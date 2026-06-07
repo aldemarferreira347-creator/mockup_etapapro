@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asistente Virtual — EtapaPro SENA</title>
+  <meta name="description" content="Chatbot de asistencia para aprendices - EtapaPro SENA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+    <div class="sidebar-brand">
+      <div class="logo-container-sidebar">
+        <i data-lucide="graduation-cap" class="logo-icon-sidebar"></i>
+      </div>
+      <div class="logo-text-sidebar">
+        <span class="logo-title-sidebar">EtapaPro</span>
+        <span class="logo-subtitle-sidebar">SENA · Sistema</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu" aria-label="Menú principal">
+      <a href="dashboard-aprendiz.html" class="menu-item">
+        <i data-lucide="layout-dashboard"></i><span>Inicio</span>
+      </a>
+      <a href="mis-bitacoras.html" class="menu-item">
+        <i data-lucide="file-check-2"></i><span>Mis Bitácoras</span>
+        <span class="menu-badge">4/6</span>
+      </a>
+      <a href="carpeta-digital.html" class="menu-item">
+        <i data-lucide="folder-open"></i><span>Carpeta Digital</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="calendar"></i><span>Seguimientos</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="building-2"></i><span>Mi Empresa</span>
+      </a>
+      <a href="notificaciones.html" class="menu-item">
+        <i data-lucide="bell"></i><span>Notificaciones</span>
+        <span class="menu-badge">3</span>
+      </a>
+      <a href="chatbot.html" class="menu-item active">
+        <i data-lucide="message-square"></i><span>Asistente Virtual</span>
+      </a>
+      <a href="perfil-usuario.html" class="menu-item">
+        <i data-lucide="user-circle"></i><span>Mi Perfil</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-profile sidebar-footer-profile">
+        <div class="avatar-display avatar-display--sidebar">CG</div>
+        <div class="user-info user-info--sidebar">
+          <span class="user-name-display user-name--sidebar">Carlos Guerrero</span>
+          <span class="user-role-display user-role--sidebar">Aprendiz ADSO</span>
+        </div>
+      </div>
+      <a href="#" class="menu-item logout" onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')">
+        <i data-lucide="log-out"></i><span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+
+    <!-- HEADER -->
+    <header class="main-header">
+      <div class="header-left">
+        <h1 class="header-title">Asistente Virtual</h1>
+        <p class="header-subtitle">Resuelve tus dudas sobre el proceso de etapa productiva</p>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" aria-label="Notificaciones" onclick="window.location.href='notificaciones.html'">
+          <i data-lucide="bell"></i>
+          <span class="notif-badge-dot"></span>
+        </button>
+        <div class="user-profile">
+          <div class="user-info">
+            <span class="user-name-display">Carlos A. Guerrero</span>
+            <span class="user-role-display">Aprendiz ADSO</span>
+          </div>
+          <div class="avatar-display">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+
+      <div class="etapa-chat-layout">
+
+        <!-- LEFT: Conversation history sidebar -->
+        <div class="etapa-chat-sidebar">
+          <div class="etapa-chat-sidebar__head">
+            <span class="etapa-chat-sidebar__title">Conversaciones</span>
+            <button class="etapa-chat-new-btn" title="Nueva conversación" aria-label="Nueva conversación" onclick="newChat()">
+              <i data-lucide="plus"></i>
+            </button>
+          </div>
+
+          <div class="etapa-chat-search">
+            <div class="etapa-chat-search-wrap">
+              <i data-lucide="search"></i>
+              <input type="search" class="etapa-chat-search-input" placeholder="Buscar conversación…" aria-label="Buscar conversación">
+            </div>
+          </div>
+
+          <div class="etapa-chat-convos" role="list">
+            <div class="etapa-chat-convo etapa-chat-convo--active" role="listitem">
+              <div class="etapa-chat-convo-icon"><i data-lucide="bot"></i></div>
+              <div class="etapa-chat-convo-body">
+                <div class="etapa-chat-convo-name">Bitácoras y formatos</div>
+                <div class="etapa-chat-convo-preview">¿Cuándo debo entregar mi bitácora?</div>
+              </div>
+              <span class="etapa-chat-convo-time">Ahora</span>
+            </div>
+            <div class="etapa-chat-convo" role="listitem">
+              <div class="etapa-chat-convo-icon"><i data-lucide="bot"></i></div>
+              <div class="etapa-chat-convo-body">
+                <div class="etapa-chat-convo-name">Contrato de aprendizaje</div>
+                <div class="etapa-chat-convo-preview">¿Qué documentos necesito?</div>
+              </div>
+              <span class="etapa-chat-convo-time">Ayer</span>
+            </div>
+            <div class="etapa-chat-convo" role="listitem">
+              <div class="etapa-chat-convo-icon"><i data-lucide="bot"></i></div>
+              <div class="etapa-chat-convo-body">
+                <div class="etapa-chat-convo-name">Seguimientos</div>
+                <div class="etapa-chat-convo-preview">¿Cuántos seguimientos necesito?</div>
+              </div>
+              <span class="etapa-chat-convo-time">Lun</span>
+            </div>
+            <div class="etapa-chat-convo" role="listitem">
+              <div class="etapa-chat-convo-icon"><i data-lucide="bot"></i></div>
+              <div class="etapa-chat-convo-body">
+                <div class="etapa-chat-convo-name">Subsidio SENA</div>
+                <div class="etapa-chat-convo-preview">¿Cuándo se paga el apoyo de sostenimiento?</div>
+              </div>
+              <span class="etapa-chat-convo-time">Sáb</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Chat window -->
+        <div class="etapa-chat-window">
+
+          <!-- Chat header -->
+          <div class="etapa-chat-header">
+            <div class="etapa-chat-bot-avatar">
+              <i data-lucide="bot"></i>
+            </div>
+            <div class="etapa-chat-bot-info">
+              <div class="etapa-chat-bot-name">EtapaBot · Asistente SENA</div>
+              <div class="etapa-chat-bot-status">
+                <span class="etapa-chat-status-dot"></span>
+                En línea · Responde en segundos
+              </div>
+            </div>
+            <div class="etapa-chat-header-actions">
+              <button class="etapa-chat-icon-btn" title="Limpiar chat" aria-label="Limpiar chat" onclick="clearChat()">
+                <i data-lucide="trash-2"></i>
+              </button>
+              <button class="etapa-chat-icon-btn" title="Exportar conversación" aria-label="Exportar conversación">
+                <i data-lucide="download"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div class="etapa-chat-messages" id="chatMessages" role="log" aria-live="polite">
+
+            <div class="etapa-chat-date-divider">Hoy, 7 de Junio 2026</div>
+
+            <!-- Bot greeting -->
+            <div class="etapa-chat-msg etapa-chat-msg--bot">
+              <div class="etapa-chat-msg-avatar etapa-chat-msg-avatar--bot">
+                <i data-lucide="bot"></i>
+              </div>
+              <div class="etapa-chat-bubble-wrap">
+                <div class="etapa-chat-bubble etapa-chat-bubble--bot">
+                  ¡Hola Carlos! 👋 Soy <strong>EtapaBot</strong>, tu asistente virtual del sistema EtapaPro SENA.<br><br>
+                  Puedo ayudarte con información sobre <strong>bitácoras, seguimientos, contratos de aprendizaje, documentos requeridos</strong> y más. ¿En qué te puedo ayudar hoy?
+                </div>
+                <span class="etapa-chat-bubble-time">09:00 AM</span>
+              </div>
+            </div>
+
+            <!-- User message -->
+            <div class="etapa-chat-msg etapa-chat-msg--user">
+              <div class="etapa-chat-msg-avatar etapa-chat-msg-avatar--user">CG</div>
+              <div class="etapa-chat-bubble-wrap">
+                <div class="etapa-chat-bubble etapa-chat-bubble--user">
+                  ¿Cuándo debo entregar mi bitácora quincenal?
+                </div>
+                <span class="etapa-chat-bubble-time">09:02 AM</span>
+              </div>
+            </div>
+
+            <!-- Bot response -->
+            <div class="etapa-chat-msg etapa-chat-msg--bot">
+              <div class="etapa-chat-msg-avatar etapa-chat-msg-avatar--bot">
+                <i data-lucide="bot"></i>
+              </div>
+              <div class="etapa-chat-bubble-wrap">
+                <div class="etapa-chat-bubble etapa-chat-bubble--bot">
+                  Las <strong>bitácoras quincenales</strong> deben entregarse dentro de los primeros <strong>3 días hábiles</strong> después de finalizar cada quincena.<br><br>
+                  Para tu caso, deberías entregar la bitácora N° 5 (período 16–30 de Mayo) antes del <strong>3 de Junio de 2026</strong>.<br><br>
+                  Recuerda que puedes subirla directamente desde la sección <em>"Mis Bitácoras"</em> en el menú lateral. ¿Necesitas más información?
+                </div>
+                <span class="etapa-chat-bubble-time">09:02 AM</span>
+              </div>
+            </div>
+
+            <!-- User -->
+            <div class="etapa-chat-msg etapa-chat-msg--user">
+              <div class="etapa-chat-msg-avatar etapa-chat-msg-avatar--user">CG</div>
+              <div class="etapa-chat-bubble-wrap">
+                <div class="etapa-chat-bubble etapa-chat-bubble--user">
+                  ¿Qué pasa si entrego la bitácora tarde?
+                </div>
+                <span class="etapa-chat-bubble-time">09:05 AM</span>
+              </div>
+            </div>
+
+            <!-- Bot -->
+            <div class="etapa-chat-msg etapa-chat-msg--bot">
+              <div class="etapa-chat-msg-avatar etapa-chat-msg-avatar--bot">
+                <i data-lucide="bot"></i>
+              </div>
+              <div class="etapa-chat-bubble-wrap">
+                <div class="etapa-chat-bubble etapa-chat-bubble--bot">
+                  Si la bitácora se entrega fuera del plazo establecido, puede generar las siguientes consecuencias:<br><br>
+                  ⚠️ <strong>Observación</strong> en tu historial de seguimiento.<br>
+                  📉 Posible <strong>descuento en la calificación</strong> de la bitácora.<br>
+                  🔴 En casos repetidos, puede <strong>afectar la aprobación</strong> de tu etapa productiva.<br><br>
+                  Te recomiendo hablar con tu instructora <strong>Ing. María Rodríguez</strong> si tienes algún inconveniente justificado.
+                </div>
+                <span class="etapa-chat-bubble-time">09:05 AM</span>
+              </div>
+            </div>
+
+            <!-- Typing indicator (hidden by default) -->
+            <div class="etapa-chat-typing" id="typingIndicator" style="display: none;" aria-label="El asistente está escribiendo">
+              <div class="etapa-chat-typing-dot"></div>
+              <div class="etapa-chat-typing-dot"></div>
+              <div class="etapa-chat-typing-dot"></div>
+            </div>
+
+          </div>
+
+          <!-- Quick replies -->
+          <div class="etapa-chat-quick-wrap">
+            <span class="etapa-chat-quick-label">Preguntas frecuentes:</span>
+            <button class="etapa-chat-quick-btn" onclick="sendQuick('¿Cuántos seguimientos necesito completar?')">¿Cuántos seguimientos?</button>
+            <button class="etapa-chat-quick-btn" onclick="sendQuick('¿Qué documentos debo subir a la carpeta digital?')">Documentos requeridos</button>
+            <button class="etapa-chat-quick-btn" onclick="sendQuick('¿Cuándo se paga el apoyo de sostenimiento?')">Apoyo de sostenimiento</button>
+            <button class="etapa-chat-quick-btn" onclick="sendQuick('¿Cómo reporto novedades en la empresa?')">Reportar novedad</button>
+          </div>
+
+          <!-- Input -->
+          <div class="etapa-chat-input-area">
+            <div class="etapa-chat-input-row">
+              <div class="etapa-chat-input-tools">
+                <button class="etapa-chat-tool-btn" title="Adjuntar archivo" aria-label="Adjuntar archivo">
+                  <i data-lucide="paperclip"></i>
+                </button>
+              </div>
+              <textarea
+                class="etapa-chat-textarea"
+                id="chatInput"
+                placeholder="Escribe tu pregunta aquí…"
+                rows="1"
+                aria-label="Escribir mensaje"
+                onkeydown="handleKey(event)"
+                oninput="autoResize(this)"></textarea>
+              <button class="etapa-chat-send-btn" title="Enviar mensaje" aria-label="Enviar mensaje" onclick="sendMessage()">
+                <i data-lucide="send"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const responses = {
+      default: 'Entendido. Te recomiendo consultar con tu instructor o revisar el reglamento de etapa productiva del SENA para más información precisa sobre este tema.',
+      seguimientos: 'Para el proceso de etapa productiva en ADSO necesitas completar <strong>2 seguimientos</strong> presenciales con tu instructor SENA: uno a los 2 meses y otro al final del proceso. También debes tener visitas de seguimiento por parte de la empresa.',
+      documentos: 'Los documentos obligatorios en tu carpeta digital son:<br>1. Contrato de Aprendizaje<br>2. Aval de la empresa<br>3. ARL (seguro)<br>4. Bitácoras quincenales<br>5. Acta de inicio<br>6. Evaluaciones del instructor.',
+      apoyo: 'El apoyo de sostenimiento SENA se paga de forma <strong>mensual</strong> mediante transferencia bancaria. El valor corresponde al salario mínimo legal vigente (SMLV). Si hay retrasos, comunícate con la coordinación académica de tu regional.',
+      novedad: 'Para reportar una novedad en la empresa (cambio de jefe, sede, horario, etc.), debes:<br>1. Ingresar a tu carpeta digital<br>2. Ir a la sección "Seguimientos"<br>3. Crear un reporte de novedad<br>4. Esperar aprobación del instructor.'
+    };
+
+    function getBotResponse(text) {
+      const t = text.toLowerCase();
+      if (t.includes('seguimiento')) return responses.seguimientos;
+      if (t.includes('document') || t.includes('carpeta')) return responses.documentos;
+      if (t.includes('apoyo') || t.includes('sostenimiento') || t.includes('pago')) return responses.apoyo;
+      if (t.includes('novedad') || t.includes('reporte')) return responses.novedad;
+      return responses.default;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage('user', text);
+      input.value = '';
+      input.style.height = 'auto';
+
+      const typing = document.getElementById('typingIndicator');
+      typing.style.display = 'flex';
+      scrollToBottom();
+
+      setTimeout(() => {
+        typing.style.display = 'none';
+        appendMessage('bot', getBotResponse(text));
+      }, 1200);
+    }
+
+    function sendQuick(text) {
+      document.getElementById('chatInput').value = text;
+      sendMessage();
+    }
+
+    function appendMessage(role, html) {
+      const container = document.getElementById('chatMessages');
+      const typing = document.getElementById('typingIndicator');
+
+      const time = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+
+      const wrap = document.createElement('div');
+      wrap.className = `etapa-chat-msg etapa-chat-msg--${role}`;
+
+      if (role === 'bot') {
+        wrap.innerHTML = `
+          <div class="etapa-chat-msg-avatar etapa-chat-msg-avatar--bot">
+            <i data-lucide="bot"></i>
+          </div>
+          <div class="etapa-chat-bubble-wrap">
+            <div class="etapa-chat-bubble etapa-chat-bubble--bot">${html}</div>
+            <span class="etapa-chat-bubble-time">${time}</span>
+          </div>`;
+      } else {
+        wrap.innerHTML = `
+          <div class="etapa-chat-msg-avatar etapa-chat-msg-avatar--user">CG</div>
+          <div class="etapa-chat-bubble-wrap">
+            <div class="etapa-chat-bubble etapa-chat-bubble--user">${html}</div>
+            <span class="etapa-chat-bubble-time">${time}</span>
+          </div>`;
+      }
+
+      container.insertBefore(wrap, typing);
+      lucide.createIcons();
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      const c = document.getElementById('chatMessages');
+      c.scrollTop = c.scrollHeight;
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function autoResize(el) {
+      el.style.height = 'auto';
+      el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+    }
+
+    function clearChat() {
+      if (!confirm('¿Limpiar esta conversación?')) return;
+      const c = document.getElementById('chatMessages');
+      const typing = document.getElementById('typingIndicator');
+      c.innerHTML = '';
+      c.appendChild(typing);
+      appendMessage('bot', '¡Hola de nuevo! 👋 La conversación fue limpiada. ¿En qué te puedo ayudar?');
+    }
+
+    function newChat() {
+      clearChat();
+    }
+
+    scrollToBottom();
+  </script>
+</body>
+</html>

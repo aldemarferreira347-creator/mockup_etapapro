@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Perfil — EtapaPro SENA</title>
+  <meta name="description" content="Gestión del perfil personal del aprendiz - EtapaPro SENA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+    <div class="sidebar-brand">
+      <div class="logo-container-sidebar">
+        <i data-lucide="graduation-cap" class="logo-icon-sidebar"></i>
+      </div>
+      <div class="logo-text-sidebar">
+        <span class="logo-title-sidebar">EtapaPro</span>
+        <span class="logo-subtitle-sidebar">SENA · Sistema</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu" aria-label="Menú principal">
+      <a href="dashboard-aprendiz.html" class="menu-item">
+        <i data-lucide="layout-dashboard"></i><span>Inicio</span>
+      </a>
+      <a href="mis-bitacoras.html" class="menu-item">
+        <i data-lucide="file-check-2"></i><span>Mis Bitácoras</span>
+        <span class="menu-badge">4/6</span>
+      </a>
+      <a href="carpeta-digital.html" class="menu-item">
+        <i data-lucide="folder-open"></i><span>Carpeta Digital</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="calendar"></i><span>Seguimientos</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="building-2"></i><span>Mi Empresa</span>
+      </a>
+      <a href="notificaciones.html" class="menu-item">
+        <i data-lucide="bell"></i><span>Notificaciones</span>
+        <span class="menu-badge">3</span>
+      </a>
+      <a href="chatbot.html" class="menu-item">
+        <i data-lucide="message-square"></i><span>Asistente Virtual</span>
+      </a>
+      <a href="perfil-usuario.html" class="menu-item active">
+        <i data-lucide="user-circle"></i><span>Mi Perfil</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-profile sidebar-footer-profile">
+        <div class="avatar-display avatar-display--sidebar">CG</div>
+        <div class="user-info user-info--sidebar">
+          <span class="user-name-display user-name--sidebar">Carlos Guerrero</span>
+          <span class="user-role-display user-role--sidebar">Aprendiz ADSO</span>
+        </div>
+      </div>
+      <a href="#" class="menu-item logout" onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')">
+        <i data-lucide="log-out"></i><span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+
+    <!-- HEADER -->
+    <header class="main-header">
+      <div class="header-left">
+        <h1 class="header-title">Mi Perfil</h1>
+        <p class="header-subtitle">Gestiona tu información personal y seguridad</p>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" aria-label="Notificaciones" onclick="window.location.href='notificaciones.html'">
+          <i data-lucide="bell"></i>
+          <span class="notif-badge-dot"></span>
+        </button>
+        <div class="user-profile">
+          <div class="user-info">
+            <span class="user-name-display">Carlos A. Guerrero</span>
+            <span class="user-role-display">Aprendiz ADSO</span>
+          </div>
+          <div class="avatar-display">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+
+      <!-- Page header -->
+      <div class="etapa-page-header">
+        <div class="etapa-page-header-icon">
+          <i data-lucide="user-circle"></i>
+        </div>
+        <div class="etapa-page-header-text">
+          <h2>Mi Perfil</h2>
+          <p>Actualiza tu información de contacto, foto y contraseña</p>
+        </div>
+      </div>
+
+      <div class="etapa-perfil-layout">
+
+        <!-- LEFT: Avatar + Stats -->
+        <div>
+
+          <!-- Avatar card -->
+          <div class="etapa-perfil-card" style="margin-bottom: 1.5rem;">
+            <div class="etapa-perfil-avatar-wrap">
+              <div class="etapa-perfil-avatar">
+                <div class="etapa-perfil-avatar__circle">CG</div>
+                <button class="etapa-perfil-avatar__edit" title="Cambiar foto" aria-label="Cambiar foto de perfil">
+                  <i data-lucide="camera"></i>
+                </button>
+              </div>
+              <span class="etapa-perfil-name">Carlos A. Guerrero López</span>
+              <span class="etapa-perfil-role">Aprendiz · Tecnología ADSO</span>
+              <span class="etapa-perfil-ficha">Ficha: 2879344</span>
+            </div>
+
+            <div class="etapa-perfil-stats">
+              <div class="etapa-perfil-stat">
+                <span class="etapa-perfil-stat__label">
+                  <i data-lucide="file-check-2"></i>Bitácoras entregadas
+                </span>
+                <span class="etapa-perfil-stat__value etapa-perfil-stat__value--green">4 / 6</span>
+              </div>
+              <div class="etapa-perfil-stat">
+                <span class="etapa-perfil-stat__label">
+                  <i data-lucide="calendar-check"></i>Seguimientos
+                </span>
+                <span class="etapa-perfil-stat__value">2 realizados</span>
+              </div>
+              <div class="etapa-perfil-stat">
+                <span class="etapa-perfil-stat__label">
+                  <i data-lucide="clock"></i>Horas etapa
+                </span>
+                <span class="etapa-perfil-stat__value etapa-perfil-stat__value--green">480 / 880 h</span>
+              </div>
+              <div class="etapa-perfil-stat">
+                <span class="etapa-perfil-stat__label">
+                  <i data-lucide="building-2"></i>Empresa
+                </span>
+                <span class="etapa-perfil-stat__value">Tecnisoft S.A.S</span>
+              </div>
+              <div class="etapa-perfil-stat">
+                <span class="etapa-perfil-stat__label">
+                  <i data-lucide="user-check"></i>Instructor
+                </span>
+                <span class="etapa-perfil-stat__value">Ing. María Rodríguez</span>
+              </div>
+              <div class="etapa-perfil-stat">
+                <span class="etapa-perfil-stat__label">
+                  <i data-lucide="map-pin"></i>Regional
+                </span>
+                <span class="etapa-perfil-stat__value">Cauca</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress card -->
+          <div class="etapa-perfil-card">
+            <p class="etapa-perfil-card__title">Progreso general</p>
+            <div class="progress-bar-container">
+              <div class="bar-header">
+                <span>Etapa Productiva</span>
+                <span>55%</span>
+              </div>
+              <div class="bar-outer">
+                <div class="bar-inner" style="width: 55%;"></div>
+              </div>
+            </div>
+            <div class="progress-bar-container">
+              <div class="bar-header">
+                <span>Documentación</span>
+                <span>80%</span>
+              </div>
+              <div class="bar-outer">
+                <div class="bar-inner" style="width: 80%; background: var(--accent-color);"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Forms -->
+        <div class="etapa-perfil-forms">
+
+          <!-- Datos personales -->
+          <div class="etapa-perfil-card">
+            <p class="etapa-perfil-card__title">Datos Personales</p>
+            <div class="etapa-perfil-form-grid">
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pNombre">Nombres</label>
+                <input type="text" id="pNombre" class="etapa-perfil-input" value="Carlos Andrés">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pApellido">Apellidos</label>
+                <input type="text" id="pApellido" class="etapa-perfil-input" value="Guerrero López">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pDoc">N° Documento</label>
+                <input type="text" id="pDoc" class="etapa-perfil-input" value="1075872451" readonly>
+                <span class="etapa-perfil-hint">El número de documento no puede modificarse.</span>
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pTipoDoc">Tipo de Documento</label>
+                <input type="text" id="pTipoDoc" class="etapa-perfil-input" value="Cédula de Ciudadanía" readonly>
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pEmail">Correo Electrónico</label>
+                <input type="email" id="pEmail" class="etapa-perfil-input" value="caguerrezlopez@misena.edu.co">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pTel">Teléfono</label>
+                <input type="tel" id="pTel" class="etapa-perfil-input" value="3142287650">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pNacimiento">Fecha de Nacimiento</label>
+                <input type="date" id="pNacimiento" class="etapa-perfil-input" value="2002-07-14">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pFicha">Ficha de Formación</label>
+                <input type="text" id="pFicha" class="etapa-perfil-input" value="2879344" readonly>
+              </div>
+            </div>
+            <div class="etapa-perfil-section-actions">
+              <button class="etapa-btn-cancel">Cancelar</button>
+              <button class="etapa-btn-save">
+                <i data-lucide="save"></i>Guardar cambios
+              </button>
+            </div>
+          </div>
+
+          <!-- Datos de contacto -->
+          <div class="etapa-perfil-card">
+            <p class="etapa-perfil-card__title">Dirección y Ubicación</p>
+            <div class="etapa-perfil-form-grid">
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pDireccion">Dirección</label>
+                <input type="text" id="pDireccion" class="etapa-perfil-input" value="Cra 5 # 12-34, Barrio El Jardín">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pCiudad">Ciudad / Municipio</label>
+                <input type="text" id="pCiudad" class="etapa-perfil-input" value="Popayán">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pDpto">Departamento</label>
+                <input type="text" id="pDpto" class="etapa-perfil-input" value="Cauca">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pEps">EPS</label>
+                <input type="text" id="pEps" class="etapa-perfil-input" value="Nueva EPS">
+              </div>
+            </div>
+            <div class="etapa-perfil-section-actions">
+              <button class="etapa-btn-cancel">Cancelar</button>
+              <button class="etapa-btn-save">
+                <i data-lucide="save"></i>Guardar cambios
+              </button>
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="etapa-perfil-card">
+            <p class="etapa-perfil-card__title">Cambiar Contraseña</p>
+            <div class="etapa-perfil-form-grid--single etapa-perfil-form-grid">
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pPassActual">Contraseña actual</label>
+                <input type="password" id="pPassActual" class="etapa-perfil-input" placeholder="••••••••">
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pPassNueva">Nueva contraseña</label>
+                <input type="password" id="pPassNueva" class="etapa-perfil-input" placeholder="••••••••" oninput="updateStrength(this.value)">
+                <div class="etapa-strength-bar" aria-label="Seguridad de contraseña">
+                  <div class="etapa-strength-bar__fill etapa-strength-bar__fill--good" id="strengthBar"></div>
+                </div>
+                <span class="etapa-perfil-hint" id="strengthLabel">Fortaleza: Buena</span>
+              </div>
+              <div class="etapa-perfil-field">
+                <label class="etapa-perfil-label" for="pPassConfirm">Confirmar nueva contraseña</label>
+                <input type="password" id="pPassConfirm" class="etapa-perfil-input" placeholder="••••••••">
+              </div>
+            </div>
+            <div class="etapa-perfil-section-actions">
+              <button class="etapa-btn-cancel">Cancelar</button>
+              <button class="etapa-btn-save">
+                <i data-lucide="lock"></i>Actualizar contraseña
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="dashboard-footer">
+      <span>EtapaPro · Sistema de Seguimiento de Aprendices · SENA Regional Cauca · v1.0</span>
+    </footer>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function updateStrength(val) {
+      const bar = document.getElementById('strengthBar');
+      const label = document.getElementById('strengthLabel');
+      bar.className = 'etapa-strength-bar__fill';
+      if (val.length === 0) { bar.className += ' etapa-strength-bar__fill--weak'; label.textContent = ''; return; }
+      if (val.length < 6)   { bar.className += ' etapa-strength-bar__fill--weak';   label.textContent = 'Fortaleza: Débil'; return; }
+      if (val.length < 10)  { bar.className += ' etapa-strength-bar__fill--fair';   label.textContent = 'Fortaleza: Regular'; return; }
+      if (/[!@#$%^&*]/.test(val)) { bar.className += ' etapa-strength-bar__fill--strong'; label.textContent = 'Fortaleza: Muy fuerte'; return; }
+      bar.className += ' etapa-strength-bar__fill--good';
+      label.textContent = 'Fortaleza: Buena';
+    }
+  </script>
+</body>
+</html>

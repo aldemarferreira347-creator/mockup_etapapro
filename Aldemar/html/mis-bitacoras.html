@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Bitácoras — EtapaPro SENA</title>
+  <meta name="description" content="Registro y control de bitácoras quincenales - EtapaPro SENA">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body class="dashboard-body">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+    <div class="sidebar-brand">
+      <div class="logo-container-sidebar">
+        <i data-lucide="graduation-cap" class="logo-icon-sidebar"></i>
+      </div>
+      <div class="logo-text-sidebar">
+        <span class="logo-title-sidebar">EtapaPro</span>
+        <span class="logo-subtitle-sidebar">SENA · Sistema</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu" aria-label="Menú principal">
+      <a href="dashboard-aprendiz.html" class="menu-item">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Inicio</span>
+      </a>
+      <a href="mis-bitacoras.html" class="menu-item active">
+        <i data-lucide="file-check-2"></i>
+        <span>Mis Bitácoras</span>
+        <span class="menu-badge">4/6</span>
+      </a>
+      <a href="carpeta-digital.html" class="menu-item">
+        <i data-lucide="folder-open"></i>
+        <span>Carpeta Digital</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="calendar"></i>
+        <span>Seguimientos</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="building-2"></i>
+        <span>Mi Empresa</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="message-square"></i>
+        <span>Asistente Virtual</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-profile sidebar-footer-profile">
+        <div class="avatar-display avatar-display--sidebar">CG</div>
+        <div class="user-info user-info--sidebar">
+          <span class="user-name-display user-name--sidebar">Carlos Guerrero</span>
+          <span class="user-role-display user-role--sidebar">Aprendiz ADSO</span>
+        </div>
+      </div>
+      <a href="#" class="menu-item logout" onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')">
+        <i data-lucide="log-out"></i>
+        <span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN CONTENT WRAPPER
+  ══════════════════════════════════════ -->
+  <div class="main-wrapper">
+
+    <!-- ── HEADER ── -->
+    <header class="main-header">
+      <div class="header-left">
+        <h1 class="header-title">Mis Bitácoras</h1>
+        <p class="header-subtitle">Registro de tu proceso formativo quincenal</p>
+      </div>
+
+      <div class="header-right">
+        <button class="notif-btn" id="notifBtn" aria-label="Notificaciones" onclick="toggleNotifs()">
+          <i data-lucide="bell"></i>
+          <span class="notif-badge-dot"></span>
+        </button>
+        <div class="user-profile">
+          <div class="user-info">
+            <span class="user-name-display">Carlos A. Guerrero</span>
+            <span class="user-role-display">Aprendiz ADSO</span>
+          </div>
+          <div class="avatar-display">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── PANEL NOTIFICACIONES ── -->
+    <div class="db-notif-panel-custom" id="notifPanel">
+      <h4>Notificaciones</h4>
+      <div class="db-notif-panel-custom__list">
+        <div>• Bitácora N° 3 está <strong>En revisión</strong>.</div>
+        <div>• Tu próxima cita de seguimiento es el <strong>12 de Junio</strong>.</div>
+      </div>
+    </div>
+
+    <!-- ── CONTENIDO PRINCIPAL ── -->
+    <main class="dashboard-content">
+
+      <!-- ────────────────────────────────────────
+           TARJETA GRANDE DE PROGRESO
+      ──────────────────────────────────────── -->
+      <section class="card" aria-label="Progreso de bitácoras">
+        <div class="progress-card-flex">
+          <div class="progress-card-left">
+            <h2 class="card-section-title progress-card-title">Progreso de Entregas</h2>
+            <p class="progress-desc-text progress-card-desc">
+              Has completado y enviado <strong>4 de las 6 bitácoras</strong> quincenales obligatorias para este período de etapa productiva.
+            </p>
+            <div class="progress-bar-container progress-card-bar-wrap">
+              <div class="bar-header">
+                <span>Progreso General</span>
+                <span class="progress-card-pct">67%</span>
+              </div>
+              <div class="bar-outer">
+                <div class="bar-inner" style="width: 67%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="progress-card-right">
+            <button class="btn-primary-dashboard" id="btnNuevaBitacora" onclick="openModal()">
+              <i data-lucide="plus" class="btn-icon"></i>
+              Nueva Bitácora
+            </button>
+            <p class="progress-card-limit-txt">Límite máximo: 6 entregas</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ────────────────────────────────────────
+           GRILLA DE LAS 6 BITÁCORAS
+      ──────────────────────────────────────── -->
+      <section aria-label="Listado de bitácoras">
+        <h3 class="card-section-title bitacoras-section-title">Listado de Bitácoras Quincenales</h3>
+        
+        <div class="bitacora-grid">
+          
+          <!-- Bitácora 1 -->
+          <div class="bitacora-card">
+            <div class="bitacora-card__header">
+              <span class="bitacora-card__number">Bitácora N° 1</span>
+              <span class="badge badge-success-light">Aprobado</span>
+            </div>
+            <div class="bitacora-card__body">
+              <div class="bitacora-card__meta">
+                <i data-lucide="calendar"></i>
+                <span>Período: 15/03/2026 — 30/03/2026</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="clock"></i>
+                <span>Enviado: 30/03/2026 · 10:45 AM</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="user-check"></i>
+                <span>Revisado por: Ing. María Rodríguez</span>
+              </div>
+            </div>
+            <div class="bitacora-card__actions">
+              <button class="btn-primary-dashboard btn-primary-dashboard--outline" onclick="alert('Visualizando Bitácora N° 1')">
+                <i data-lucide="eye"></i> Ver
+              </button>
+              <button class="btn-primary-dashboard btn-primary-dashboard--disabled" disabled>
+                <i data-lucide="edit-2"></i> Editar
+              </button>
+            </div>
+          </div>
+
+          <!-- Bitácora 2 -->
+          <div class="bitacora-card">
+            <div class="bitacora-card__header">
+              <span class="bitacora-card__number">Bitácora N° 2</span>
+              <span class="badge badge-success-light">Aprobado</span>
+            </div>
+            <div class="bitacora-card__body">
+              <div class="bitacora-card__meta">
+                <i data-lucide="calendar"></i>
+                <span>Período: 01/04/2026 — 15/04/2026</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="clock"></i>
+                <span>Enviado: 15/04/2026 · 04:30 PM</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="user-check"></i>
+                <span>Revisado por: Ing. María Rodríguez</span>
+              </div>
+            </div>
+            <div class="bitacora-card__actions">
+              <button class="btn-primary-dashboard btn-primary-dashboard--outline" onclick="alert('Visualizando Bitácora N° 2')">
+                <i data-lucide="eye"></i> Ver
+              </button>
+              <button class="btn-primary-dashboard btn-primary-dashboard--disabled" disabled>
+                <i data-lucide="edit-2"></i> Editar
+              </button>
+            </div>
+          </div>
+
+          <!-- Bitácora 3 -->
+          <div class="bitacora-card bitacora-card--warning">
+            <div class="bitacora-card__header">
+              <span class="bitacora-card__number">Bitácora N° 3</span>
+              <span class="badge badge-warning-light">En revisión</span>
+            </div>
+            <div class="bitacora-card__body">
+              <div class="bitacora-card__meta">
+                <i data-lucide="calendar"></i>
+                <span>Período: 16/04/2026 — 30/04/2026</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="clock"></i>
+                <span>Enviado: 30/04/2026 · 08:15 AM</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="refresh-cw"></i>
+                <span>En espera de firma de instructor</span>
+              </div>
+            </div>
+            <div class="bitacora-card__actions">
+              <button class="btn-primary-dashboard btn-primary-dashboard--outline" onclick="alert('Visualizando Bitácora N° 3')">
+                <i data-lucide="eye"></i> Ver
+              </button>
+              <button class="btn-primary-dashboard btn-primary-dashboard--disabled" disabled>
+                <i data-lucide="edit-2"></i> Editar
+              </button>
+            </div>
+          </div>
+
+          <!-- Bitácora 4 -->
+          <div class="bitacora-card bitacora-card--success">
+            <div class="bitacora-card__header">
+              <span class="bitacora-card__number">Bitácora N° 4</span>
+              <span class="badge badge-success-light">Aprobado</span>
+            </div>
+            <div class="bitacora-card__body">
+              <div class="bitacora-card__meta">
+                <i data-lucide="calendar"></i>
+                <span>Período: 01/05/2026 — 15/05/2026</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="clock"></i>
+                <span>Enviado: 15/05/2026 · 09:20 AM</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="user-check"></i>
+                <span>Revisado por: Ing. María Rodríguez</span>
+              </div>
+            </div>
+            <div class="bitacora-card__actions">
+              <button class="btn-primary-dashboard btn-primary-dashboard--outline" onclick="alert('Visualizando Bitácora N° 4')">
+                <i data-lucide="eye"></i> Ver
+              </button>
+              <button class="btn-primary-dashboard btn-primary-dashboard--disabled" disabled>
+                <i data-lucide="edit-2"></i> Editar
+              </button>
+            </div>
+          </div>
+
+          <!-- Bitácora 5 -->
+          <div class="bitacora-card bitacora-card--draft">
+            <div class="bitacora-card__header">
+              <span class="bitacora-card__number">Bitácora N° 5</span>
+              <span class="badge badge-secondary-light">Borrador</span>
+            </div>
+            <div class="bitacora-card__body">
+              <div class="bitacora-card__meta">
+                <i data-lucide="calendar"></i>
+                <span>Período: 16/05/2026 — 30/05/2026</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="alert-circle"></i>
+                <span>Pendiente de entrega (Vence pronto)</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="file-text"></i>
+                <span>Archivo: No cargado</span>
+              </div>
+            </div>
+            <div class="bitacora-card__actions">
+              <button class="btn-primary-dashboard btn-primary-dashboard--disabled" disabled>
+                <i data-lucide="eye"></i> Ver
+              </button>
+              <button class="btn-primary-dashboard" onclick="openModal('Bitácora N° 5', '16/05/2026 — 30/05/2026')">
+                <i data-lucide="edit-2"></i> Editar / Subir
+              </button>
+            </div>
+          </div>
+
+          <!-- Bitácora 6 -->
+          <div class="bitacora-card bitacora-card--pending">
+            <div class="bitacora-card__header">
+              <span class="bitacora-card__number">Bitácora N° 6</span>
+              <span class="badge badge-secondary-light">Pendiente</span>
+            </div>
+            <div class="bitacora-card__body">
+              <div class="bitacora-card__meta">
+                <i data-lucide="calendar"></i>
+                <span>Período: 01/06/2026 — 15/06/2026</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="clock"></i>
+                <span>Vence: 15/06/2026</span>
+              </div>
+              <div class="bitacora-card__meta">
+                <i data-lucide="file-text"></i>
+                <span>Archivo: No cargado</span>
+              </div>
+            </div>
+            <div class="bitacora-card__actions">
+              <button class="btn-primary-dashboard btn-primary-dashboard--disabled" disabled>
+                <i data-lucide="eye"></i> Ver
+              </button>
+              <button class="btn-primary-dashboard" onclick="openModal('Bitácora N° 6', '01/06/2026 — 15/06/2026')">
+                <i data-lucide="edit-2"></i> Editar / Subir
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <footer class="dashboard-footer">
+      <span>EtapaPro · Sistema de Seguimiento de Aprendices · SENA Regional Cauca · v1.0</span>
+    </footer>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL NUEVA BITÁCORA
+  ══════════════════════════════════════ -->
+  <div class="modal-overlay" id="bitacoraModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="logo-title-sidebar modal-title-custom">Subir Bitácora</h3>
+        <button class="notif-btn modal-close-btn" onclick="closeModal()" aria-label="Cerrar modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <form id="frmBitacora" onsubmit="event.preventDefault(); submitForm();">
+          <div class="form-group form-group--margin">
+            <label class="input-label" for="selBita">Bitácora a Entregar</label>
+            <div class="input-wrapper input-wrapper--margin">
+              <select id="selBita" class="form-input form-input--select" onchange="updatePeriodo(this.value)">
+                <option value="5">Bitácora N° 5 (16/05/2026 — 30/05/2026)</option>
+                <option value="6">Bitácora N° 6 (01/06/2026 — 15/06/2026)</option>
+              </select>
+              <i data-lucide="chevron-down" class="modal-select-chevron"></i>
+            </div>
+          </div>
+
+          <div class="form-group form-group--margin">
+            <label class="input-label" for="txtPeriodo">Período Seleccionado</label>
+            <input type="text" id="txtPeriodo" class="form-input form-input--readonly" readonly value="16 de Mayo — 30 de Mayo de 2026">
+          </div>
+
+          <!-- Drag and Drop Zone -->
+          <div class="form-group form-group--margin">
+            <label class="input-label">Documento de la Bitácora (Formato PDF / Word)</label>
+            <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0">
+              <i data-lucide="cloud-upload" style="width: 32px; height: 32px; color: var(--primary-green); margin-bottom: 0.5rem;"></i>
+              <p style="font-size: 0.85rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.2rem;">Arrastra tu archivo aquí</p>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">o haz clic para seleccionar del equipo</p>
+              <span style="font-size: 0.7rem; color: var(--text-muted); opacity: 0.7; margin-top: 0.4rem; display: block;">PDF, DOCX hasta 10MB</span>
+              <input type="file" id="fileInput" accept=".pdf,.doc,.docx" style="display: none;" onchange="fileSelected(this)">
+            </div>
+          </div>
+
+          <div class="form-group form-group--small-margin">
+            <label class="input-label" for="txtObs">Observaciones o Notas Adicionales (Opcional)</label>
+            <textarea id="txtObs" class="form-input form-input--textarea" placeholder="Escribe aquí algún comentario para el instructor..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer-custom">
+        <button class="btn-primary-dashboard btn-primary-dashboard--ghost" onclick="closeModal()">Cancelar</button>
+        <button class="btn-primary-dashboard" type="submit" form="frmBitacora">
+          <i data-lucide="upload-cloud"></i> Enviar Bitácora
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function toggleNotifs() {
+      const panel = document.getElementById('notifPanel');
+      panel.classList.toggle('show');
+    }
+
+    // Modal Control Functions
+    function openModal(bitaName, bitaPeriod) {
+      const modal = document.getElementById('bitacoraModal');
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+
+      if (bitaName) {
+        const value = bitaName.includes('5') ? '5' : '6';
+        document.getElementById('selBita').value = value;
+        updatePeriodo(value);
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('bitacoraModal');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      
+      // Reset dropzone text
+      const dz = document.getElementById('dropzone');
+      dz.innerHTML = `
+        <i data-lucide="cloud-upload" style="width: 32px; height: 32px; color: var(--primary-green); margin-bottom: 0.5rem;"></i>
+        <p style="font-size: 0.85rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.2rem;">Arrastra tu archivo aquí</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">o haz clic para seleccionar del equipo</p>
+        <span style="font-size: 0.7rem; color: var(--text-muted); opacity: 0.7; margin-top: 0.4rem; display: block;">PDF, DOCX hasta 10MB</span>
+        <input type="file" id="fileInput" accept=".pdf,.doc,.docx" style="display: none;" onchange="fileSelected(this)">
+      `;
+      lucide.createIcons();
+    }
+
+    function updatePeriodo(val) {
+      const txt = document.getElementById('txtPeriodo');
+      if (val === '5') {
+        txt.value = '16 de Mayo — 30 de Mayo de 2026';
+      } else {
+        txt.value = '01 de Junio — 15 de Junio de 2026';
+      }
+    }
+
+    function fileSelected(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const dz = document.getElementById('dropzone');
+        dz.innerHTML = `
+          <i data-lucide="file-check" style="width: 32px; height: 32px; color: var(--primary-green); margin-bottom: 0.5rem;"></i>
+          <p style="font-size: 0.85rem; font-weight: 600; color: var(--primary-green); margin-bottom: 0.2rem;">${file.name}</p>
+          <p style="font-size: 0.75rem; color: var(--text-dark);">${(file.size / 1024 / 1024).toFixed(2)} MB · Listo para cargar</p>
+          <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 0.4rem;">Haz clic si deseas cambiar el archivo</span>
+          <input type="file" id="fileInput" accept=".pdf,.doc,.docx" style="display: none;" onchange="fileSelected(this)">
+        `;
+        lucide.createIcons();
+      }
+    }
+
+    function submitForm() {
+      alert('¡Bitácora enviada con éxito!');
+      closeModal();
+    }
+
+    // Close modal on escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+
+</html>

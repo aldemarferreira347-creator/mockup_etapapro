@@ -1,0 +1,999 @@
+/* ================================================================
+   CARPETA DIGITAL — carpeta-digital.css
+   EtapaPro · SENA Regional Cauca
+   Extiende dashboard.css. No duplica variables ni reset.
+   Prefijo de clases: etapa-cd-
+   ================================================================ */
+
+
+/* ════════════════════════════════════════
+   1. AJUSTE DE CONTENIDO PARA ESTA VISTA
+════════════════════════════════════════ */
+.etapa-cd-content {
+  max-width: 1380px;
+}
+
+
+/* ════════════════════════════════════════
+   2. BUSCADOR EN HEADER
+════════════════════════════════════════ */
+.etapa-header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.etapa-header-search i {
+  position: absolute;
+  left: 0.75rem;
+  width: 16px; height: 16px;
+  color: var(--tx-muted);
+  pointer-events: none;
+}
+.etapa-header-search input {
+  height: 38px;
+  padding: 0 1rem 0 2.4rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  font-family: var(--ff-body);
+  font-size: 0.82rem;
+  color: var(--tx-dark);
+  width: 220px;
+  transition: var(--tr);
+  outline: none;
+}
+.etapa-header-search input::placeholder { color: var(--tx-muted); }
+.etapa-header-search input:focus {
+  border-color: var(--g-500);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(13,107,82,.1);
+  width: 260px;
+}
+
+
+/* ════════════════════════════════════════
+   3. TARJETA HERO (PROGRESO GENERAL)
+════════════════════════════════════════ */
+.etapa-cd-hero {
+  background: linear-gradient(135deg, var(--g-600) 0%, var(--g-800) 100%);
+  border-radius: var(--r-2xl);
+  padding: 2rem 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(7,71,54,.32);
+}
+
+/* Glow derecho */
+.etapa-cd-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 45%;
+  background: radial-gradient(ellipse at 90% 30%, rgba(14,210,154,.13) 0%, transparent 65%);
+  pointer-events: none;
+}
+/* Círculo decorativo */
+.etapa-cd-hero::after {
+  content: '';
+  position: absolute;
+  right: -70px; bottom: -70px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.05);
+  pointer-events: none;
+}
+
+.etapa-cd-hero__left {
+  max-width: 60%;
+  z-index: 1;
+}
+
+.etapa-cd-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+}
+.etapa-cd-hero__eyebrow i { width: 14px; height: 14px; }
+
+.etapa-cd-hero__title {
+  font-family: var(--ff-title);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  margin-bottom: 0.5rem;
+}
+
+.etapa-cd-hero__desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,.7);
+  line-height: 1.6;
+  margin-bottom: 1.4rem;
+}
+
+/* Stats */
+.etapa-cd-hero__stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 1.4rem;
+}
+.etapa-cd-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.25rem;
+}
+.etapa-cd-stat:first-child { padding-left: 0; }
+
+.etapa-cd-stat__num {
+  font-family: var(--ff-title);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.etapa-cd-stat__den {
+  font-size: 0.95rem;
+  opacity: .65;
+}
+.etapa-cd-stat__lbl {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,.55);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.etapa-cd-stat__divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,.15);
+  flex-shrink: 0;
+}
+
+/* Barra progreso en hero */
+.etapa-cd-hero__bar-wrap { max-width: 380px; }
+.etapa-cd-hero__bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,.65);
+  margin-bottom: 0.45rem;
+}
+.etapa-cd-hero__bar-pct {
+  font-weight: 700;
+  color: var(--accent);
+}
+.etapa-cd-hero__bar-track {
+  height: 8px;
+  background: rgba(255,255,255,.12);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.etapa-cd-hero__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #20e9ab);
+  border-radius: 100px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ring circular */
+.etapa-cd-hero__right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.etapa-cd-ring-svg { display: block; }
+.etapa-cd-ring-bg   { stroke: rgba(255,255,255,.12); }
+.etapa-cd-ring-fill { stroke: var(--accent); transition: stroke-dashoffset 1.4s ease; }
+.etapa-cd-ring-label {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center;
+  pointer-events: none;
+}
+.etapa-cd-ring-pct {
+  font-family: var(--ff-title);
+  font-size: 1.5rem; font-weight: 800;
+  color: #fff; line-height: 1;
+}
+.etapa-cd-ring-txt {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,.6);
+  margin-top: 2px;
+}
+
+
+/* ════════════════════════════════════════
+   4. PANEL PRINCIPAL (TABS + TABLA)
+════════════════════════════════════════ */
+.etapa-cd-panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-md);
+  overflow: hidden;
+}
+
+
+/* ════════════════════════════════════════
+   5. PESTAÑAS
+════════════════════════════════════════ */
+.etapa-cd-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0.75rem 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.etapa-cd-tabs::-webkit-scrollbar { display: none; }
+
+.etapa-cd-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  color: var(--tx-muted);
+  font-family: var(--ff-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--tr-fast);
+  position: relative;
+  bottom: -1px;
+}
+.etapa-cd-tab i { width: 15px; height: 15px; flex-shrink: 0; }
+
+.etapa-cd-tab:hover {
+  color: var(--tx-dark);
+  background: var(--bg);
+}
+
+.etapa-cd-tab--active {
+  background: var(--white);
+  color: var(--g-700);
+  font-weight: 600;
+  border-color: var(--border);
+  border-bottom-color: var(--white);
+}
+.etapa-cd-tab--active i { color: var(--g-600); }
+
+/* Burbuja con conteo */
+.etapa-cd-tab__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 0.4rem;
+  background: var(--g-50);
+  color: var(--g-700);
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.etapa-cd-tab--active .etapa-cd-tab__count {
+  background: var(--g-600);
+  color: #fff;
+}
+
+
+/* ════════════════════════════════════════
+   6. FILTROS
+════════════════════════════════════════ */
+.etapa-cd-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.etapa-cd-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 200px;
+  max-width: 340px;
+}
+.etapa-cd-search i {
+  position: absolute;
+  left: 0.75rem;
+  width: 16px; height: 16px;
+  color: var(--tx-muted);
+  pointer-events: none;
+}
+.etapa-cd-search input {
+  width: 100%;
+  height: 38px;
+  padding: 0 1rem 0 2.4rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-family: var(--ff-body);
+  font-size: 0.85rem;
+  color: var(--tx-dark);
+  outline: none;
+  transition: var(--tr);
+}
+.etapa-cd-search input::placeholder { color: var(--tx-muted); }
+.etapa-cd-search input:focus {
+  border-color: var(--g-500);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(13,107,82,.1);
+}
+
+.etapa-cd-filters__selects {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.etapa-cd-select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.etapa-cd-select-wrap > i {
+  position: absolute;
+  right: 0.7rem;
+  width: 14px; height: 14px;
+  color: var(--tx-muted);
+  pointer-events: none;
+}
+.etapa-cd-select {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 38px;
+  padding: 0 2.2rem 0 0.85rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-family: var(--ff-body);
+  font-size: 0.82rem;
+  color: var(--tx-medium);
+  outline: none;
+  cursor: pointer;
+  transition: var(--tr-fast);
+  white-space: nowrap;
+}
+.etapa-cd-select:focus {
+  border-color: var(--g-500);
+  box-shadow: 0 0 0 3px rgba(13,107,82,.1);
+}
+
+/* Botón subir en filtros */
+.etapa-cd-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0 1.1rem;
+  height: 38px;
+  background: var(--g-600);
+  color: #fff;
+  border-radius: var(--r-md);
+  font-family: var(--ff-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: auto;
+  box-shadow: 0 2px 8px rgba(13,107,82,.25);
+  transition: var(--tr);
+}
+.etapa-cd-upload-btn i { width: 16px; height: 16px; }
+.etapa-cd-upload-btn:hover {
+  background: var(--g-500);
+  box-shadow: 0 4px 16px rgba(13,107,82,.35);
+  transform: translateY(-1px);
+}
+
+
+/* ════════════════════════════════════════
+   7. TABPANEL
+════════════════════════════════════════ */
+.etapa-cd-tabpanel { padding: 0; }
+.etapa-cd-tabpanel--hidden { display: none; }
+
+
+/* ════════════════════════════════════════
+   8. TABLA DE DOCUMENTOS
+════════════════════════════════════════ */
+.etapa-cd-table-wrap { overflow-x: auto; }
+
+.etapa-cd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.855rem;
+}
+
+/* Cabecera */
+.etapa-cd-th {
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--tx-muted);
+  text-align: left;
+  white-space: nowrap;
+}
+.etapa-cd-th__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.etapa-cd-th--date    { min-width: 100px; }
+.etapa-cd-th--actions { min-width: 120px; text-align: center; }
+
+/* Filas */
+.etapa-cd-row {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s ease;
+}
+.etapa-cd-row:last-child { border-bottom: none; }
+.etapa-cd-row:hover { background: #f8fafc; }
+.etapa-cd-row:nth-child(even) { background: #fafbfc; }
+.etapa-cd-row:nth-child(even):hover { background: #f4f7fa; }
+
+.etapa-cd-td {
+  padding: 0.85rem 1rem;
+  color: var(--tx-dark);
+  vertical-align: middle;
+}
+.etapa-cd-td--date  { color: var(--tx-muted); font-size: 0.8rem; white-space: nowrap; }
+.etapa-cd-td--actions {
+  text-align: center;
+}
+
+/* Checkbox */
+.etapa-cd-checkbox {
+  width: 15px; height: 15px;
+  accent-color: var(--g-600);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Celda de archivo */
+.etapa-cd-file {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.etapa-cd-file__icon {
+  width: 36px; height: 36px;
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.etapa-cd-file__icon i { width: 18px; height: 18px; }
+
+.etapa-cd-file__icon--green  { background: var(--g-50);    color: var(--g-600); }
+.etapa-cd-file__icon--amber  { background: var(--amber-50); color: var(--amber-600); }
+.etapa-cd-file__icon--red    { background: var(--red-50);   color: var(--red-600); }
+.etapa-cd-file__icon--blue   { background: var(--blue-50);  color: var(--blue-600); }
+.etapa-cd-file__icon--gray   { background: #f1f5f9;          color: var(--tx-muted); }
+
+.etapa-cd-file__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.etapa-cd-file__name {
+  font-weight: 600;
+  color: var(--tx-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+.etapa-cd-file__meta {
+  font-size: 0.72rem;
+  color: var(--tx-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Badges de categoría */
+.etapa-cd-cat {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.etapa-cd-cat--green  { background: var(--g-50);    color: var(--g-700); }
+.etapa-cd-cat--amber  { background: var(--amber-50); color: var(--amber-600); }
+.etapa-cd-cat--red    { background: var(--red-50);   color: var(--red-600); }
+.etapa-cd-cat--blue   { background: var(--blue-50);  color: var(--blue-600); }
+.etapa-cd-cat--gray   { background: #f1f5f9;          color: var(--tx-muted); }
+
+/* Badges de estado */
+.etapa-cd-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-width: 1px;
+  border-style: solid;
+}
+.etapa-cd-status i { width: 12px; height: 12px; }
+
+.etapa-cd-status--green {
+  background: var(--g-50);
+  color: var(--g-700);
+  border-color: #b6e8d5;
+}
+.etapa-cd-status--amber {
+  background: var(--amber-50);
+  color: var(--amber-600);
+  border-color: #f0ca89;
+}
+.etapa-cd-status--red {
+  background: var(--red-50);
+  color: var(--red-600);
+  border-color: #f4bcbc;
+}
+.etapa-cd-status--blue {
+  background: var(--blue-50);
+  color: var(--blue-600);
+  border-color: #b5d4f4;
+}
+.etapa-cd-status--gray {
+  background: #f1f5f9;
+  color: var(--tx-muted);
+  border-color: var(--border);
+}
+
+/* Botones de acción */
+.etapa-cd-td--actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.etapa-cd-action-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--r-sm);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--tx-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: var(--tr-fast);
+  flex-shrink: 0;
+}
+.etapa-cd-action-btn i { width: 15px; height: 15px; }
+.etapa-cd-action-btn:hover {
+  background: var(--bg);
+  color: var(--tx-dark);
+  border-color: var(--border-md);
+}
+.etapa-cd-action-btn--primary {
+  background: var(--g-50);
+  color: var(--g-600);
+  border-color: #b6e8d5;
+}
+.etapa-cd-action-btn--primary:hover {
+  background: var(--g-600);
+  color: #fff;
+  border-color: var(--g-600);
+}
+.etapa-cd-action-btn--danger {
+  background: var(--red-50);
+  color: var(--red-600);
+  border-color: #f4bcbc;
+}
+.etapa-cd-action-btn--danger:hover {
+  background: var(--red-600);
+  color: #fff;
+  border-color: var(--red-600);
+}
+
+
+/* ════════════════════════════════════════
+   9. PAGINACIÓN
+════════════════════════════════════════ */
+.etapa-cd-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.etapa-cd-pagination__info {
+  font-size: 0.78rem;
+  color: var(--tx-muted);
+}
+.etapa-cd-pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.etapa-cd-page-btn {
+  min-width: 32px; height: 32px;
+  padding: 0 0.35rem;
+  border-radius: var(--r-sm);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--tx-medium);
+  font-family: var(--ff-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: var(--tr-fast);
+}
+.etapa-cd-page-btn i { width: 15px; height: 15px; }
+.etapa-cd-page-btn:hover:not(:disabled) {
+  background: var(--g-50);
+  border-color: var(--g-100);
+  color: var(--g-700);
+}
+.etapa-cd-page-btn--active {
+  background: var(--g-600);
+  border-color: var(--g-600);
+  color: #fff;
+  font-weight: 700;
+}
+.etapa-cd-page-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+
+/* ════════════════════════════════════════
+   10. ESTADO VACÍO
+════════════════════════════════════════ */
+.etapa-cd-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 0.75rem;
+  text-align: center;
+}
+.etapa-cd-empty-state__icon {
+  width: 60px; height: 60px;
+  background: var(--g-50);
+  border-radius: var(--r-lg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--g-600);
+  margin-bottom: 0.5rem;
+}
+.etapa-cd-empty-state__icon i { width: 28px; height: 28px; }
+.etapa-cd-empty-state__title {
+  font-family: var(--ff-title);
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--tx-dark);
+}
+.etapa-cd-empty-state__desc {
+  font-size: 0.85rem;
+  color: var(--tx-muted);
+  max-width: 360px;
+  line-height: 1.6;
+}
+
+
+/* ════════════════════════════════════════
+   11. FAB
+════════════════════════════════════════ */
+.etapa-cd-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 250;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--g-600), #006400);
+  color: #fff;
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(0,100,0,.4);
+  transition: var(--tr);
+}
+.etapa-cd-fab i { width: 24px; height: 24px; }
+.etapa-cd-fab:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 10px 32px rgba(0,100,0,.5);
+}
+.etapa-cd-fab:active {
+  transform: scale(0.97);
+}
+
+/* Tooltip del FAB */
+.etapa-cd-fab__tooltip {
+  position: absolute;
+  right: calc(100% + 0.65rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e293b;
+  color: #fff;
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.etapa-cd-fab__tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%; top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: #1e293b;
+}
+.etapa-cd-fab:hover .etapa-cd-fab__tooltip { opacity: 1; }
+
+
+/* ════════════════════════════════════════
+   12. MODAL SUBIR ARCHIVO
+════════════════════════════════════════ */
+.etapa-cd-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4,20,14,.5);
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  backdrop-filter: blur(3px);
+}
+.etapa-cd-modal-overlay--open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.etapa-cd-modal {
+  background: var(--white);
+  border-radius: var(--r-2xl);
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.18);
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+.etapa-cd-modal-overlay--open .etapa-cd-modal {
+  transform: translateY(0) scale(1);
+}
+
+.etapa-cd-modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.etapa-cd-modal__title {
+  font-family: var(--ff-title);
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--tx-dark);
+}
+.etapa-cd-modal__close {
+  width: 30px; height: 30px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--tx-muted); cursor: pointer;
+  transition: var(--tr-fast);
+}
+.etapa-cd-modal__close:hover { background: var(--red-50); color: var(--red-600); }
+.etapa-cd-modal__close i { width: 15px; height: 15px; }
+
+.etapa-cd-modal__body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.etapa-cd-modal__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* Dropzone */
+.etapa-cd-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 2rem 1rem;
+  border: 2px dashed var(--border-md);
+  border-radius: var(--r-lg);
+  background: var(--bg);
+  cursor: pointer;
+  text-align: center;
+  transition: var(--tr);
+}
+.etapa-cd-dropzone:hover {
+  border-color: var(--g-500);
+  background: var(--g-50);
+}
+.etapa-cd-dropzone__icon {
+  width: 48px; height: 48px;
+  background: var(--g-50);
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--g-600);
+  margin-bottom: 0.25rem;
+}
+.etapa-cd-dropzone__icon i { width: 24px; height: 24px; }
+.etapa-cd-dropzone__title {
+  font-size: 0.9rem; font-weight: 600;
+  color: var(--tx-dark);
+}
+.etapa-cd-dropzone__sub {
+  font-size: 0.8rem; color: var(--tx-muted);
+}
+.etapa-cd-dropzone__hint {
+  font-size: 0.72rem;
+  color: var(--tx-muted);
+  background: var(--border);
+  padding: 0.2rem 0.65rem;
+  border-radius: 100px;
+  margin-top: 0.25rem;
+}
+
+/* Campos del modal */
+.etapa-cd-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.etapa-cd-form-label {
+  font-size: 0.8rem; font-weight: 600;
+  color: var(--tx-medium);
+}
+.etapa-cd-form-input {
+  height: 40px;
+  padding: 0 0.85rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-family: var(--ff-body);
+  font-size: 0.85rem;
+  color: var(--tx-dark);
+  outline: none;
+  transition: var(--tr);
+}
+.etapa-cd-form-input::placeholder { color: var(--tx-muted); }
+.etapa-cd-form-input:focus {
+  border-color: var(--g-500);
+  box-shadow: 0 0 0 3px rgba(13,107,82,.1);
+  background: var(--white);
+}
+
+/* Botones del modal */
+.etapa-cd-btn-primary {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  height: 38px; padding: 0 1.1rem;
+  background: var(--g-600); color: #fff;
+  border-radius: var(--r-md);
+  font-family: var(--ff-body);
+  font-size: 0.85rem; font-weight: 600;
+  border: none; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(13,107,82,.25);
+  transition: var(--tr);
+}
+.etapa-cd-btn-primary i { width: 15px; height: 15px; }
+.etapa-cd-btn-primary:hover {
+  background: var(--g-500);
+  box-shadow: 0 4px 14px rgba(13,107,82,.35);
+  transform: translateY(-1px);
+}
+
+.etapa-cd-btn-ghost {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  height: 38px; padding: 0 1.1rem;
+  background: transparent;
+  color: var(--tx-medium);
+  border: 1px solid var(--border-md);
+  border-radius: var(--r-md);
+  font-family: var(--ff-body);
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer;
+  transition: var(--tr);
+}
+.etapa-cd-btn-ghost:hover {
+  background: var(--bg);
+  color: var(--tx-dark);
+}
+
+
+/* ════════════════════════════════════════
+   13. RESPONSIVE
+════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .etapa-cd-hero__left { max-width: 100%; }
+  .etapa-cd-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .etapa-cd-hero__right { align-self: center; }
+}
+
+@media (max-width: 768px) {
+  .etapa-header-search { display: none; }
+
+  .etapa-cd-hero {
+    padding: 1.5rem;
+  }
+  .etapa-cd-hero__title { font-size: 1.35rem; }
+  .etapa-cd-hero__stats { flex-wrap: wrap; gap: 0.75rem; }
+  .etapa-cd-stat__divider { display: none; }
+  .etapa-cd-stat { padding: 0; }
+
+  .etapa-cd-filters {
+    flex-wrap: wrap;
+  }
+  .etapa-cd-search { max-width: 100%; }
+  .etapa-cd-upload-btn { width: 100%; justify-content: center; margin-left: 0; }
+  .etapa-cd-filters__selects { width: 100%; }
+  .etapa-cd-select { flex: 1; }
+
+  .etapa-cd-file__name { max-width: 160px; }
+
+  .etapa-cd-fab { bottom: 1.25rem; right: 1.25rem; width: 50px; height: 50px; }
+  .etapa-cd-fab i { width: 22px; height: 22px; }
+  .etapa-cd-fab__tooltip { display: none; }
+}
+
+@media (max-width: 520px) {
+  .etapa-cd-th--date,
+  .etapa-cd-td--date { display: none; }
+  .etapa-cd-cat { display: none; }
+}

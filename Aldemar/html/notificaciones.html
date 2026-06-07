@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notificaciones — EtapaPro SENA</title>
+  <meta name="description" content="Centro de notificaciones del aprendiz - EtapaPro SENA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+    <div class="sidebar-brand">
+      <div class="logo-container-sidebar">
+        <i data-lucide="graduation-cap" class="logo-icon-sidebar"></i>
+      </div>
+      <div class="logo-text-sidebar">
+        <span class="logo-title-sidebar">EtapaPro</span>
+        <span class="logo-subtitle-sidebar">SENA · Sistema</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu" aria-label="Menú principal">
+      <a href="dashboard-aprendiz.html" class="menu-item">
+        <i data-lucide="layout-dashboard"></i><span>Inicio</span>
+      </a>
+      <a href="mis-bitacoras.html" class="menu-item">
+        <i data-lucide="file-check-2"></i><span>Mis Bitácoras</span>
+        <span class="menu-badge">4/6</span>
+      </a>
+      <a href="carpeta-digital.html" class="menu-item">
+        <i data-lucide="folder-open"></i><span>Carpeta Digital</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="calendar"></i><span>Seguimientos</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i data-lucide="building-2"></i><span>Mi Empresa</span>
+      </a>
+      <a href="notificaciones.html" class="menu-item active">
+        <i data-lucide="bell"></i><span>Notificaciones</span>
+        <span class="menu-badge">3</span>
+      </a>
+      <a href="chatbot.html" class="menu-item">
+        <i data-lucide="message-square"></i><span>Asistente Virtual</span>
+      </a>
+      <a href="perfil-usuario.html" class="menu-item">
+        <i data-lucide="user-circle"></i><span>Mi Perfil</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-profile sidebar-footer-profile">
+        <div class="avatar-display avatar-display--sidebar">CG</div>
+        <div class="user-info user-info--sidebar">
+          <span class="user-name-display user-name--sidebar">Carlos Guerrero</span>
+          <span class="user-role-display user-role--sidebar">Aprendiz ADSO</span>
+        </div>
+      </div>
+      <a href="#" class="menu-item logout" onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')">
+        <i data-lucide="log-out"></i><span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+
+    <!-- HEADER -->
+    <header class="main-header">
+      <div class="header-left">
+        <h1 class="header-title">Notificaciones</h1>
+        <p class="header-subtitle">Alertas y avisos de tu proceso formativo</p>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" aria-label="Notificaciones" onclick="window.location.href='notificaciones.html'">
+          <i data-lucide="bell"></i>
+          <span class="notif-badge-dot"></span>
+        </button>
+        <div class="user-profile">
+          <div class="user-info">
+            <span class="user-name-display">Carlos A. Guerrero</span>
+            <span class="user-role-display">Aprendiz ADSO</span>
+          </div>
+          <div class="avatar-display">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+
+      <!-- Page header -->
+      <div class="etapa-page-header">
+        <div class="etapa-page-header-icon">
+          <i data-lucide="bell"></i>
+        </div>
+        <div class="etapa-page-header-text">
+          <h2>Centro de Notificaciones</h2>
+          <p>Tienes <strong>3 notificaciones sin leer</strong> de tu proceso de etapa productiva</p>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="etapa-notif-toolbar">
+        <span class="etapa-notif-count">Mostrando 8 notificaciones · 3 sin leer</span>
+        <div class="etapa-notif-actions">
+          <button class="etapa-btn-mark-all" onclick="markAllRead()">
+            <i data-lucide="check-check"></i>
+            Marcar todas como leídas
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="etapa-notif-filter-bar" role="group" aria-label="Filtros de notificaciones">
+        <button class="etapa-notif-filter etapa-notif-filter--active" onclick="filterNotif(this, 'all')">Todas</button>
+        <button class="etapa-notif-filter" onclick="filterNotif(this, 'unread')">Sin leer (3)</button>
+        <button class="etapa-notif-filter" onclick="filterNotif(this, 'success')">Aprobaciones</button>
+        <button class="etapa-notif-filter" onclick="filterNotif(this, 'warning')">Advertencias</button>
+        <button class="etapa-notif-filter" onclick="filterNotif(this, 'info')">Informativas</button>
+      </div>
+
+      <!-- Notification list -->
+      <div class="etapa-notif-list" id="notifList">
+
+        <!-- GROUP: HOY -->
+        <div class="etapa-notif-group-date">Hoy — Sábado, 7 de Junio 2026</div>
+
+        <!-- Item 1: unread + green -->
+        <div class="etapa-notif-item etapa-notif-item--unread" data-type="success" onclick="markRead(this)">
+          <div class="etapa-notif-icon etapa-notif-icon--green">
+            <i data-lucide="check-circle-2"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">Tu <strong>Bitácora N° 4</strong> fue <strong>aprobada</strong> por la instructora Ing. María Rodríguez. ¡Excelente trabajo!</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Hace 30 minutos
+            </div>
+          </div>
+          <div class="etapa-notif-dot"></div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Marcar como leída" aria-label="Marcar como leída">
+              <i data-lucide="check"></i>
+            </button>
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 2: unread + amber -->
+        <div class="etapa-notif-item etapa-notif-item--unread" data-type="warning" onclick="markRead(this)">
+          <div class="etapa-notif-icon etapa-notif-icon--amber">
+            <i data-lucide="file-warning"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">Tu <strong>Bitácora N° 5</strong> tiene vencimiento en <strong>3 días</strong> (10 de Junio). Realiza tu entrega antes de la fecha límite.</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Hace 2 horas
+            </div>
+          </div>
+          <div class="etapa-notif-dot"></div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Marcar como leída" aria-label="Marcar como leída">
+              <i data-lucide="check"></i>
+            </button>
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 3: unread + red -->
+        <div class="etapa-notif-item etapa-notif-item--unread" data-type="warning" onclick="markRead(this)">
+          <div class="etapa-notif-icon etapa-notif-icon--red">
+            <i data-lucide="alert-circle"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">El <strong>Aval de la Empresa</strong> en tu carpeta digital está <strong>próximo a vencer</strong>. Actualiza el documento para evitar contratiempos.</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Hace 4 horas
+            </div>
+          </div>
+          <div class="etapa-notif-dot"></div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Marcar como leída" aria-label="Marcar como leída">
+              <i data-lucide="check"></i>
+            </button>
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- GROUP: AYER -->
+        <div class="etapa-notif-group-date">Ayer — Viernes, 6 de Junio 2026</div>
+
+        <!-- Item 4: read + blue -->
+        <div class="etapa-notif-item" data-type="info">
+          <div class="etapa-notif-icon etapa-notif-icon--blue">
+            <i data-lucide="calendar-check"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">Tu próximo <strong>seguimiento presencial</strong> está programado para el <strong>Jueves 12 de Junio</strong> a las 10:00 AM. Coordina con tu instructor.</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Ayer, 03:00 PM
+            </div>
+          </div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 5: read + green -->
+        <div class="etapa-notif-item" data-type="success">
+          <div class="etapa-notif-icon etapa-notif-icon--green">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">Tu <strong>Contrato de Aprendizaje</strong> fue verificado y aprobado por coordinación académica. Tu proceso está activo.</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Ayer, 10:20 AM
+            </div>
+          </div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- GROUP: ESTA SEMANA -->
+        <div class="etapa-notif-group-date">Esta semana</div>
+
+        <!-- Item 6: read + purple -->
+        <div class="etapa-notif-item" data-type="info">
+          <div class="etapa-notif-icon etapa-notif-icon--purple">
+            <i data-lucide="bot"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">El <strong>Asistente Virtual EtapaPro</strong> tiene nuevas respuestas sobre formatos de bitácoras. Consúltalo para resolver tus dudas.</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Miércoles, 4 de Jun, 11:00 AM
+            </div>
+          </div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 7: read + green -->
+        <div class="etapa-notif-item" data-type="success">
+          <div class="etapa-notif-icon etapa-notif-icon--green">
+            <i data-lucide="check-circle-2"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">Tu <strong>Bitácora N° 3</strong> fue aprobada con calificación <strong>Excelente</strong> por la instructora. Sigue así.</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Martes, 3 de Jun, 04:15 PM
+            </div>
+          </div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 8: read + blue -->
+        <div class="etapa-notif-item" data-type="info">
+          <div class="etapa-notif-icon etapa-notif-icon--blue">
+            <i data-lucide="info"></i>
+          </div>
+          <div class="etapa-notif-body">
+            <p class="etapa-notif-msg">El sistema EtapaPro fue actualizado a la versión 1.2. Revisa las <strong>nuevas funcionalidades</strong> disponibles en el panel de inicio.</p>
+            <div class="etapa-notif-time">
+              <i data-lucide="clock"></i>
+              Lunes, 2 de Jun, 09:00 AM
+            </div>
+          </div>
+          <div class="etapa-notif-item-actions">
+            <button class="etapa-notif-action-btn" title="Eliminar" aria-label="Eliminar notificación">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /etapa-notif-list -->
+
+    </main>
+
+    <footer class="dashboard-footer">
+      <span>EtapaPro · Sistema de Seguimiento de Aprendices · SENA Regional Cauca · v1.0</span>
+    </footer>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function markRead(item) {
+      item.classList.remove('etapa-notif-item--unread');
+      const dot = item.querySelector('.etapa-notif-dot');
+      if (dot) dot.remove();
+      updateCount();
+    }
+
+    function markAllRead() {
+      document.querySelectorAll('.etapa-notif-item--unread').forEach(item => markRead(item));
+    }
+
+    function updateCount() {
+      const unread = document.querySelectorAll('.etapa-notif-item--unread').length;
+      document.querySelector('.etapa-notif-count').textContent =
+        'Mostrando 8 notificaciones · ' + unread + ' sin leer';
+    }
+
+    function filterNotif(btn, type) {
+      document.querySelectorAll('.etapa-notif-filter').forEach(b => b.classList.remove('etapa-notif-filter--active'));
+      btn.classList.add('etapa-notif-filter--active');
+
+      document.querySelectorAll('.etapa-notif-item').forEach(item => {
+        if (type === 'all') {
+          item.style.display = '';
+        } else if (type === 'unread') {
+          item.style.display = item.classList.contains('etapa-notif-item--unread') ? '' : 'none';
+        } else {
+          item.style.display = item.dataset.type === type ? '' : 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

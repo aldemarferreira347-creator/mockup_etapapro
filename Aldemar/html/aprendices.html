@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — SENA Seguimiento</title>
+    <link rel="stylesheet" href="../css/aprendices.css">
+    <style>
+        /* ── Layout ── */
+        .db-layout {
+            display: grid;
+            grid-template-columns: var(--sidebar-w) 1fr;
+            min-height: calc(100vh - var(--topbar-h));
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            background: var(--white);
+            border-right: 1px solid var(--gray-100);
+            padding: 18px 12px;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: var(--topbar-h);
+            height: calc(100vh - var(--topbar-h));
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 22px;
+        }
+
+        .sidebar-section-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            padding: 0 10px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: var(--r-md);
+            font-size: 13.5px;
+            color: var(--gray-600);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        .sidebar-item:hover {
+            background: var(--gray-50);
+            color: var(--gray-800);
+        }
+
+        .sidebar-item.active {
+            background: var(--green-50);
+            color: var(--green-800);
+            font-weight: 500;
+        }
+
+        .sidebar-item svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            flex-shrink: 0;
+        }
+
+        .sidebar-badge {
+            margin-left: auto;
+            background: var(--green-400);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 100px;
+            padding: 1px 7px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+        }
+
+        .sidebar-user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-800);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-user-role {
+            font-size: 11px;
+            color: var(--gray-400);
+        }
+
+        /* ── Main ── */
+        .db-main {
+            padding: 28px;
+            min-width: 0;
+        }
+
+        .db-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .db-greeting {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .db-date {
+            font-size: 13px;
+            color: var(--gray-400);
+            margin-top: 2px;
+        }
+
+        .db-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ── Métricas ── */
+        .db-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--white);
+            border-radius: var(--r-lg);
+            border: 1px solid var(--gray-100);
+            padding: 18px 20px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+
+        .metric-val {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--gray-800);
+            line-height: 1.1;
+        }
+
+        .metric-delta {
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .metric-delta.up {
+            color: var(--green-400);
+        }
+
+        .metric-delta.down {
+            color: var(--red-400);
+        }
+
+        /* ── Charts ── */
+        .db-chart-area {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 120px;
+            padding: 0 4px;
+        }
+
+        .bar-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .bar {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            background: var(--green-200);
+            transition: opacity var(--transition);
+        }
+
+        .bar:hover {
+            opacity: 0.7;
+        }
+
+        .bar.hl {
+            background: var(--green-600);
+        }
+
+        .bar-lbl {
+            font-size: 11px;
+            color: var(--gray-400);
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .chart-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* Donut */
+        .donut {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 16px;
+        }
+
+        .donut svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .donut-val {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        .legend-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .legend-row span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-600);
+        }
+
+        .legend-row span:last-child {
+            font-weight: 600;
+        }
+
+        /* Table */
+        .td-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .db-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .db-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .db-chart-area {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <div class="topbar-brand-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3L4 9v12h16V9L12 3z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <span class="topbar-brand-name">SENA</span>
+        </div>
+        <nav class="topbar-nav">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="componentes.html">Componentes</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="notificaciones.html">Notificaciones</a>
+            <a href="chatbot.html">Chatbot</a>
+            <a href="responsive.html">Móvil</a>
+        </nav>
+        <div class="topbar-right">
+            <div class="icon-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+                <div class="notif-dot"></div>
+            </div>
+            <div class="avatar avatar-sm avatar-green" style="cursor:pointer">MR</div>
+        </div>
+    </header>
+
+    <!-- LAYOUT -->
+    <div class="db-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">Principal</div>
+                <button class="sidebar-item active">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg>
+                    Dashboard
+                </button>
+                <button class="sidebar-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                    </svg>
+                    Aprendices
+                    <span class="sidebar-badge">142</span>
+                </button>
+                <button class="sidebar-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    Documentos
+                </button>
+                <button class="sidebar-item">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    Seguimientos
+                    <span class="sidebar-badge">3</span>
+                </button>
+                <button class="sidebar-item">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                    Reportes
+                </button>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">Sistema</div>
+                <button class="sidebar-item">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+                    </svg>
+                    Configuración
+                </button>
+                <button class="sidebar-item">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 8v4m0 4h.01" />
+                    </svg>
+                    Ayuda
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="avatar avatar-sm avatar-green">MR</div>
+                    <div>
+                        <div class="sidebar-user-name">María Rodríguez</div>
+                        <div class="sidebar-user-role">Instructora</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="db-main">
+            <div class="db-topbar">
+                <div>
+                    <div class="db-greeting">Buenos días, María 👋</div>
+                    <div class="db-date">Viernes, 6 de junio de 2025</div>
+                </div>
+                <div class="db-actions">
+                    <div class="icon-btn">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <div class="notif-dot"></div>
+                    </div>
+                    <div class="icon-btn">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Nuevo seguimiento
+                    </button>
+                </div>
+            </div>
+
+            <!-- MÉTRICAS -->
+            <div class="db-metrics">
+                <div class="metric-card">
+                    <div class="metric-label">Aprendices activos</div>
+                    <div class="metric-val">142</div>
+                    <div class="metric-delta up">↑ 8 este mes</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Seguimientos pendientes</div>
+                    <div class="metric-val">23</div>
+                    <div class="metric-delta down">↓ 5 por vencer</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Documentos revisados</div>
+                    <div class="metric-val">87</div>
+                    <div class="metric-delta up">↑ 12% vs mes anterior</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Tasa de aprobación</div>
+                    <div class="metric-val">94%</div>
+                    <div class="metric-delta up">↑ 2 puntos</div>
+                </div>
+            </div>
+
+            <!-- GRÁFICAS -->
+            <div class="db-chart-area">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Seguimientos por mes</div>
+                            <div class="card-sub">Último semestre · 2025</div>
+                        </div>
+                        <span class="badge badge-green">2025</span>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-wrap">
+                            <div class="bar" style="height:48%"></div>
+                            <div class="bar-lbl">Ene</div>
+                        </div>
+                        <div class="bar-wrap">
+                            <div class="bar" style="height:63%"></div>
+                            <div class="bar-lbl">Feb</div>
+                        </div>
+                        <div class="bar-wrap">
+                            <div class="bar" style="height:55%"></div>
+                            <div class="bar-lbl">Mar</div>
+                        </div>
+                        <div class="bar-wrap">
+                            <div class="bar" style="height:80%"></div>
+                            <div class="bar-lbl">Abr</div>
+                        </div>
+                        <div class="bar-wrap">
+                            <div class="bar" style="height:92%"></div>
+                            <div class="bar-lbl">May</div>
+                        </div>
+                        <div class="bar-wrap">
+                            <div class="bar hl" style="height:74%"></div>
+                            <div class="bar-lbl">Jun</div>
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="chart-legend-item">
+                            <div class="legend-dot" style="background:var(--green-200)"></div>Meses anteriores
+                        </div>
+                        <div class="chart-legend-item">
+                            <div class="legend-dot" style="background:var(--green-600)"></div>Mes actual
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Estado de fichas</div>
+                            <div class="card-sub">Total 142</div>
+                        </div>
+                    </div>
+                    <div class="donut">
+                        <svg viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--gray-100)" stroke-width="4" />
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--green-400)" stroke-width="4"
+                                stroke-dasharray="66 34" stroke-linecap="round" />
+                        </svg>
+                        <div class="donut-val">66%</div>
+                    </div>
+                    <div class="legend-row"><span><span
+                                style="width:10px;height:10px;border-radius:50%;background:var(--green-400);display:inline-block;margin-right:4px"></span>Al
+                            día</span><span>94</span></div>
+                    <div class="legend-row"><span><span
+                                style="width:10px;height:10px;border-radius:50%;background:var(--amber-400);display:inline-block;margin-right:4px"></span>En
+                            proceso</span><span>33</span></div>
+                    <div class="legend-row"><span><span
+                                style="width:10px;height:10px;border-radius:50%;background:var(--red-400);display:inline-block;margin-right:4px"></span>Pendiente</span><span>15</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLA -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Aprendices recientes</div>
+                        <div class="card-sub">Últimas actualizaciones</div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm">Ver todos</button>
+                </div>
+                <div class="table-wrap">
+                    <table class="ds-table">
+                        <thead>
+                            <tr>
+                                <th>Aprendiz</th>
+                                <th>Ficha</th>
+                                <th>Empresa</th>
+                                <th>Estado</th>
+                                <th>Próx. seguimiento</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="td-user">
+                                        <div class="avatar avatar-sm avatar-green">JM</div>Juan Martínez
+                                    </div>
+                                </td>
+                                <td style="font-family:var(--mono);font-size:13px">2721345</td>
+                                <td>Comfacauca</td>
+                                <td><span class="badge badge-green badge-dot">Al día</span></td>
+                                <td style="color:var(--gray-400);font-size:13px">10 jun 2025</td>
+                                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="td-user">
+                                        <div class="avatar avatar-sm avatar-amber">LP</div>Laura Peña
+                                    </div>
+                                </td>
+                                <td style="font-family:var(--mono);font-size:13px">2731098</td>
+                                <td>Alcaldía Popayán</td>
+                                <td><span class="badge badge-amber badge-dot">Pendiente</span></td>
+                                <td style="color:var(--red-400);font-size:13px;font-weight:500">Vence mañana</td>
+                                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="td-user">
+                                        <div class="avatar avatar-sm avatar-blue">CR</div>Carlos Ruiz
+                                    </div>
+                                </td>
+                                <td style="font-family:var(--mono);font-size:13px">2721345</td>
+                                <td>Banco Caja Social</td>
+                                <td><span class="badge badge-green badge-dot">Al día</span></td>
+                                <td style="color:var(--gray-400);font-size:13px">15 jun 2025</td>
+                                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="td-user">
+                                        <div class="avatar avatar-sm avatar-red">SM</div>Sofía Morales
+                                    </div>
+                                </td>
+                                <td style="font-family:var(--mono);font-size:13px">2740221</td>
+                                <td>Hospital Universitario</td>
+                                <td><span class="badge badge-red badge-dot">Alerta</span></td>
+                                <td style="color:var(--red-400);font-size:13px;font-weight:500">Vencido</td>
+                                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
