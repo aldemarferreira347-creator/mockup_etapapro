@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENA - Etapa Productiva</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container" style="display: flex; height: 100vh; overflow: hidden;">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">🎓</div>
+          <div>
+            <div class="sidebar-logo-title">SENA</div>
+            <div class="sidebar-logo-subtitle">Etapa Productiva</div>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-nav-item active" data-screen="dashboard">
+          <span class="sidebar-nav-item-icon">⊞</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="sidebar-nav-item" data-screen="calendario">
+          <span class="sidebar-nav-item-icon">📅</span>
+          <span>Calendario</span>
+        </button>
+        <button class="sidebar-nav-item" data-screen="citas">
+          <span class="sidebar-nav-item-icon">🕐</span>
+          <span>Programar Cita</span>
+        </button>
+        <button class="sidebar-nav-item" data-screen="solicitudes">
+          <span class="sidebar-nav-item-icon">📋</span>
+          <span>Solicitudes</span>
+        </button>
+        <button class="sidebar-nav-item" data-screen="evaluacion">
+          <span class="sidebar-nav-item-icon">📊</span>
+          <span>Evaluación</span>
+        </button>
+        <button class="sidebar-nav-item" data-screen="reportes">
+          <span class="sidebar-nav-item-icon">📈</span>
+          <span>Reportes</span>
+        </button>
+        <button class="sidebar-nav-item" data-screen="usuarios">
+          <span class="sidebar-nav-item-icon">👥</span>
+          <span>Usuarios</span>
+        </button>
+        <button class="sidebar-nav-item" data-screen="roles">
+          <span class="sidebar-nav-item-icon">🔐</span>
+          <span>Roles y Permisos</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar">JA</div>
+          <div>
+            <div class="sidebar-user-name">Jaime Méndez</div>
+            <div class="sidebar-user-role">Administrador</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div style="flex: 1; overflow: auto;">
+      
+      <!-- DASHBOARD SCREEN -->
+      <div id="dashboard" class="screen active">
+        <div class="navbar">
+          <div class="navbar-title">Dashboard Principal</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <!-- KPIs -->
+          <div class="grid-6" style="margin-bottom: 24px;">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <div class="kpi-icon" style="background: var(--primary)1A;">📅</div>
+                <span class="kpi-delta positive">▲ 8%</span>
+              </div>
+              <div class="kpi-value">42</div>
+              <div class="kpi-label">Seguimientos Programados</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <div class="kpi-icon" style="background: var(--success)1A;">✅</div>
+                <span class="kpi-delta positive">▲ 12%</span>
+              </div>
+              <div class="kpi-value">138</div>
+              <div class="kpi-label">Seguimientos Realizados</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <div class="kpi-icon" style="background: var(--info)1A;">🎓</div>
+                <span class="kpi-delta positive">▲ 5%</span>
+              </div>
+              <div class="kpi-value">213</div>
+              <div class="kpi-label">Aprendices Activos</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <div class="kpi-icon" style="background: var(--warning)1A;">👨‍🏫</div>
+                <span class="kpi-delta negative">▼ 2%</span>
+              </div>
+              <div class="kpi-value">18</div>
+              <div class="kpi-label">Instructores Activos</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <div class="kpi-icon" style="background: var(--danger)1A;">📝</div>
+                <span class="kpi-delta negative">▼ 4%</span>
+              </div>
+              <div class="kpi-value">27</div>
+              <div class="kpi-label">Evaluaciones Pendientes</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <div class="kpi-icon" style="background: #8B5CF61A;">📊</div>
+                <span class="kpi-delta positive">▲ 15%</span>
+              </div>
+              <div class="kpi-value">64</div>
+              <div class="kpi-label">Reportes Generados</div>
+            </div>
+          </div>
+          <div class="grid-1-2" style="margin-bottom: 16px;">
+            <!-- Chart seguimientos -->
+            <div class="card">
+              <div class="card-title">Seguimientos por Mes</div>
+              <div style="display: flex; align-items: flex-end; gap: 8px; height: 100px;">
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 45.6px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">E</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 62.4px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">F</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 54px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">M</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 73.2px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">A</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 57.6px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">M</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 84px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">J</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 66px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">J</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 75.6px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">A</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 86.4px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">S</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 69.6px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">O</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 78px; background: var(--primary-xlight); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">N</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 100%; height: 96px; background: var(--primary); border-radius: 4px 4px 0 0; border: 1px solid var(--primary-light);"></div>
+                  <div style="font-size: 9px; color: var(--muted);">D</div>
+                </div>
+              </div>
+            </div>
+            <!-- Donut estado aprendices -->
+            <div class="card">
+              <div class="card-title">Estado de Aprendices</div>
+              <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="var(--border)" stroke-width="14" />
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="var(--primary)" stroke-width="14" stroke-dasharray="150 89" stroke-linecap="round" transform="rotate(-90 50 50)" />
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="var(--warning)" stroke-width="14" stroke-dasharray="60 179" stroke-linecap="round" transform="rotate(80 50 50)" />
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="var(--danger)" stroke-width="14" stroke-dasharray="29 210" stroke-linecap="round" transform="rotate(195 50 50)" />
+                  <text x="50" y="54" text-anchor="middle" font-size="14" font-weight="700" fill="var(--dark)">213</text>
+                </svg>
+              </div>
+              <div class="donut-legend-item">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <div class="donut-legend-color" style="background: var(--primary);"></div>
+                  <span style="font-size: 12px; color: var(--mid);">En proceso</span>
+                </div>
+                <span style="font-size: 12px; font-weight: 600;">62%</span>
+              </div>
+              <div class="donut-legend-item">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <div class="donut-legend-color" style="background: var(--warning);"></div>
+                  <span style="font-size: 12px; color: var(--mid);">Por iniciar</span>
+                </div>
+                <span style="font-size: 12px; font-weight: 600;">25%</span>
+              </div>
+              <div class="donut-legend-item">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <div class="donut-legend-color" style="background: var(--danger);"></div>
+                  <span style="font-size: 12px; color: var(--mid);">Atrasados</span>
+                </div>
+                <span style="font-size: 12px; font-weight: 600;">13%</span>
+              </div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <!-- Próximas citas -->
+            <div class="card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div class="card-title" style="margin-bottom: 0;">Próximas Citas Hoy</div>
+                <button class="btn btn-outline btn-small">Ver todas</button>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border);">
+                <div style="width: 48px; text-align: center; background: var(--primary-xlight); border-radius: 8px; padding: 4px 0; font-size: 11px; font-weight: 700; color: var(--primary);">08:00</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 13px; font-weight: 600;">María López</div>
+                  <div style="font-size: 11px; color: var(--muted);">Ing. Ríos</div>
+                </div>
+                <span class="badge" style="color: var(--info); background: #E8F2FD;">Virtual</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border);">
+                <div style="width: 48px; text-align: center; background: var(--primary-xlight); border-radius: 8px; padding: 4px 0; font-size: 11px; font-weight: 700; color: var(--primary);">10:30</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 13px; font-weight: 600;">Carlos Ruiz</div>
+                  <div style="font-size: 11px; color: var(--muted);">Ing. Mora</div>
+                </div>
+                <span class="badge" style="color: var(--success); background: #E8F8EF;">Presencial</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border);">
+                <div style="width: 48px; text-align: center; background: var(--primary-xlight); border-radius: 8px; padding: 4px 0; font-size: 11px; font-weight: 700; color: var(--primary);">14:00</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 13px; font-weight: 600;">Ana Torres</div>
+                  <div style="font-size: 11px; color: var(--muted);">Ing. Ríos</div>
+                </div>
+                <span class="badge" style="color: var(--info); background: #E8F2FD;">Virtual</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0;">
+                <div style="width: 48px; text-align: center; background: var(--primary-xlight); border-radius: 8px; padding: 4px 0; font-size: 11px; font-weight: 700; color: var(--primary);">15:30</div>
+                <div style="flex: 1;">
+                  <div style="font-size: 13px; font-weight: 600;">Luis Pérez</div>
+                  <div style="font-size: 11px; color: var(--muted);">Ing. Vega</div>
+                </div>
+                <span class="badge" style="color: var(--success); background: #E8F8EF;">Presencial</span>
+              </div>
+            </div>
+            <!-- Actividad reciente -->
+            <div class="card">
+              <div class="card-title">Actividad Reciente</div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: var(--success)1A;">✅</div>
+                <div>
+                  <div class="activity-text">Seguimiento completado — Juan Mora</div>
+                  <div class="activity-time">hace 10 min</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: var(--info)1A;">📝</div>
+                <div>
+                  <div class="activity-text">Nueva solicitud — Laura García</div>
+                  <div class="activity-time">hace 25 min</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: var(--warning)1A;">⚠️</div>
+                <div>
+                  <div class="activity-text">Evaluación pendiente — Pedro Villa</div>
+                  <div class="activity-time">hace 1h</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: var(--primary)1A;">👤</div>
+                <div>
+                  <div class="activity-text">Usuario creado — Ing. Salcedo</div>
+                  <div class="activity-time">hace 2h</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background: #8B5CF61A;">📊</div>
+                <div>
+                  <div class="activity-text">Reporte generado — Junio 2026</div>
+                  <div class="activity-time">hace 3h</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALENDARIO SCREEN -->
+      <div id="calendario" class="screen">
+        <div class="navbar">
+          <div class="navbar-title">Calendario de Seguimientos</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; background: var(--bg); min-height: calc(100vh - 56px);">
+          <div style="flex: 1; padding: 20px;">
+            <div class="calendar-controls">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="btn btn-ghost btn-small">◀</button>
+                <span style="font-weight: 700; font-size: 15px;">Junio 2026</span>
+                <button class="btn btn-ghost btn-small">▶</button>
+                <button class="btn btn-ghost btn-small">Hoy</button>
+              </div>
+              <div class="calendar-view-toggle">
+                <button class="calendar-view-btn">Día</button>
+                <button class="calendar-view-btn active">Semana</button>
+                <button class="calendar-view-btn">Mes</button>
+              </div>
+              <button class="btn btn-primary">+ Nuevo Seguimiento</button>
+            </div>
+            <div class="calendar-grid">
+              <div class="calendar-header">
+                <div></div>
+                <div class="calendar-day-header">
+                  <div class="calendar-day-name">Lun</div>
+                  <div class="calendar-day-number">2</div>
+                </div>
+                <div class="calendar-day-header">
+                  <div class="calendar-day-name">Mar</div>
+                  <div class="calendar-day-number">3</div>
+                </div>
+                <div class="calendar-day-header today">
+                  <div class="calendar-day-name">Mié</div>
+                  <div class="calendar-day-number today">4</div>
+                </div>
+                <div class="calendar-day-header">
+                  <div class="calendar-day-name">Jue</div>
+                  <div class="calendar-day-number">5</div>
+                </div>
+                <div class="calendar-day-header">
+                  <div class="calendar-day-name">Vie</div>
+                  <div class="calendar-day-number">6</div>
+                </div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">08:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today">
+                  <div class="calendar-event" style="height: 44px; background: var(--warning);">
+                    <div>Seguimiento — Carlos R.</div>
+                    <div style="font-size: 10px; opacity: 0.85;">Pendiente</div>
+                  </div>
+                </div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">09:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today">
+                  <div class="calendar-event" style="height: 44px; background: var(--primary);">
+                    <div>Seguimiento — Ana T.</div>
+                    <div style="font-size: 10px; opacity: 0.85;">Confirmada</div>
+                  </div>
+                </div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">10:00</div>
+                <div class="calendar-cell">
+                  <div class="calendar-event" style="height: 44px; background: var(--primary);">
+                    <div>Seguimiento — María L.</div>
+                    <div style="font-size: 10px; opacity: 0.85;">Confirmada</div>
+                  </div>
+                </div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">11:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">12:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">13:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">14:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell">
+                  <div class="calendar-event" style="height: 44px; background: var(--success);">
+                    <div>Seguimiento — Luis P.</div>
+                    <div style="font-size: 10px; opacity: 0.85;">Completada</div>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">15:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell">
+                  <div class="calendar-event" style="height: 44px; background: #8B5CF6;">
+                    <div>Evaluación — Pedro V.</div>
+                    <div style="font-size: 10px; opacity: 0.85;">Confirmada</div>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-row">
+                <div class="calendar-time">16:00</div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell today"></div>
+                <div class="calendar-cell"></div>
+                <div class="calendar-cell"></div>
+              </div>
+            </div>
+          </div>
+          <div style="width: 240px; background: var(--white); border-left: 1px solid var(--border); padding: 16px;">
+            <div style="font-weight: 600; font-size: 13px; margin-bottom: 12px;">Instructor Seleccionado</div>
+            <div style="text-align: center; padding: 16px; background: var(--bg); border-radius: 10px; margin-bottom: 16px;">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 20px; font-weight: 700; margin: 0 auto 8px;">JR</div>
+              <div style="font-weight: 600; font-size: 13px;">Ing. Juan Ríos</div>
+              <div style="font-size: 11px; color: var(--muted);">Instructor Principal</div>
+              <span class="badge" style="color: var(--success); background: #E8F8EF; margin-top: 8px;">Disponible</span>
+            </div>
+            <div style="font-weight: 600; font-size: 12px; margin-bottom: 8px;">Horarios Disponibles</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: var(--bg); border-radius: 8px; margin-bottom: 6px;">
+              <span style="font-size: 12px;">⏰ 08:00–10:00</span>
+              <span class="badge" style="color: var(--success); background: #E8F8EF;">Libre</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: var(--bg); border-radius: 8px; margin-bottom: 6px;">
+              <span style="font-size: 12px;">⏰ 11:00–13:00</span>
+              <span class="badge" style="color: var(--success); background: #E8F8EF;">Libre</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: var(--bg); border-radius: 8px; margin-bottom: 6px;">
+              <span style="font-size: 12px;">⏰ 14:00–16:00</span>
+              <span class="badge" style="color: var(--success); background: #E8F8EF;">Libre</span>
+            </div>
+            <div style="margin-top: 16px;">
+              <div style="font-weight: 600; font-size: 12px; margin-bottom: 8px;">Leyenda</div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <div style="width: 12px; height: 12px; border-radius: 3px; background: var(--primary);"></div>
+                <span style="font-size: 12px;">Confirmada</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <div style="width: 12px; height: 12px; border-radius: 3px; background: var(--warning);"></div>
+                <span style="font-size: 12px;">Pendiente</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <div style="width: 12px; height: 12px; border-radius: 3px; background: var(--success);"></div>
+                <span style="font-size: 12px;">Completada</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 12px; height: 12px; border-radius: 3px; background: #8B5CF6;"></div>
+                <span style="font-size: 12px;">Evaluación</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CITAS SCREEN -->
+      <div id="citas" class="screen">
+        <div class="navbar">
+          <div class="navbar-title">Programación de Citas</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="grid-1-380">
+            <div class="card">
+              <div style="font-weight: 700; font-size: 16px; margin-bottom: 20px;">Solicitar Cita de Seguimiento</div>
+              <div class="grid-2" style="margin-bottom: 20px;">
+                <div class="form-group">
+                  <label class="form-label">Instructor</label>
+                  <select class="form-select">
+                    <option>Ing. Juan Ríos</option>
+                    <option>Ing. Ana Mora</option>
+                    <option>Ing. Carlos Vega</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Modalidad</label>
+                  <select class="form-select">
+                    <option>Virtual</option>
+                    <option>Presencial</option>
+                    <option>Telefónica</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Fecha</label>
+                  <input type="date" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Empresa</label>
+                  <input type="text" placeholder="Empresa patrocinadora" class="form-input">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Seleccionar Hora Disponible</label>
+                <div class="time-slots">
+                  <button class="time-slot-btn" data-time="08:00">08:00</button>
+                  <button class="time-slot-btn" data-time="08:30">08:30</button>
+                  <button class="time-slot-btn busy" data-time="09:00">09:00 ✗</button>
+                  <button class="time-slot-btn" data-time="09:30">09:30</button>
+                  <button class="time-slot-btn" data-time="10:00">10:00</button>
+                  <button class="time-slot-btn busy" data-time="10:30">10:30 ✗</button>
+                  <button class="time-slot-btn" data-time="11:00">11:00</button>
+                  <button class="time-slot-btn" data-time="11:30">11:30</button>
+                  <button class="time-slot-btn" data-time="14:00">14:00</button>
+                  <button class="time-slot-btn busy" data-time="14:30">14:30 ✗</button>
+                  <button class="time-slot-btn" data-time="15:00">15:00</button>
+                  <button class="time-slot-btn" data-time="15:30">15:30</button>
+                </div>
+                <div style="display: flex; gap: 16px; margin-top: 10px;">
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <div style="width: 14px; height: 14px; border-radius: 3px; background: var(--primary-xlight); border: 1px solid var(--primary-light);"></div>
+                    <span style="font-size: 11px; color: var(--muted);">Disponible</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <div style="width: 14px; height: 14px; border-radius: 3px; background: #F5E8E8; border: 1px solid #F0C0C0;"></div>
+                    <span style="font-size: 11px; color: var(--muted);">Ocupado</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <div style="width: 14px; height: 14px; border-radius: 3px; background: var(--primary); border: 1px solid var(--primary);"></div>
+                    <span style="font-size: 11px; color: var(--muted);">Seleccionado</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Observaciones</label>
+                <textarea placeholder="Describa el motivo del seguimiento o puntos a tratar..." class="form-textarea" style="height: 80px;"></textarea>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary">📅 Solicitar Cita</button>
+                <button class="btn btn-ghost">Cancelar</button>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="card" id="cita-resumen" style="display: none; background: var(--primary-xlight); border: 1px solid var(--primary-light);">
+                <div style="font-weight: 700; font-size: 14px; color: var(--primary); margin-bottom: 12px;">✅ Resumen de Solicitud</div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span style="font-size: 12px; color: var(--muted);">Instructor</span>
+                  <span style="font-size: 12px; font-weight: 600; color: var(--dark);">Ing. Juan Ríos</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span style="font-size: 12px; color: var(--muted);">Fecha</span>
+                  <span style="font-size: 12px; font-weight: 600; color: var(--dark);">Miércoles 4 Jun 2026</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span style="font-size: 12px; color: var(--muted);">Hora</span>
+                  <span style="font-size: 12px; font-weight: 600; color: var(--dark);" id="selected-hora">--:--</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span style="font-size: 12px; color: var(--muted);">Modalidad</span>
+                  <span style="font-size: 12px; font-weight: 600; color: var(--dark);">Virtual</span>
+                </div>
+                <div style="margin-top: 12px; padding: 10px; background: var(--white); border-radius: 8px;">
+                  <div style="font-size: 11px; color: var(--muted);">Estado</div>
+                  <span class="badge" style="color: var(--warning); background: #FFF3E0;">⏳ Pendiente de confirmación</span>
+                </div>
+              </div>
+              <div class="card">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 12px;">Disponibilidad del Instructor</div>
+                <div style="background: var(--primary-xlight); border-radius: 10px; padding: 12px;">
+                  <div style="font-weight: 600; font-size: 12px; color: var(--primary); margin-bottom: 8px;">Ing. Juan Ríos — Junio 2026</div>
+                  <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px;">
+                    <div style="font-size: 9px; text-align: center; color: var(--muted); font-weight: 600;">L</div>
+                    <div style="font-size: 9px; text-align: center; color: var(--muted); font-weight: 600;">M</div>
+                    <div style="font-size: 9px; text-align: center; color: var(--muted); font-weight: 600;">X</div>
+                    <div style="font-size: 9px; text-align: center; color: var(--muted); font-weight: 600;">J</div>
+                    <div style="font-size: 9px; text-align: center; color: var(--muted); font-weight: 600;">V</div>
+                    <div style="font-size: 9px; text-align: center; color: var(--muted); font-weight: 600;">S</div>
+                    <div style="font-size: 9px; text-align: center; color: var(--muted); font-weight: 600;">D</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">1</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">2</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">3</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--primary); color: var(--white);">4</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">5</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">6</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">7</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">8</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">9</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">10</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">11</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">12</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">13</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">14</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">15</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">16</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">17</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">18</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">19</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">20</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">21</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">22</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">23</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">24</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">25</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">26</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">27</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: #F5E8E8; color: var(--danger);">28</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">29</div>
+                    <div style="width: 100%; aspect-ratio: 1; border-radius: 4px; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; background: var(--white); color: var(--dark);">30</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOLICITUDES SCREEN -->
+      <div id="solicitudes" class="screen">
+        <div class="navbar">
+          <div class="navbar-title">Gestión de Solicitudes de Seguimiento</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="card" style="margin-bottom: 16px; display: flex; gap: 12px; align-items: center; padding: 16px;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-size: 11px; font-weight: 600; color: var(--muted);">Fecha desde</label>
+              <input type="date" style="padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-size: 11px; font-weight: 600; color: var(--muted);">Fecha hasta</label>
+              <input type="date" style="padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-size: 11px; font-weight: 600; color: var(--muted);">Estado</label>
+              <select style="padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px;">
+                <option>Todos</option>
+                <option>Pendiente</option>
+                <option>Aprobada</option>
+                <option>Rechazada</option>
+              </select>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-size: 11px; font-weight: 600; color: var(--muted);">Instructor</label>
+              <select style="padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px;">
+                <option>Todos</option>
+                <option>Ing. Ríos</option>
+                <option>Ing. Mora</option>
+              </select>
+            </div>
+            <div style="margin-top: 18px;">
+              <button class="btn btn-primary">🔍 Filtrar</button>
+            </div>
+          </div>
+          <div class="table-container">
+            <div style="padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: 600; font-size: 14px;">Solicitudes de Seguimiento <span style="color: var(--muted); font-weight: 400; font-size: 12px;">(5 registros)</span></div>
+              <button class="btn btn-outline btn-small">📥 Exportar</button>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Aprendiz</th>
+                  <th>Documento</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Instructor</th>
+                  <th>Modalidad</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">ML</div>
+                      <span style="font-size: 13px; font-weight: 600;">María López</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">1234567890</td>
+                  <td>04/06/2026</td>
+                  <td style="font-weight: 600; color: var(--primary);">08:00</td>
+                  <td>Ing. Ríos</td>
+                  <td><span class="badge" style="color: var(--info); background: #E8F2FD;">Virtual</span></td>
+                  <td><span class="badge" style="color: var(--warning); background: #FFF3E0;">Pendiente</span></td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-primary btn-small">✓</button>
+                      <button class="btn btn-danger btn-small">✗</button>
+                      <button class="btn btn-ghost btn-small">↻</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">CR</div>
+                      <span style="font-size: 13px; font-weight: 600;">Carlos Ruiz</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">0987654321</td>
+                  <td>04/06/2026</td>
+                  <td style="font-weight: 600; color: var(--primary);">10:30</td>
+                  <td>Ing. Mora</td>
+                  <td><span class="badge" style="color: var(--success); background: #E8F8EF;">Presencial</span></td>
+                  <td><span class="badge" style="color: var(--success); background: #E8F8EF;">Aprobada</span></td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-ghost btn-small">↻</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">AT</div>
+                      <span style="font-size: 13px; font-weight: 600;">Ana Torres</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">1122334455</td>
+                  <td>05/06/2026</td>
+                  <td style="font-weight: 600; color: var(--primary);">14:00</td>
+                  <td>Ing. Ríos</td>
+                  <td><span class="badge" style="color: var(--info); background: #E8F2FD;">Virtual</span></td>
+                  <td><span class="badge" style="color: var(--danger); background: #FDE8E8;">Rechazada</span></td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-ghost btn-small">↻</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">LP</div>
+                      <span style="font-size: 13px; font-weight: 600;">Luis Pérez</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">5566778899</td>
+                  <td>05/06/2026</td>
+                  <td style="font-weight: 600; color: var(--primary);">15:30</td>
+                  <td>Ing. Vega</td>
+                  <td><span class="badge" style="color: var(--success); background: #E8F8EF;">Presencial</span></td>
+                  <td><span class="badge" style="color: var(--warning); background: #FFF3E0;">Pendiente</span></td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-primary btn-small">✓</button>
+                      <button class="btn btn-danger btn-small">✗</button>
+                      <button class="btn btn-ghost btn-small">↻</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">SG</div>
+                      <span style="font-size: 13px; font-weight: 600;">Sandra Gil</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">6677889900</td>
+                  <td>06/06/2026</td>
+                  <td style="font-weight: 600; color: var(--primary);">09:00</td>
+                  <td>Ing. Mora</td>
+                  <td><span class="badge" style="color: var(--info); background: #E8F2FD;">Virtual</span></td>
+                  <td><span class="badge" style="color: var(--warning); background: #FFF3E0;">Pendiente</span></td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-primary btn-small">✓</button>
+                      <button class="btn btn-danger btn-small">✗</button>
+                      <button class="btn btn-ghost btn-small">↻</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVALUACION SCREEN -->
+      <div id="evaluacion" class="screen">
+        <div class="navbar">
+          <div class="navbar-title">Evaluación y Seguimiento del Aprendiz</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="grid-1-300">
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="card">
+                <div style="font-weight: 700; font-size: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                  <span style="color: var(--primary);">📝</span> Formulario de Evaluación
+                </div>
+                <div style="margin-bottom: 20px;">
+                  <div style="font-size: 12px; font-weight: 700; color: var(--mid); margin-bottom: 12px;">COMPETENCIAS</div>
+                  <div style="margin-bottom: 14px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                      <span style="font-size: 13px;">Responsabilidad</span>
+                      <span style="font-size: 12px; font-weight: 700; color: var(--primary);">85/100</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 85%; background: var(--success);"></div>
+                    </div>
+                  </div>
+                  <div style="margin-bottom: 14px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                      <span style="font-size: 13px;">Puntualidad</span>
+                      <span style="font-size: 12px; font-weight: 700; color: var(--primary);">92/100</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 92%; background: var(--success);"></div>
+                    </div>
+                  </div>
+                  <div style="margin-bottom: 14px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                      <span style="font-size: 13px;">Calidad del trabajo</span>
+                      <span style="font-size: 12px; font-weight: 700; color: var(--primary);">78/100</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 78%; background: var(--warning);"></div>
+                    </div>
+                  </div>
+                  <div style="margin-bottom: 14px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                      <span style="font-size: 13px;">Iniciativa</span>
+                      <span style="font-size: 12px; font-weight: 700; color: var(--primary);">70/100</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 70%; background: var(--warning);"></div>
+                    </div>
+                  </div>
+                  <div style="margin-bottom: 14px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                      <span style="font-size: 13px;">Trabajo en equipo</span>
+                      <span style="font-size: 12px; font-weight: 700; color: var(--primary);">88/100</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 88%; background: var(--success);"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid-2" style="margin-bottom: 20px;">
+                  <div class="form-group">
+                    <label class="form-label">Cumplimiento de metas</label>
+                    <select class="form-select">
+                      <option>Excelente</option>
+                      <option>Bueno</option>
+                      <option>Regular</option>
+                      <option>Deficiente</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Calificación general</label>
+                    <div style="display: flex; gap: 4px;">
+                      <span style="font-size: 24px; cursor: pointer; color: #F59E0B;">★</span>
+                      <span style="font-size: 24px; cursor: pointer; color: #F59E0B;">★</span>
+                      <span style="font-size: 24px; cursor: pointer; color: #F59E0B;">★</span>
+                      <span style="font-size: 24px; cursor: pointer; color: #F59E0B;">★</span>
+                      <span style="font-size: 24px; cursor: pointer; color: var(--border);">★</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                  <label class="form-label">Observaciones y recomendaciones</label>
+                  <textarea placeholder="Ingrese sus observaciones sobre el desempeño del aprendiz..." class="form-textarea" style="height: 100px;"></textarea>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                  <button class="btn btn-primary">💾 Guardar Evaluación</button>
+                  <button class="btn btn-outline">👁️ Vista previa</button>
+                  <button class="btn btn-ghost">Cancelar</button>
+                </div>
+              </div>
+              <div class="card">
+                <div style="font-weight: 600; font-size: 14px; margin-bottom: 14px;">Historial de Evaluaciones</div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border);">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; background: var(--primary-xlight); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">📋</div>
+                    <div>
+                      <div style="font-size: 13px; font-weight: 600;">Seguimiento 3</div>
+                      <div style="font-size: 11px; color: var(--muted);">15/05/2026 · Ing. Ríos</div>
+                    </div>
+                  </div>
+                  <div style="font-size: 18px; font-weight: 700; color: var(--success);">88</div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border);">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; background: var(--primary-xlight); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">📋</div>
+                    <div>
+                      <div style="font-size: 13px; font-weight: 600;">Seguimiento 2</div>
+                      <div style="font-size: 11px; color: var(--muted);">10/04/2026 · Ing. Mora</div>
+                    </div>
+                  </div>
+                  <div style="font-size: 18px; font-weight: 700; color: var(--warning);">82</div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; background: var(--primary-xlight); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">📋</div>
+                    <div>
+                      <div style="font-size: 13px; font-weight: 600;">Seguimiento 1</div>
+                      <div style="font-size: 11px; color: var(--muted);">05/03/2026 · Ing. Ríos</div>
+                    </div>
+                  </div>
+                  <div style="font-size: 18px; font-weight: 700; color: var(--warning);">75</div>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="card" style="text-align: center;">
+                <div class="avatar avatar-large" style="margin: 0 auto 12px;">ML</div>
+                <div style="font-weight: 700; font-size: 15px;">María López</div>
+                <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">ID: 2344567 · ADSO</div>
+                <span class="badge" style="color: var(--success); background: #E8F8EF;">Activa</span>
+                <div style="margin-top: 16px; text-align: left;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 12px; color: var(--muted);">Empresa</span>
+                    <span style="font-size: 12px; font-weight: 600;">TechCorp S.A.S</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 12px; color: var(--muted);">Inicio EP</span>
+                    <span style="font-size: 12px; font-weight: 600;">01/03/2026</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 12px; color: var(--muted);">Instructor</span>
+                    <span style="font-size: 12px; font-weight: 600;">Ing. Juan Ríos</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span style="font-size: 12px; color: var(--muted);">Ficha</span>
+                    <span style="font-size: 12px; font-weight: 600;">2876543</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 12px;">Indicadores de Progreso</div>
+                <div style="margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-size: 11px; color: var(--muted);">Seguimientos completados</span>
+                    <span style="font-size: 11px; font-weight: 700;">3/4</span>
+                  </div>
+                  <div class="progress-bar" style="height: 6px;">
+                    <div class="progress-fill" style="width: 75%; background: var(--primary);"></div>
+                  </div>
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-size: 11px; color: var(--muted);">Rendimiento general</span>
+                    <span style="font-size: 11px; font-weight: 700;">82/100</span>
+                  </div>
+                  <div class="progress-bar" style="height: 6px;">
+                    <div class="progress-fill" style="width: 82%; background: var(--success);"></div>
+                  </div>
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-size: 11px; color: var(--muted);">Documentos entregados</span>
+                    <span style="font-size: 11px; font-weight: 700;">7/10</span>
+                  </div>
+                  <div class="progress-bar" style="height: 6px;">
+                    <div class="progress-fill" style="width: 70%; background: var(--warning);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTES SCREEN -->
+      <div id="reportes" class="screen">
+        <div class="navbar">
+          <div class="navbar-title">Generación de Reportes</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="grid-4" style="margin-bottom: 20px;">
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 28px;">📅</div>
+              <div style="font-size: 26px; font-weight: 700; color: var(--primary); margin-top: 4px;">138</div>
+              <div style="font-size: 11px; color: var(--muted);">Seguimientos realizados</div>
+            </div>
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 28px;">✅</div>
+              <div style="font-size: 26px; font-weight: 700; color: var(--success); margin-top: 4px;">87%</div>
+              <div style="font-size: 11px; color: var(--muted);">Cumplimiento</div>
+            </div>
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 28px;">📝</div>
+              <div style="font-size: 26px; font-weight: 700; color: #8B5CF6; margin-top: 4px;">94</div>
+              <div style="font-size: 11px; color: var(--muted);">Evaluaciones</div>
+            </div>
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 28px;">🎓</div>
+              <div style="font-size: 26px; font-weight: 700; color: var(--info); margin-top: 4px;">213</div>
+              <div style="font-size: 11px; color: var(--muted);">Aprendices activos</div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div style="font-weight: 700; font-size: 15px; margin-bottom: 20px;">🔍 Configurar Reporte</div>
+              <div style="margin-bottom: 16px;">
+                <label class="form-label">Tipo de Reporte</label>
+                <div class="grid-2" style="gap: 8px;">
+                  <label style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--primary); border-radius: 8px; cursor: pointer; font-size: 12px; background: var(--primary-xlight); color: var(--primary); font-weight: 600;">
+                    <input type="radio" name="tipo" checked> Por aprendiz
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 12px; background: var(--bg); color: var(--dark);">
+                    <input type="radio" name="tipo"> Por instructor
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 12px; background: var(--bg); color: var(--dark);">
+                    <input type="radio" name="tipo"> Por fecha
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 12px; background: var(--bg); color: var(--dark);">
+                    <input type="radio" name="tipo"> General
+                  </label>
+                </div>
+              </div>
+              <div class="grid-2" style="margin-bottom: 16px;">
+                <div class="form-group">
+                  <label class="form-label">Fecha desde</label>
+                  <input type="date" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Fecha hasta</label>
+                  <input type="date" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Aprendiz</label>
+                  <input type="text" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Estado</label>
+                  <select class="form-select">
+                    <option>Todos</option>
+                  </select>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-primary">👁️ Vista Previa PDF</button>
+                <button class="btn btn-outline">📥 Exportar PDF</button>
+                <button class="btn btn-outline">📊 Exportar Excel</button>
+                <button class="btn btn-ghost">🖨️ Imprimir</button>
+              </div>
+            </div>
+            <div class="card" style="overflow: hidden;">
+              <div class="report-preview-header">
+                <div style="font-weight: 700; font-size: 14px;">Vista Previa — Reporte General</div>
+                <span style="font-size: 12px; opacity: 0.8;">Junio 2026</span>
+              </div>
+              <div class="report-preview-body">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding: 12px; background: var(--bg); border-radius: 8px;">
+                  <span style="font-size: 24px;">🎓</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 13px;">SENA — Etapa Productiva</div>
+                    <div style="font-size: 11px; color: var(--muted);">Centro de Teleinformática y Producción Industrial</div>
+                  </div>
+                </div>
+                <table class="table" style="font-size: 11px;">
+                  <thead>
+                    <tr style="background: var(--primary); color: var(--white);">
+                      <th style="padding: 8px 10px; text-align: left;">Aprendiz</th>
+                      <th style="padding: 8px 10px; text-align: left;">Seguimientos</th>
+                      <th style="padding: 8px 10px; text-align: left;">Evaluación</th>
+                      <th style="padding: 8px 10px; text-align: left;">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid var(--border); background: var(--white);">
+                      <td style="padding: 7px 10px;">María López</td>
+                      <td style="padding: 7px 10px;">3/4</td>
+                      <td style="padding: 7px 10px;">88</td>
+                      <td style="padding: 7px 10px; color: var(--warning); font-weight: 600;">En proceso</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border); background: var(--bg);">
+                      <td style="padding: 7px 10px;">Carlos Ruiz</td>
+                      <td style="padding: 7px 10px;">4/4</td>
+                      <td style="padding: 7px 10px;">92</td>
+                      <td style="padding: 7px 10px; color: var(--success); font-weight: 600;">Completado</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border); background: var(--white);">
+                      <td style="padding: 7px 10px;">Ana Torres</td>
+                      <td style="padding: 7px 10px;">2/4</td>
+                      <td style="padding: 7px 10px;">75</td>
+                      <td style="padding: 7px 10px; color: var(--warning); font-weight: 600;">En proceso</td>
+                    </tr>
+                    <tr style="background: var(--bg);">
+                      <td style="padding: 7px 10px;">Luis Pérez</td>
+                      <td style="padding: 7px 10px;">1/4</td>
+                      <td style="padding: 7px 10px;">68</td>
+                      <td style="padding: 7px 10px; color: var(--danger); font-weight: 600;">Atrasado</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="margin-top: 12px; padding: 10px; background: var(--primary-xlight); border-radius: 8px; font-size: 11px; color: var(--primary); font-style: italic;">
+                  Generado el 07/06/2026 · Sistema de Seguimiento SENA v1.0
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USUARIOS SCREEN -->
+      <div id="usuarios" class="screen">
+        <div class="navbar">
+          <div class="navbar-title">Gestión de Usuarios</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="grid-4" style="margin-bottom: 20px; gap: 12px;">
+            <div class="card" style="padding: 16px; display: flex; align-items: center; gap: 12px;">
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--primary)1A; display: flex; align-items: center; justify-content: center; font-size: 20px;">👥</div>
+              <div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--dark);">231</div>
+                <div style="font-size: 11px; color: var(--muted);">Total usuarios</div>
+              </div>
+            </div>
+            <div class="card" style="padding: 16px; display: flex; align-items: center; gap: 12px;">
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--success)1A; display: flex; align-items: center; justify-content: center; font-size: 20px;">✅</div>
+              <div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--dark);">218</div>
+                <div style="font-size: 11px; color: var(--muted);">Activos</div>
+              </div>
+            </div>
+            <div class="card" style="padding: 16px; display: flex; align-items: center; gap: 12px;">
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--danger)1A; display: flex; align-items: center; justify-content: center; font-size: 20px;">⛔</div>
+              <div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--dark);">13</div>
+                <div style="font-size: 11px; color: var(--muted);">Inactivos</div>
+              </div>
+            </div>
+            <div class="card" style="padding: 16px; display: flex; align-items: center; gap: 12px;">
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--info)1A; display: flex; align-items: center; justify-content: center; font-size: 20px;">🆕</div>
+              <div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--dark);">7</div>
+                <div style="font-size: 11px; color: var(--muted);">Nuevos este mes</div>
+              </div>
+            </div>
+          </div>
+          <div class="table-container">
+            <div style="padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input placeholder="🔍  Buscar usuario..." style="padding: 7px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; width: 220px;">
+                <select style="padding: 7px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px;">
+                  <option>Todos los roles</option>
+                  <option>Instructor</option>
+                  <option>Aprendiz</option>
+                  <option>Coordinador</option>
+                </select>
+                <select style="padding: 7px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px;">
+                  <option>Todos los estados</option>
+                  <option>Activo</option>
+                  <option>Inactivo</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" id="btn-crear-usuario">+ Crear Usuario</button>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Documento</th>
+                  <th>Correo</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
+                  <th>Último acceso</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">JR</div>
+                      <span style="font-size: 13px; font-weight: 600;">Juan Ríos</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">79876543</td>
+                  <td>j.rios@sena.edu.co</td>
+                  <td><span class="badge" style="color: var(--info); background: #E8F2FD;">Instructor</span></td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--success);"></div>
+                      <span style="font-size: 12px;">Activo</span>
+                    </div>
+                  </td>
+                  <td style="font-size: 11px; color: var(--muted);">07/06/2026 08:12</td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-ghost btn-small">✏️</button>
+                      <button class="btn btn-danger btn-small">⛔</button>
+                      <button class="btn btn-ghost btn-small">🔑</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">AM</div>
+                      <span style="font-size: 13px; font-weight: 600;">Ana Mora</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">52341234</td>
+                  <td>a.mora@sena.edu.co</td>
+                  <td><span class="badge" style="color: var(--info); background: #E8F2FD;">Instructor</span></td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--success);"></div>
+                      <span style="font-size: 12px;">Activo</span>
+                    </div>
+                  </td>
+                  <td style="font-size: 11px; color: var(--muted);">06/06/2026 15:40</td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-ghost btn-small">✏️</button>
+                      <button class="btn btn-danger btn-small">⛔</button>
+                      <button class="btn btn-ghost btn-small">🔑</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">ML</div>
+                      <span style="font-size: 13px; font-weight: 600;">María López</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">1023456789</td>
+                  <td>m.lopez@sena.edu.co</td>
+                  <td><span class="badge" style="color: #8B5CF6; background: #F0EBFE;">Aprendiz</span></td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--success);"></div>
+                      <span style="font-size: 12px;">Activo</span>
+                    </div>
+                  </td>
+                  <td style="font-size: 11px; color: var(--muted);">07/06/2026 07:55</td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-ghost btn-small">✏️</button>
+                      <button class="btn btn-danger btn-small">⛔</button>
+                      <button class="btn btn-ghost btn-small">🔑</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">CR</div>
+                      <span style="font-size: 13px; font-weight: 600;">Carlos Ruiz</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">1098765432</td>
+                  <td>c.ruiz@sena.edu.co</td>
+                  <td><span class="badge" style="color: #8B5CF6; background: #F0EBFE;">Aprendiz</span></td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--danger);"></div>
+                      <span style="font-size: 12px;">Inactivo</span>
+                    </div>
+                  </td>
+                  <td style="font-size: 11px; color: var(--muted);">01/06/2026 10:00</td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-ghost btn-small">✏️</button>
+                      <button class="btn btn-primary btn-small">✅</button>
+                      <button class="btn btn-ghost btn-small">🔑</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="avatar">PV</div>
+                      <span style="font-size: 13px; font-weight: 600;">Pedro Vega</span>
+                    </div>
+                  </td>
+                  <td style="color: var(--muted);">80123456</td>
+                  <td>p.vega@sena.edu.co</td>
+                  <td><span class="badge" style="color: var(--warning); background: #FFF3E0;">Coordinador</span></td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--success);"></div>
+                      <span style="font-size: 12px;">Activo</span>
+                    </div>
+                  </td>
+                  <td style="font-size: 11px; color: var(--muted);">07/06/2026 09:00</td>
+                  <td>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-ghost btn-small">✏️</button>
+                      <button class="btn btn-danger btn-small">⛔</button>
+                      <button class="btn btn-ghost btn-small">🔑</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Modal crear usuario -->
+        <div class="modal-overlay" id="modal-crear-usuario" style="display: none;">
+          <div class="modal">
+            <div class="modal-header">
+              <div class="modal-title">👤 Crear Nuevo Usuario</div>
+              <button class="modal-close" id="btn-cerrar-modal">✕</button>
+            </div>
+            <div class="grid-2" style="margin-bottom: 14px;">
+              <div class="form-group">
+                <label class="form-label">Nombres</label>
+                <input type="text" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Apellidos</label>
+                <input type="text" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Documento</label>
+                <input type="text" class="form-input">
+              </div>
+              <div class="form-group" style="grid-column: 1 / 3;">
+                <label class="form-label">Correo institucional</label>
+                <input type="email" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Teléfono</label>
+                <input type="text" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rol</label>
+                <select class="form-select">
+                  <option>Aprendiz</option>
+                  <option>Instructor</option>
+                  <option>Coordinador</option>
+                  <option>Administrador</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+              <button class="btn btn-ghost" id="btn-cancelar-modal">Cancelar</button>
+              <button class="btn btn-primary">💾 Crear Usuario</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLES SCREEN -->
+      <div id="roles" class="screen">
+        <div class="navbar">
+          <div class="navbar-title">Gestión de Roles y Permisos</div>
+          <div class="navbar-actions">
+            <div class="navbar-search">
+              <span>🔍</span> Buscar...
+            </div>
+            <div class="navbar-notification">
+              <span class="navbar-notification-icon">🔔</span>
+              <span class="navbar-notification-badge">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="grid-220-1">
+            <div class="card" style="padding: 16px;">
+              <div style="font-weight: 600; font-size: 13px; margin-bottom: 14px; color: var(--dark);">Roles del Sistema</div>
+              <button class="sidebar-nav-item" style="width: 100%; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--dark); font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;" data-role="Administrador">
+                <span>👑</span>Administrador
+              </button>
+              <button class="sidebar-nav-item active" style="width: 100%; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; background: var(--primary); border: 1px solid var(--primary); color: var(--white); font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;" data-role="Coordinador">
+                <span>🎯</span>Coordinador
+              </button>
+              <button class="sidebar-nav-item" style="width: 100%; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--dark); font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;" data-role="Instructor">
+                <span>👨‍🏫</span>Instructor
+              </button>
+              <button class="sidebar-nav-item" style="width: 100%; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--dark); font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;" data-role="Aprendiz">
+                <span>🎓</span>Aprendiz
+              </button>
+              <div style="margin-top: 16px; padding: 12px; background: var(--primary-xlight); border-radius: 8px;">
+                <div style="font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px;">Rol seleccionado</div>
+                <div style="font-size: 13px; font-weight: 700; color: var(--dark);" id="rol-seleccionado">Coordinador</div>
+                <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">30 permisos activos</div>
+              </div>
+            </div>
+            <div class="card" style="overflow: hidden;">
+              <div style="padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 700; font-size: 14px;">Matriz de Permisos — <span id="rol-matriz">Coordinador</span></div>
+                <button class="btn btn-primary">💾 Guardar cambios</button>
+              </div>
+              <div style="overflow-x: auto;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 700; color: var(--muted); min-width: 120px;">Módulo</th>
+                      <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Crear</th>
+                      <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Leer</th>
+                      <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Editar</th>
+                      <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Eliminar</th>
+                      <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Aprobar</th>
+                      <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Exportar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Dashboard</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Calendario</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle off" data-perm="false">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Citas</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle off" data-perm="false">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Solicitudes</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle off" data-perm="false">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Evaluación</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle off" data-perm="false">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Reportes</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle off" data-perm="false">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Usuarios</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle off" data-perm="false">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--dark);">Roles</td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle off" data-perm="false">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                      <td style="padding: 12px 16px; text-align: center;">
+                        <div class="toggle on" data-perm="true">
+                          <div class="toggle-handle"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="padding: 12px 20px; border-top: 1px solid var(--border); display: flex; gap: 16px; align-items: center;">
+                <span style="font-size: 12px; color: var(--muted);">Leyenda:</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <div style="width: 28px; height: 14px; border-radius: 7px; background: var(--primary);"></div>
+                  <span style="font-size: 11px; color: var(--muted);">Permitido</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <div style="width: 28px; height: 14px; border-radius: 7px; background: var(--border);"></div>
+                  <span style="font-size: 11px; color: var(--muted);">Denegado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
