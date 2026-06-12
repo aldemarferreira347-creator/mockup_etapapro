@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión - Sistema de Seguimiento de Aprendices</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-container">
+    <!-- Left Section (Green Branding) -->
+    <div class="branding-section">
+      <div class="branding-header">
+        <div class="logo-container">
+          <i data-lucide="graduation-cap" class="logo-icon"></i>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">SENA</span>
+          <span class="logo-subtitle">Centro de Teleinformática y Producción Industrial</span>
+        </div>
+      </div>
+      
+      <div class="branding-content">
+        <h1 class="branding-title">Sistema de seguimiento de aprendices en etapa productiva</h1>
+        <p class="branding-desc">Plataforma institucional para el acompañamiento, gestión documental y evaluación del proceso formativo.</p>
+        
+        <ul class="features-list">
+          <li>
+            <div class="feature-icon-wrapper">
+              <i data-lucide="file-text"></i>
+            </div>
+            <span>Gestión documental y bitácoras</span>
+          </li>
+          <li>
+            <div class="feature-icon-wrapper">
+              <i data-lucide="calendar"></i>
+            </div>
+            <span>Agendamiento de seguimientos</span>
+          </li>
+          <li>
+            <div class="feature-icon-wrapper">
+              <i data-lucide="bar-chart-3"></i>
+            </div>
+            <span>Reportes y auditoría</span>
+          </li>
+          <li>
+            <div class="feature-icon-wrapper">
+              <i data-lucide="message-square"></i>
+            </div>
+            <span>Asistente virtual integrado</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Section (Login Form in White) -->
+    <div class="form-section">
+      <div class="form-container">
+        <div class="form-header">
+          <h2 class="form-title">Iniciar sesión</h2>
+          <p class="form-subtitle">Ingresa con tu correo institucional SENA</p>
+        </div>
+
+        <form class="login-form" id="loginForm">
+          <div class="input-group">
+            <label for="email" class="input-label">Correo institucional</label>
+            <div class="input-wrapper">
+              <i data-lucide="mail" class="field-icon"></i>
+              <input type="email" id="email" class="form-input" placeholder="usuario@sena.edu.co" required autocomplete="username">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="label-row">
+              <label for="password" class="input-label">Contraseña</label>
+              <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+            </div>
+            <div class="input-wrapper">
+              <i data-lucide="lock" class="field-icon"></i>
+              <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" class="password-toggle" id="passwordToggle" aria-label="Mostrar contraseña">
+                <i data-lucide="eye" id="toggleIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span>Ingresar al sistema</span>
+            <i data-lucide="arrow-right" class="btn-icon"></i>
+          </button>
+        </form>
+
+
+
+        <div class="form-footer">
+          <span>Regional Cauca &middot; Versión 1.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Password visibility toggle
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.getElementById('passwordToggle');
+    const toggleIcon = document.getElementById('toggleIcon');
+
+    passwordToggle.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      // Update icon dynamically
+      if (type === 'text') {
+        toggleIcon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        toggleIcon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    });
+
+
+    // Form submission feedback
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      
+      // Premium toast feedback
+      showToast(`Ingresando como ${email}...`);
+    });
+
+    function showToast(message) {
+      // Remove any existing toast first
+      const existingToast = document.querySelector('.toast-notification');
+      if (existingToast) {
+        existingToast.remove();
+      }
+
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.className = 'toast-notification';
+      toast.innerHTML = `
+        <div class="toast-content">
+          <i data-lucide="check-circle" class="toast-icon"></i>
+          <span>${message}</span>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      lucide.createIcons();
+
+      // Trigger animation
+      setTimeout(() => toast.classList.add('show'), 10);
+
+      // Remove after 3s
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carpeta Digital — EtapaPro SENA</title>
+  <meta name="description" content="Expediente digital completo del aprendiz - EtapaPro SENA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/carpeta-digital.css">
+</head>
+
+<body class="db-body">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="db-sidebar" id="dbSidebar" aria-label="Navegación principal">
+    <div class="db-sidebar__brand">
+      <div class="db-sidebar__logo-icon">
+        <i data-lucide="graduation-cap"></i>
+      </div>
+      <div class="db-sidebar__logo-text">
+        <span class="db-sidebar__logo-title">EtapaPro</span>
+        <span class="db-sidebar__logo-sub">SENA · Sistema</span>
+      </div>
+      <button class="db-sidebar__close" onclick="closeSidebar()" aria-label="Cerrar menú">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="db-sidebar__chip">
+      <i data-lucide="user-check"></i>
+      <span>Aprendiz</span>
+    </div>
+
+    <nav class="db-sidebar__nav" aria-label="Menú principal">
+      <a href="dashboard-aprendiz.html" class="db-nav-item">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Inicio</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="file-check-2"></i>
+        <span>Mis Bitácoras</span>
+        <span class="db-nav-badge">4/6</span>
+      </a>
+      <a href="#" class="db-nav-item db-nav-item--active" aria-current="page">
+        <i data-lucide="folder-open"></i>
+        <span>Carpeta Digital</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="calendar"></i>
+        <span>Seguimientos</span>
+        <span class="db-nav-badge db-nav-badge--warn">1</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="building-2"></i>
+        <span>Mi Empresa</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="message-square"></i>
+        <span>Asistente Virtual</span>
+      </a>
+    </nav>
+
+    <div class="db-sidebar__footer">
+      <div class="db-sidebar__user">
+        <div class="db-sidebar__avatar">CG</div>
+        <div class="db-sidebar__user-info">
+          <span class="db-sidebar__user-name">Carlos A. Guerrero</span>
+          <span class="db-sidebar__user-role">Aprendiz · ADSO</span>
+        </div>
+      </div>
+      <button class="db-sidebar__logout"
+        onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')" aria-label="Cerrar sesión">
+        <i data-lucide="log-out"></i>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="db-overlay" id="dbOverlay" onclick="closeSidebar()"></div>
+  <button class="db-hamburger" id="dbHamburger" onclick="openSidebar()" aria-label="Abrir menú" aria-expanded="false">
+    <i data-lucide="menu"></i>
+  </button>
+
+
+  <!-- ══════════════════════════════════════
+       WRAPPER PRINCIPAL
+  ══════════════════════════════════════ -->
+  <div class="db-wrapper">
+
+    <!-- ── HEADER ── -->
+    <header class="db-header">
+      <div class="db-header__left">
+        <h1 class="db-header__title">Carpeta Digital</h1>
+        <p class="db-header__sub">Expediente completo de tu etapa productiva</p>
+      </div>
+      <div class="db-header__right">
+
+        <!-- Buscador rápido en header -->
+        <div class="etapa-header-search">
+          <i data-lucide="search"></i>
+          <input type="search" placeholder="Buscar en carpeta…" aria-label="Buscar documentos">
+        </div>
+
+        <button class="db-header__icon-btn" id="notifBtn" aria-label="Notificaciones" onclick="toggleNotifPanel()">
+          <i data-lucide="bell"></i>
+          <span class="db-header__notif-dot" aria-hidden="true"></span>
+        </button>
+
+        <div class="db-header__user">
+          <div class="db-header__user-info">
+            <span class="db-header__user-name">Carlos A. Guerrero</span>
+            <span class="db-header__user-role">Aprendiz ADSO</span>
+          </div>
+          <div class="db-header__avatar" aria-hidden="true">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Panel notificaciones -->
+    <div class="db-notif-panel" id="notifPanel" role="dialog" aria-label="Notificaciones" aria-modal="false">
+      <div class="db-notif-panel__head">
+        <span class="db-notif-panel__title">Notificaciones</span>
+        <button class="db-notif-panel__clear" onclick="toggleNotifPanel()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <ul class="db-notif-list">
+        <li class="db-notif-item db-notif-item--unread">
+          <div class="db-notif-item__icon db-notif-item__icon--green">
+            <i data-lucide="check-circle-2"></i>
+          </div>
+          <div class="db-notif-item__body">
+            <p class="db-notif-item__msg">Contrato de Aprendizaje <strong>aprobado</strong> por coordinación.</p>
+            <span class="db-notif-item__time">Hace 1 h</span>
+          </div>
+        </li>
+        <li class="db-notif-item db-notif-item--unread">
+          <div class="db-notif-item__icon db-notif-item__icon--amber">
+            <i data-lucide="file-warning"></i>
+          </div>
+          <div class="db-notif-item__body">
+            <p class="db-notif-item__msg">Formato F123 requiere firma del supervisor antes del <strong>viernes</strong>.
+            </p>
+            <span class="db-notif-item__time">Hace 3 h</span>
+          </div>
+        </li>
+        <li class="db-notif-item">
+          <div class="db-notif-item__icon db-notif-item__icon--red">
+            <i data-lucide="alert-circle"></i>
+          </div>
+          <div class="db-notif-item__body">
+            <p class="db-notif-item__msg">Aval de la Empresa está <strong>vencido</strong>. Sube el documento
+              actualizado.</p>
+            <span class="db-notif-item__time">Ayer, 2:00 PM</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- ── CONTENIDO PRINCIPAL ── -->
+    <main class="db-content etapa-cd-content" id="main-content">
+
+      <!-- ─────────────────────────────────────────
+           TARJETA PROGRESO GENERAL
+      ───────────────────────────────────────── -->
+      <section class="etapa-cd-hero" aria-label="Progreso general de carpeta digital">
+
+        <div class="etapa-cd-hero__left">
+          <p class="etapa-cd-hero__eyebrow">
+            <i data-lucide="folder-open"></i> Expediente digital
+          </p>
+          <h2 class="etapa-cd-hero__title">Progreso de tu Carpeta Digital</h2>
+          <p class="etapa-cd-hero__desc">
+            Completa todos los documentos requeridos para certificar tu etapa productiva exitosamente.
+          </p>
+
+          <div class="etapa-cd-hero__stats">
+            <div class="etapa-cd-stat">
+              <span class="etapa-cd-stat__num">12<span class="etapa-cd-stat__den">/18</span></span>
+              <span class="etapa-cd-stat__lbl">Documentos</span>
+            </div>
+            <div class="etapa-cd-stat__divider" aria-hidden="true"></div>
+            <div class="etapa-cd-stat">
+              <span class="etapa-cd-stat__num">4<span class="etapa-cd-stat__den">/6</span></span>
+              <span class="etapa-cd-stat__lbl">Bitácoras</span>
+            </div>
+            <div class="etapa-cd-stat__divider" aria-hidden="true"></div>
+            <div class="etapa-cd-stat">
+              <span class="etapa-cd-stat__num">2<span class="etapa-cd-stat__den">/3</span></span>
+              <span class="etapa-cd-stat__lbl">Seguimientos</span>
+            </div>
+          </div>
+
+          <!-- Barra progreso general -->
+          <div class="etapa-cd-hero__bar-wrap">
+            <div class="etapa-cd-hero__bar-labels">
+              <span>Completado</span>
+              <span class="etapa-cd-hero__bar-pct">80%</span>
+            </div>
+            <div class="etapa-cd-hero__bar-track" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+              aria-valuemax="100" aria-label="Progreso general 80%">
+              <div class="etapa-cd-hero__bar-fill" style="width:80%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="etapa-cd-hero__right" aria-label="80% completado">
+          <svg class="etapa-cd-ring-svg" viewBox="0 0 140 140" width="150" height="150">
+            <circle class="etapa-cd-ring-bg" cx="70" cy="70" r="58" fill="none" stroke-width="10" />
+            <circle class="etapa-cd-ring-fill" cx="70" cy="70" r="58" fill="none" stroke-width="10"
+              stroke-dasharray="364.42" stroke-dashoffset="72.88" stroke-linecap="round"
+              transform="rotate(-90 70 70)" />
+          </svg>
+          <div class="etapa-cd-ring-label">
+            <span class="etapa-cd-ring-pct">80%</span>
+            <span class="etapa-cd-ring-txt">Completado</span>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ─────────────────────────────────────────
+           PESTAÑAS + FILTROS + TABLA
+      ───────────────────────────────────────── -->
+      <div class="etapa-cd-panel">
+
+        <!-- Pestañas -->
+        <div class="etapa-cd-tabs" role="tablist" aria-label="Secciones de la carpeta digital">
+          <button class="etapa-cd-tab etapa-cd-tab--active" role="tab" aria-selected="true" id="tab-docs"
+            onclick="switchTab(this,'panel-docs')">
+            <i data-lucide="file-text"></i>
+            <span>Documentos</span>
+            <span class="etapa-cd-tab__count">12</span>
+          </button>
+          <button class="etapa-cd-tab" role="tab" aria-selected="false" id="tab-bit"
+            onclick="switchTab(this,'panel-bit')">
+            <i data-lucide="file-check-2"></i>
+            <span>Bitácoras</span>
+            <span class="etapa-cd-tab__count">4</span>
+          </button>
+          <button class="etapa-cd-tab" role="tab" aria-selected="false" id="tab-seg"
+            onclick="switchTab(this,'panel-seg')">
+            <i data-lucide="calendar-check"></i>
+            <span>Seguimientos</span>
+            <span class="etapa-cd-tab__count">2</span>
+          </button>
+          <button class="etapa-cd-tab" role="tab" aria-selected="false" id="tab-eval"
+            onclick="switchTab(this,'panel-eval')">
+            <i data-lucide="clipboard-list"></i>
+            <span>Evaluaciones</span>
+            <span class="etapa-cd-tab__count">1</span>
+          </button>
+          <button class="etapa-cd-tab" role="tab" aria-selected="false" id="tab-hist"
+            onclick="switchTab(this,'panel-hist')">
+            <i data-lucide="history"></i>
+            <span>Historial</span>
+          </button>
+        </div>
+
+        <!-- Barra de filtros -->
+        <div class="etapa-cd-filters">
+          <div class="etapa-cd-search">
+            <i data-lucide="search"></i>
+            <input type="search" placeholder="Buscar documento…" aria-label="Buscar documentos en la carpeta">
+          </div>
+
+          <div class="etapa-cd-filters__selects">
+            <div class="etapa-cd-select-wrap">
+              <select class="etapa-cd-select" aria-label="Filtrar por estado">
+                <option>Todos los estados</option>
+                <option>Aprobado</option>
+                <option>Pendiente</option>
+                <option>Vencido</option>
+                <option>En revisión</option>
+              </select>
+              <i data-lucide="chevron-down"></i>
+            </div>
+
+            <div class="etapa-cd-select-wrap">
+              <select class="etapa-cd-select" aria-label="Filtrar por categoría">
+                <option>Todas las categorías</option>
+                <option>Contratos</option>
+                <option>Formatos</option>
+                <option>Avales</option>
+                <option>Seguros</option>
+                <option>Planes</option>
+              </select>
+              <i data-lucide="chevron-down"></i>
+            </div>
+          </div>
+
+          <button class="etapa-cd-upload-btn" onclick="handleUpload()" aria-label="Subir nuevo documento">
+            <i data-lucide="upload-cloud"></i>
+            <span>Subir documento</span>
+          </button>
+        </div>
+
+
+        <!-- ── PANEL: DOCUMENTOS ── -->
+        <div id="panel-docs" class="etapa-cd-tabpanel" role="tabpanel" aria-labelledby="tab-docs">
+
+          <div class="etapa-cd-table-wrap">
+            <table class="etapa-cd-table" aria-label="Lista de documentos">
+              <thead>
+                <tr>
+                  <th scope="col" class="etapa-cd-th">
+                    <div class="etapa-cd-th__inner">
+                      <input type="checkbox" class="etapa-cd-checkbox" aria-label="Seleccionar todos">
+                      Documento
+                    </div>
+                  </th>
+                  <th scope="col" class="etapa-cd-th">Categoría</th>
+                  <th scope="col" class="etapa-cd-th etapa-cd-th--date">Fecha</th>
+                  <th scope="col" class="etapa-cd-th">Estado</th>
+                  <th scope="col" class="etapa-cd-th etapa-cd-th--actions">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <!-- Fila 1: Aprobado -->
+                <tr class="etapa-cd-row">
+                  <td class="etapa-cd-td">
+                    <div class="etapa-cd-file">
+                      <input type="checkbox" class="etapa-cd-checkbox" aria-label="Seleccionar Contrato de Aprendizaje">
+                      <div class="etapa-cd-file__icon etapa-cd-file__icon--green">
+                        <i data-lucide="file-check-2"></i>
+                      </div>
+                      <div class="etapa-cd-file__info">
+                        <span class="etapa-cd-file__name">Contrato de Aprendizaje</span>
+                        <span class="etapa-cd-file__meta">PDF · 2.4 MB · Subido por Carlos G.</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-cat etapa-cd-cat--blue">Contrato</span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--date">15/03/2026</td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-status etapa-cd-status--green">
+                      <i data-lucide="check-circle-2"></i>Aprobado
+                    </span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--actions">
+                    <button class="etapa-cd-action-btn" aria-label="Ver documento">
+                      <i data-lucide="eye"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Descargar documento">
+                      <i data-lucide="download"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Más opciones">
+                      <i data-lucide="more-horizontal"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Fila 2: Pendiente firma -->
+                <tr class="etapa-cd-row">
+                  <td class="etapa-cd-td">
+                    <div class="etapa-cd-file">
+                      <input type="checkbox" class="etapa-cd-checkbox" aria-label="Seleccionar Formato F123">
+                      <div class="etapa-cd-file__icon etapa-cd-file__icon--amber">
+                        <i data-lucide="file-signature"></i>
+                      </div>
+                      <div class="etapa-cd-file__info">
+                        <span class="etapa-cd-file__name">Formato F123 — Concertación</span>
+                        <span class="etapa-cd-file__meta">PDF · 1.1 MB · Pendiente de firma</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-cat etapa-cd-cat--amber">Formato</span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--date">20/03/2026</td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-status etapa-cd-status--amber">
+                      <i data-lucide="pen-line"></i>Pendiente firma
+                    </span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--actions">
+                    <button class="etapa-cd-action-btn" aria-label="Ver documento">
+                      <i data-lucide="eye"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn etapa-cd-action-btn--primary" aria-label="Subir versión firmada">
+                      <i data-lucide="upload"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Más opciones">
+                      <i data-lucide="more-horizontal"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Fila 3: Aprobado -->
+                <tr class="etapa-cd-row">
+                  <td class="etapa-cd-td">
+                    <div class="etapa-cd-file">
+                      <input type="checkbox" class="etapa-cd-checkbox" aria-label="Seleccionar Plan de Trabajo">
+                      <div class="etapa-cd-file__icon etapa-cd-file__icon--green">
+                        <i data-lucide="file-check-2"></i>
+                      </div>
+                      <div class="etapa-cd-file__info">
+                        <span class="etapa-cd-file__name">Plan de Trabajo Concertado</span>
+                        <span class="etapa-cd-file__meta">PDF · 890 KB · Firmado por supervisor</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-cat etapa-cd-cat--green">Plan</span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--date">01/04/2026</td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-status etapa-cd-status--green">
+                      <i data-lucide="check-circle-2"></i>Aprobado
+                    </span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--actions">
+                    <button class="etapa-cd-action-btn" aria-label="Ver documento">
+                      <i data-lucide="eye"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Descargar documento">
+                      <i data-lucide="download"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Más opciones">
+                      <i data-lucide="more-horizontal"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Fila 4: Vencido -->
+                <tr class="etapa-cd-row">
+                  <td class="etapa-cd-td">
+                    <div class="etapa-cd-file">
+                      <input type="checkbox" class="etapa-cd-checkbox" aria-label="Seleccionar Aval de la Empresa">
+                      <div class="etapa-cd-file__icon etapa-cd-file__icon--red">
+                        <i data-lucide="file-x-2"></i>
+                      </div>
+                      <div class="etapa-cd-file__info">
+                        <span class="etapa-cd-file__name">Aval de la Empresa</span>
+                        <span class="etapa-cd-file__meta">PDF · 560 KB · Requiere renovación</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-cat etapa-cd-cat--red">Aval</span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--date">10/04/2026</td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-status etapa-cd-status--red">
+                      <i data-lucide="alert-circle"></i>Vencido
+                    </span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--actions">
+                    <button class="etapa-cd-action-btn" aria-label="Ver documento">
+                      <i data-lucide="eye"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn etapa-cd-action-btn--danger" aria-label="Subir nuevo aval">
+                      <i data-lucide="upload"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Más opciones">
+                      <i data-lucide="more-horizontal"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Fila 5: En revisión -->
+                <tr class="etapa-cd-row">
+                  <td class="etapa-cd-td">
+                    <div class="etapa-cd-file">
+                      <input type="checkbox" class="etapa-cd-checkbox" aria-label="Seleccionar Seguro Estudiantil">
+                      <div class="etapa-cd-file__icon etapa-cd-file__icon--blue">
+                        <i data-lucide="file-clock"></i>
+                      </div>
+                      <div class="etapa-cd-file__info">
+                        <span class="etapa-cd-file__name">Seguro Estudiantil SENA</span>
+                        <span class="etapa-cd-file__meta">PDF · 1.8 MB · En verificación</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-cat etapa-cd-cat--blue">Seguro</span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--date">18/04/2026</td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-status etapa-cd-status--blue">
+                      <i data-lucide="loader-circle"></i>En revisión
+                    </span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--actions">
+                    <button class="etapa-cd-action-btn" aria-label="Ver documento">
+                      <i data-lucide="eye"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Descargar">
+                      <i data-lucide="download"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Más opciones">
+                      <i data-lucide="more-horizontal"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Fila 6: Pendiente -->
+                <tr class="etapa-cd-row">
+                  <td class="etapa-cd-td">
+                    <div class="etapa-cd-file">
+                      <input type="checkbox" class="etapa-cd-checkbox" aria-label="Seleccionar Evaluación Final">
+                      <div class="etapa-cd-file__icon etapa-cd-file__icon--gray">
+                        <i data-lucide="file-plus"></i>
+                      </div>
+                      <div class="etapa-cd-file__info">
+                        <span class="etapa-cd-file__name">Evaluación Final del Supervisor</span>
+                        <span class="etapa-cd-file__meta">No cargado · Requerido para certificación</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-cat etapa-cd-cat--gray">Evaluación</span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--date">—</td>
+                  <td class="etapa-cd-td">
+                    <span class="etapa-cd-status etapa-cd-status--gray">
+                      <i data-lucide="circle-dashed"></i>Pendiente
+                    </span>
+                  </td>
+                  <td class="etapa-cd-td etapa-cd-td--actions">
+                    <button class="etapa-cd-action-btn etapa-cd-action-btn--primary" aria-label="Subir evaluación">
+                      <i data-lucide="upload"></i>
+                    </button>
+                    <button class="etapa-cd-action-btn" aria-label="Más opciones">
+                      <i data-lucide="more-horizontal"></i>
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Paginación -->
+          <div class="etapa-cd-pagination">
+            <span class="etapa-cd-pagination__info">Mostrando 6 de 12 documentos</span>
+            <div class="etapa-cd-pagination__controls">
+              <button class="etapa-cd-page-btn" disabled aria-label="Página anterior">
+                <i data-lucide="chevron-left"></i>
+              </button>
+              <button class="etapa-cd-page-btn etapa-cd-page-btn--active" aria-current="page">1</button>
+              <button class="etapa-cd-page-btn">2</button>
+              <button class="etapa-cd-page-btn" aria-label="Página siguiente">
+                <i data-lucide="chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /panel-docs -->
+
+
+        <!-- ── PANEL: BITÁCORAS ── -->
+        <div id="panel-bit" class="etapa-cd-tabpanel etapa-cd-tabpanel--hidden" role="tabpanel"
+          aria-labelledby="tab-bit">
+          <div class="etapa-cd-empty-state">
+            <div class="etapa-cd-empty-state__icon">
+              <i data-lucide="file-check-2"></i>
+            </div>
+            <h3 class="etapa-cd-empty-state__title">Panel de Bitácoras</h3>
+            <p class="etapa-cd-empty-state__desc">
+              Aquí verás todas tus bitácoras quincenales con su estado de aprobación.
+            </p>
+            <button class="etapa-cd-upload-btn">
+              <i data-lucide="plus"></i>
+              <span>Crear nueva bitácora</span>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ── PANEL: SEGUIMIENTOS ── -->
+        <div id="panel-seg" class="etapa-cd-tabpanel etapa-cd-tabpanel--hidden" role="tabpanel"
+          aria-labelledby="tab-seg">
+          <div class="etapa-cd-empty-state">
+            <div class="etapa-cd-empty-state__icon">
+              <i data-lucide="calendar-check"></i>
+            </div>
+            <h3 class="etapa-cd-empty-state__title">Panel de Seguimientos</h3>
+            <p class="etapa-cd-empty-state__desc">
+              Registro de todas tus visitas de seguimiento con el instructor asignado.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- ── PANEL: EVALUACIONES ── -->
+        <div id="panel-eval" class="etapa-cd-tabpanel etapa-cd-tabpanel--hidden" role="tabpanel"
+          aria-labelledby="tab-eval">
+          <div class="etapa-cd-empty-state">
+            <div class="etapa-cd-empty-state__icon">
+              <i data-lucide="clipboard-list"></i>
+            </div>
+            <h3 class="etapa-cd-empty-state__title">Panel de Evaluaciones</h3>
+            <p class="etapa-cd-empty-state__desc">
+              Resultados de evaluaciones del supervisor y del instructor de seguimiento.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- ── PANEL: HISTORIAL ── -->
+        <div id="panel-hist" class="etapa-cd-tabpanel etapa-cd-tabpanel--hidden" role="tabpanel"
+          aria-labelledby="tab-hist">
+          <div class="etapa-cd-empty-state">
+            <div class="etapa-cd-empty-state__icon">
+              <i data-lucide="history"></i>
+            </div>
+            <h3 class="etapa-cd-empty-state__title">Historial de actividad</h3>
+            <p class="etapa-cd-empty-state__desc">
+              Registro cronológico de todas las acciones sobre tu carpeta digital.
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /etapa-cd-panel -->
+
+    </main><!-- /db-content -->
+
+    <footer class="db-footer">
+      <span>EtapaPro · Sistema de Seguimiento de Aprendices · SENA Regional Cauca · v1.0</span>
+    </footer>
+
+  </div><!-- /db-wrapper -->
+
+
+  <!-- ── FAB ── -->
+  <button class="etapa-cd-fab" onclick="handleUpload()" aria-label="Subir archivo a la carpeta digital">
+    <i data-lucide="upload-cloud"></i>
+    <span class="etapa-cd-fab__tooltip">Subir archivo</span>
+  </button>
+
+
+  <!-- ── Modal Subir Archivo ── -->
+  <div class="etapa-cd-modal-overlay" id="uploadModal" role="dialog" aria-modal="true" aria-label="Subir documento"
+    aria-hidden="true">
+    <div class="etapa-cd-modal">
+      <div class="etapa-cd-modal__head">
+        <h3 class="etapa-cd-modal__title">Subir documento</h3>
+        <button class="etapa-cd-modal__close" onclick="closeModal()" aria-label="Cerrar">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="etapa-cd-modal__body">
+
+        <!-- Zona de drop -->
+        <div class="etapa-cd-dropzone" id="dropzone" ondragover="event.preventDefault()" ondrop="handleDrop(event)"
+          onclick="document.getElementById('fileInput').click()" role="button" tabindex="0"
+          aria-label="Zona para arrastrar o seleccionar archivo">
+          <div class="etapa-cd-dropzone__icon">
+            <i data-lucide="cloud-upload"></i>
+          </div>
+          <p class="etapa-cd-dropzone__title">Arrastra tu archivo aquí</p>
+          <p class="etapa-cd-dropzone__sub">o haz clic para seleccionar</p>
+          <span class="etapa-cd-dropzone__hint">PDF, DOC, DOCX · Máximo 10 MB</span>
+          <input type="file" id="fileInput" accept=".pdf,.doc,.docx" hidden onchange="fileSelected(this)">
+        </div>
+
+        <!-- Campos -->
+        <div class="etapa-cd-form-field">
+          <label class="etapa-cd-form-label" for="docCategoria">Categoría del documento</label>
+          <div class="etapa-cd-select-wrap">
+            <select id="docCategoria" class="etapa-cd-select">
+              <option value="">Selecciona una categoría…</option>
+              <option>Contrato</option>
+              <option>Formato</option>
+              <option>Plan</option>
+              <option>Aval</option>
+              <option>Seguro</option>
+              <option>Evaluación</option>
+              <option>Otro</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+          </div>
+        </div>
+
+        <div class="etapa-cd-form-field">
+          <label class="etapa-cd-form-label" for="docNombre">Nombre del documento</label>
+          <input type="text" id="docNombre" class="etapa-cd-form-input"
+            placeholder="Ej: Contrato de Aprendizaje firmado">
+        </div>
+
+      </div>
+      <div class="etapa-cd-modal__foot">
+        <button class="etapa-cd-btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button class="etapa-cd-btn-primary">
+          <i data-lucide="upload-cloud"></i>
+          Subir documento
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    lucide.createIcons();
+
+    /* ── Sidebar mobile ── */
+    function openSidebar() {
+      document.getElementById('dbSidebar').classList.add('db-sidebar--open');
+      document.getElementById('dbOverlay').classList.add('db-overlay--visible');
+      document.getElementById('dbHamburger').setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      document.getElementById('dbSidebar').classList.remove('db-sidebar--open');
+      document.getElementById('dbOverlay').classList.remove('db-overlay--visible');
+      document.getElementById('dbHamburger').setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSidebar(); closeModal(); } });
+
+    /* ── Panel notificaciones ── */
+    function toggleNotifPanel() {
+      document.getElementById('notifPanel').classList.toggle('db-notif-panel--open');
+    }
+    document.addEventListener('click', e => {
+      const panel = document.getElementById('notifPanel');
+      const btn = document.getElementById('notifBtn');
+      if (panel && btn && !panel.contains(e.target) && !btn.contains(e.target))
+        panel.classList.remove('db-notif-panel--open');
+    });
+
+    /* ── Pestañas ── */
+    function switchTab(btn, panelId) {
+      document.querySelectorAll('.etapa-cd-tab').forEach(t => {
+        t.classList.remove('etapa-cd-tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      document.querySelectorAll('.etapa-cd-tabpanel').forEach(p => {
+        p.classList.add('etapa-cd-tabpanel--hidden');
+      });
+      btn.classList.add('etapa-cd-tab--active');
+      btn.setAttribute('aria-selected', 'true');
+      document.getElementById(panelId)?.classList.remove('etapa-cd-tabpanel--hidden');
+    }
+
+    /* ── Modal subir ── */
+    function handleUpload() {
+      const modal = document.getElementById('uploadModal');
+      modal.classList.add('etapa-cd-modal-overlay--open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal() {
+      const modal = document.getElementById('uploadModal');
+      modal.classList.remove('etapa-cd-modal-overlay--open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+    document.getElementById('uploadModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+    function handleDrop(e) {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file) showFilePreview(file);
+    }
+    function fileSelected(input) {
+      if (input.files[0]) showFilePreview(input.files[0]);
+    }
+    function showFilePreview(file) {
+      const dz = document.getElementById('dropzone');
+      dz.innerHTML = `
+        <div class="etapa-cd-dropzone__icon" style="color:var(--g-600)">
+          <i data-lucide="file-check-2"></i>
+        </div>
+        <p class="etapa-cd-dropzone__title" style="color:var(--tx-dark)">${file.name}</p>
+        <p class="etapa-cd-dropzone__sub">${(file.size / 1024 / 1024).toFixed(2)} MB · Listo para subir</p>
+      `;
+      lucide.createIcons();
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Académica y Documental - SENA</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS VARIABLES & PREMIUM DESIGN SYSTEM */
+        :root {
+            /* Font Families */
+            --font-headings: 'Outfit', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+
+            /* Light Theme Palette (Default) */
+            --bg-primary: #f4f7f6;
+            --bg-sidebar: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-glass-hover: rgba(57, 169, 0, 0.08);
+            --border-color: rgba(226, 232, 240, 0.8);
+            
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --text-on-primary: #ffffff;
+
+            /* Brand Colors (SENA Green) */
+            --sena-primary: #39A900;
+            --sena-hover: #2e8800;
+            --sena-light: #eef8e8;
+            --sena-secondary: #00324d; /* Dark Blue SENA */
+
+            /* Status Colors */
+            --status-pending: #f59e0b; /* Yellow */
+            --status-pending-bg: rgba(245, 158, 11, 0.12);
+            --status-review: #0ea5e9; /* Blue */
+            --status-review-bg: rgba(14, 165, 233, 0.12);
+            --status-approved: #10b981; /* Green */
+            --status-approved-bg: rgba(16, 185, 129, 0.12);
+            --status-rejected: #ef4444; /* Red */
+            --status-rejected-bg: rgba(239, 68, 68, 0.12);
+
+            /* Shadows & Glassmorphism */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 20px -2px rgba(148, 163, 184, 0.12), 0 2px 8px -1px rgba(148, 163, 184, 0.08);
+            --shadow-lg: 0 20px 25px -5px rgba(148, 163, 184, 0.15), 0 10px 10px -5px rgba(148, 163, 184, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.4);
+            --glass-blur: blur(12px);
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+
+            --transition-speed: 0.3s;
+        }
+
+        /* Dark Theme Palette Override */
+        [data-theme="dark"] {
+            --bg-primary: #090d16;
+            --bg-sidebar: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-glass-hover: rgba(57, 169, 0, 0.15);
+            --border-color: rgba(51, 65, 85, 0.5);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            --sena-light: rgba(57, 169, 0, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* BASE RESET & SCROLLBARS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-body);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: var(--border-radius-sm);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-headings);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* APP LAYOUT */
+        .app-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* SIDEBAR STYLE */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            transition: all var(--transition-speed);
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--sena-primary), var(--sena-secondary));
+            width: 42px;
+            height: 42px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-on-primary);
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(57, 169, 0, 0.3);
+        }
+
+        .logo-text h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--sena-primary);
+            line-height: 1.1;
+        }
+
+        .logo-text span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 8px 12px 4px 12px;
+        }
+
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: var(--border-radius-sm);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .menu-item a i {
+            font-size: 18px;
+            width: 20px;
+            display: flex;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .menu-item:hover a {
+            background-color: var(--bg-glass-hover);
+            color: var(--sena-primary);
+        }
+
+        .menu-item:hover a i {
+            transform: translateX(3px);
+        }
+
+        .menu-item.active a {
+            background-color: var(--sena-primary);
+            color: var(--text-on-primary);
+            box-shadow: 0 4px 15px rgba(57, 169, 0, 0.2);
+        }
+
+        .menu-item.active a i {
+            color: var(--text-on-primary);
+        }
+
+        .sidebar-footer {
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            border: 2px solid var(--sena-primary);
+        }
+
+        .user-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .user-info h4 {
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-info span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* MAIN CONTENT STYLE */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* HEADER */
+        .top-header {
+            height: 80px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-sidebar);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            backdrop-filter: var(--glass-blur);
+            transition: background-color var(--transition-speed);
+        }
+
+        .header-search {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            padding: 8px 16px;
+            width: 320px;
+            gap: 12px;
+        }
+
+        .header-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* ROLE SELECTOR FOR TESTING */
+        .role-selector-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--sena-light);
+            border: 1px dashed var(--sena-primary);
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+        }
+
+        .role-selector-container label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--sena-primary);
+        }
+
+        .role-select {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--sena-secondary);
+            cursor: pointer;
+        }
+
+        .theme-toggle, .notifications-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover, .notifications-btn:hover {
+            background-color: var(--border-color);
+            transform: scale(1.05);
+        }
+
+        /* VIEW CONTAINERS & ANIMATIONS */
+        .view-content {
+            padding: 40px;
+            flex: 1;
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .view-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CARDS & GLASSMORPHISM */
+        .glass-card {
+            background-color: var(--bg-card);
+            border: var(--glass-border);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            backdrop-filter: var(--glass-blur);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* DASHBOARD RESUMEN PAGE CSS */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--sena-secondary) 0%, #004c73 50%, var(--sena-primary) 100%);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .welcome-banner h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .welcome-banner p {
+            font-size: 15px;
+            opacity: 0.9;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .welcome-badge {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 16px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* KPI GRID */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .kpi-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .kpi-details h3 {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .kpi-details .number {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+            font-family: var(--font-headings);
+        }
+
+        .kpi-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .kpi-card.green .kpi-icon-wrapper {
+            background-color: var(--sena-light);
+            color: var(--sena-primary);
+        }
+        .kpi-card.yellow .kpi-icon-wrapper {
+            background-color: var(--status-pending-bg);
+            color: var(--status-pending);
+        }
+        .kpi-card.blue .kpi-icon-wrapper {
+            background-color: var(--status-review-bg);
+            color: var(--status-review);
+        }
+        .kpi-card.red .kpi-icon-wrapper {
+            background-color: var(--status-rejected-bg);
+            color: var(--status-rejected);
+        }
+
+        /* CHARTS GRID */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .chart-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* MOCK CHARTS (SVG based) */
+        .bar-chart-container {
+            height: 240px;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 10px 10px 0 10px;
+            position: relative;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+            gap: 8px;
+            max-width: 45px;
+        }
+
+        .bar-fill {
+            width: 100%;
+            border-radius: 6px 6px 0 0;
+            background: linear-gradient(180deg, var(--sena-primary), var(--sena-light));
+            animation: growBar 1s ease-out forwards;
+            position: relative;
+            min-height: 5px;
+        }
+
+        .bar-fill-secondary {
+            background: linear-gradient(180deg, var(--sena-secondary), rgba(0, 50, 77, 0.1));
+        }
+
+        .bar-tooltip {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--sena-secondary);
+            color: white;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .bar-item:hover .bar-fill {
+            filter: brightness(1.1);
+        }
+
+        .bar-item:hover .bar-tooltip {
+            opacity: 1;
+        }
+
+        .bar-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        @keyframes growBar {
+            from { height: 0; }
+            to { height: var(--bar-height); }
+        }
+
+        /* DONUT/PIE MOCK CHART */
+        .pie-chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 220px;
+        }
+
+        .donut-hole {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--bg-sidebar);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset var(--shadow-sm);
+        }
+
+        .donut-hole span.val {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .donut-hole span.lbl {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* ADVANCED TABLE STYLES (PASO 2) */
+        .table-view-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .table-view-title h2 {
+            font-size: 24px;
+            color: var(--text-main);
+        }
+
+        .table-view-title p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .filters-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            width: 100%;
+            background-color: var(--bg-sidebar);
+            padding: 16px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--sena-primary);
+        }
+
+        .filter-select {
+            padding: 10px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            border-color: var(--sena-primary);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: var(--border-radius-sm);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--sena-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(57, 169, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--sena-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        /* TABLE */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--bg-sidebar);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .modern-table th {
+            background-color: var(--bg-primary);
+            color: var(--text-muted);
+            padding: 16px 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modern-table td {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .modern-table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        .modern-table tbody tr:hover {
+            background-color: var(--bg-glass-hover);
+        }
+
+        /* Table components */
+        .student-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .student-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-pending {
+            background-color: var(--status-pending-bg);
+            color: var(--status-pending);
+        }
+
+        .badge-review {
+            background-color: var(--status-review-bg);
+            color: var(--status-review);
+        }
+
+        .badge-approved {
+            background-color: var(--status-approved-bg);
+            color: var(--status-approved);
+        }
+
+        .badge-rejected {
+            background-color: var(--status-rejected-bg);
+            color: var(--status-rejected);
+        }
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-icon-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-icon-action:hover {
+            border-color: var(--sena-primary);
+            color: var(--sena-primary);
+            background-color: var(--sena-light);
+            transform: scale(1.05);
+        }
+
+        /* PAGINATION */
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background-color: var(--bg-sidebar);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .pagination-info {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* MODAL POPUPS (PASO 2) */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-backdrop.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--bg-sidebar);
+            border: var(--glass-border);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-backdrop.show .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            color: var(--text-main);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-control {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            font-size: 14px;
+            outline: none;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            width: 100%;
+        }
+
+        .form-control:focus {
+            border-color: var(--sena-primary);
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background-color: var(--bg-primary);
+        }
+
+        /* TOAST NOTIFICATION SYSTEM */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast-notification {
+            background-color: var(--bg-sidebar);
+            color: var(--text-main);
+            border-left: 4px solid var(--sena-primary);
+            box-shadow: var(--shadow-lg);
+            padding: 16px 20px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            transform: translateX(120%);
+            animation: slideInToast 0.3s forwards, fadeOutToast 0.3s 2.7s forwards;
+            border-top: var(--glass-border);
+            border-right: var(--glass-border);
+            border-bottom: var(--glass-border);
+        }
+
+        @keyframes slideInToast {
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeOutToast {
+            to { opacity: 0; transform: translateY(20px); }
+        }
+
+        /* PLACEHOLDER SECTION LAYOUT FOR COMING SCREENS */
+        .placeholder-view {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .placeholder-view i {
+            font-size: 64px;
+            color: var(--sena-primary);
+            opacity: 0.3;
+            margin-bottom: 24px;
+        }
+        .placeholder-view h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .placeholder-view p {
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 16px;
+            }
+            .sidebar-logo {
+                padding-bottom: 16px;
+                margin-bottom: 16px;
+            }
+            .sidebar-menu {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+            .menu-title {
+                display: none;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            .top-header {
+                padding: 0 16px;
+                height: 70px;
+            }
+            .view-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>SENA-SAD</h2>
+                    <span>Seguimiento EP</span>
+                </div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-title">Principal</li>
+                <li class="menu-item active" data-view="dashboard">
+                    <a><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+                </li>
+                
+                <li class="menu-title">Procesos</li>
+                <li class="menu-item" data-view="aprendices">
+                    <a><i class="fa-solid fa-user-graduate"></i><span>Aprendices</span></a>
+                </li>
+                <li class="menu-item" data-view="carga">
+                    <a><i class="fa-solid fa-cloud-arrow-up"></i><span>Cargar Archivos</span></a>
+                </li>
+                <li class="menu-item" data-view="revision">
+                    <a><i class="fa-solid fa-file-signature"></i><span>Revisión y Aprobación</span></a>
+                </li>
+                <li class="menu-item" data-view="checklist">
+                    <a><i class="fa-solid fa-list-check"></i><span>Certificación</span></a>
+                </li>
+                <li class="menu-item" data-view="historial">
+                    <a><i class="fa-solid fa-clock-rotate-left"></i><span>Historial</span></a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-info">
+                    <h4 id="userName">Aarón J. Cadena</h4>
+                    <span id="userRoleTitle">Coordinador Académico</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WINDOW WRAPPER -->
+        <div class="main-wrapper">
+            
+            <!-- HEADER -->
+            <header class="top-header">
+                <!-- Search bar -->
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                    <input type="text" id="topSearchInput" placeholder="Buscar aprendiz, ficha, documento...">
+                </div>
+
+                <!-- Action controls -->
+                <div class="header-actions">
+                    <!-- Simulator Role Selector -->
+                    <div class="role-selector-container">
+                        <label for="roleSelect">Vista Rol Simulado:</label>
+                        <select id="roleSelect" class="role-select">
+                            <option value="coordinador">Coordinador Académico</option>
+                            <option value="instructor">Instructor de Seguimiento</option>
+                            <option value="aprendiz">Aprendiz SENA</option>
+                        </select>
+                    </div>
+
+                    <!-- Notification bell -->
+                    <button class="notifications-btn" title="Notificaciones">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle" title="Cambiar Tema">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- VIEW: DASHBOARD (HOME) -->
+            <div id="view-dashboard" class="view-content active">
+                <div class="welcome-banner">
+                    <span class="welcome-badge"><i class="fa-solid fa-award"></i> Etapa Productiva 2026</span>
+                    <h1 id="welcomeText">¡Bienvenido de nuevo, Aarón Josué!</h1>
+                    <p>Módulo de Gestión Académica y Documental. Aquí puedes realizar el seguimiento de los aprendices en etapa productiva, auditar documentos cargados, gestionar bitácoras de seguimiento y aprobar los checklists de certificación final.</p>
+                </div>
+
+                <!-- KPI Cards Grid -->
+                <div class="kpi-grid">
+                    <div class="glass-card kpi-card green">
+                        <div class="kpi-details">
+                            <h3>Aprendices Asignados</h3>
+                            <div class="number" id="kpi-total-aprendices">84</div>
+                        </div>
+                        <div class="kpi-icon-wrapper">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card kpi-card yellow">
+                        <div class="kpi-details">
+                            <h3>Documentos Pendientes</h3>
+                            <div class="number" id="kpi-docs-pendientes">12</div>
+                        </div>
+                        <div class="kpi-icon-wrapper">
+                            <i class="fa-solid fa-folder-open"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-card kpi-card blue">
+                        <div class="kpi-details">
+                            <h3>Bitácoras Recibidas</h3>
+                            <div class="number" id="kpi-bitacoras-cargadas">342</div>
+                        </div>
+                        <div class="kpi-icon-wrapper">
+                            <i class="fa-solid fa-book-journal-whills"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-card kpi-card red">
+                        <div class="kpi-details">
+                            <h3>Por Certificar (Apto)</h3>
+                            <div class="number" id="kpi-apto-certificar">8</div>
+                        </div>
+                        <div class="kpi-icon-wrapper">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="charts-grid">
+                    <!-- Column Chart -->
+                    <div class="glass-card">
+                        <div class="chart-header">
+                            <h3>Envío de Bitácoras Mensuales</h3>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: var(--sena-primary)"></span>
+                                    <span>Entregadas a Tiempo</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: var(--sena-secondary)"></span>
+                                    <span>Entregas Tardías</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bar-chart-container">
+                            <!-- Ene -->
+                            <div class="bar-item">
+                                <div class="bar-fill" style="--bar-height: 60%;">
+                                    <span class="bar-tooltip">Ene: 45 / Tardías: 5</span>
+                                </div>
+                                <div class="bar-fill bar-fill-secondary" style="--bar-height: 10%;"></div>
+                                <span class="bar-label">Ene</span>
+                            </div>
+                            <!-- Feb -->
+                            <div class="bar-item">
+                                <div class="bar-fill" style="--bar-height: 75%;">
+                                    <span class="bar-tooltip">Feb: 58 / Tardías: 4</span>
+                                </div>
+                                <div class="bar-fill bar-fill-secondary" style="--bar-height: 8%;"></div>
+                                <span class="bar-label">Feb</span>
+                            </div>
+                            <!-- Mar -->
+                            <div class="bar-item">
+                                <div class="bar-fill" style="--bar-height: 85%;">
+                                    <span class="bar-tooltip">Mar: 64 / Tardías: 2</span>
+                                </div>
+                                <div class="bar-fill bar-fill-secondary" style="--bar-height: 5%;"></div>
+                                <span class="bar-label">Mar</span>
+                            </div>
+                            <!-- Abr -->
+                            <div class="bar-item">
+                                <div class="bar-fill" style="--bar-height: 70%;">
+                                    <span class="bar-tooltip">Abr: 50 / Tardías: 8</span>
+                                </div>
+                                <div class="bar-fill bar-fill-secondary" style="--bar-height: 15%;"></div>
+                                <span class="bar-label">Abr</span>
+                            </div>
+                            <!-- May -->
+                            <div class="bar-item">
+                                <div class="bar-fill" style="--bar-height: 90%;">
+                                    <span class="bar-tooltip">May: 72 / Tardías: 1</span>
+                                </div>
+                                <div class="bar-fill bar-fill-secondary" style="--bar-height: 3%;"></div>
+                                <span class="bar-label">May</span>
+                            </div>
+                            <!-- Jun -->
+                            <div class="bar-item">
+                                <div class="bar-fill" style="--bar-height: 95%;">
+                                    <span class="bar-tooltip">Jun: 80 / Tardías: 0</span>
+                                </div>
+                                <div class="bar-fill bar-fill-secondary" style="--bar-height: 0%;"></div>
+                                <span class="bar-label">Jun</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Donut Chart -->
+                    <div class="glass-card">
+                        <div class="chart-header">
+                            <h3>Estado de Documentos</h3>
+                        </div>
+                        
+                        <div class="pie-chart-container">
+                            <!-- SVG Circular Donut Chart -->
+                            <svg width="200" height="200" viewBox="0 0 200 200">
+                                <!-- Background Circle -->
+                                <circle cx="100" cy="100" r="70" fill="transparent" stroke="var(--border-color)" stroke-width="20" />
+                                
+                                <!-- Approved Segment (60%) Green -->
+                                <circle cx="100" cy="100" r="70" fill="transparent" stroke="var(--status-approved)" stroke-width="20"
+                                        stroke-dasharray="439.8" stroke-dashoffset="175.9" transform="rotate(-90 100 100)" />
+                                
+                                <!-- Pending Segment (25%) Yellow -->
+                                <circle cx="100" cy="100" r="70" fill="transparent" stroke="var(--status-pending)" stroke-width="20"
+                                        stroke-dasharray="439.8" stroke-dashoffset="329.8" transform="rotate(126 100 100)" />
+                                
+                                <!-- Rejected Segment (15%) Red -->
+                                <circle cx="100" cy="100" r="70" fill="transparent" stroke="var(--status-rejected)" stroke-width="20"
+                                        stroke-dasharray="439.8" stroke-dashoffset="373.8" transform="rotate(216 100 100)" />
+                            </svg>
+                            <div class="donut-hole">
+                                <span class="val">88%</span>
+                                <span class="lbl">Completitud</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-top: 12px; font-size: 13px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span><i class="fa-solid fa-circle" style="color:var(--status-approved); font-size:10px; margin-right:6px;"></i> Aprobados</span>
+                                <span style="font-weight:600">60%</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span><i class="fa-solid fa-circle" style="color:var(--status-pending); font-size:10px; margin-right:6px;"></i> Pendientes</span>
+                                <span style="font-weight:600">25%</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span><i class="fa-solid fa-circle" style="color:var(--status-rejected); font-size:10px; margin-right:6px;"></i> Rechazados</span>
+                                <span style="font-weight:600">15%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: APRENDICES (PASO 2) -->
+            <div id="view-aprendices" class="view-content">
+                <div class="table-view-header">
+                    <div class="table-view-title">
+                        <h2>Gestión de Aprendices</h2>
+                        <p>Visualiza, busca y administra el estado de los aprendices en etapa productiva.</p>
+                    </div>
+                    <button class="btn btn-primary" id="btnRegistrarAprendiz">
+                        <i class="fa-solid fa-user-plus"></i> Registrar Aprendiz
+                    </button>
+                </div>
+
+                <!-- Filters Bar -->
+                <div class="filters-bar">
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="tableSearchInput" class="search-input" placeholder="Buscar por nombre, documento o ficha...">
+                    </div>
+                    
+                    <select id="filterEstado" class="filter-select">
+                        <option value="">Todos los Estados</option>
+                        <option value="Inducción">Inducción</option>
+                        <option value="En Formación">En Formación</option>
+                        <option value="Etapa Productiva">Etapa Productiva</option>
+                        <option value="Por Certificar">Por Certificar</option>
+                        <option value="Certificado">Certificado</option>
+                    </select>
+
+                    <select id="filterAlternativa" class="filter-select">
+                        <option value="">Todas las Alternativas</option>
+                        <option value="Contrato de Aprendizaje">Contrato de Aprendizaje</option>
+                        <option value="Pasantía">Pasantía</option>
+                        <option value="Proyecto Productivo">Proyecto Productivo</option>
+                        <option value="Vínculo Laboral">Vínculo Laboral</option>
+                        <option value="Monitoría">Monitoría</option>
+                    </select>
+                </div>
+
+                <!-- Table Container -->
+                <div class="table-responsive">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>Aprendiz</th>
+                                <th>Ficha y Programa</th>
+                                <th>Alternativa</th>
+                                <th>Instructor</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aprendicesTableBody">
+                            <!-- Dynamically loaded via JS -->
+                        </tbody>
+                    </table>
+                    
+                    <!-- Pagination footer -->
+                    <div class="pagination-container">
+                        <div class="pagination-info" id="paginationInfo">
+                            Mostrando 1-5 de 7 aprendices
+                        </div>
+                        <div class="pagination-buttons">
+                            <button class="btn btn-secondary btn-icon-action" id="btnPrevPage" style="border-radius:8px; width:auto; padding:8px 12px;">
+                                <i class="fa-solid fa-chevron-left"></i> Anterior
+                            </button>
+                            <button class="btn btn-secondary btn-icon-action" id="btnNextPage" style="border-radius:8px; width:auto; padding:8px 12px;">
+                                Siguiente <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: CARGA -->
+            <div id="view-carga" class="view-content">
+                <div class="glass-card placeholder-view">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <h2>Carga de Archivos</h2>
+                    <p>Próximamente: Zona interactiva de Drag & Drop para subir evidencias, contratos de aprendizaje e informes parciales con indicador de progreso simulado.</p>
+                </div>
+            </div>
+
+            <!-- VIEW: REVISION -->
+            <div id="view-revision" class="view-content">
+                <div class="glass-card placeholder-view">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <h2>Revisión y Aprobación</h2>
+                    <p>Próximamente: Interfaz de auditoría de documentos y bitácoras para instructores, con visor simulado, panel de comentarios, y cambio visual de estado (Aprobado/Rechazado).</p>
+                </div>
+            </div>
+
+            <!-- VIEW: CHECKLIST -->
+            <div id="view-checklist" class="view-content">
+                <div class="glass-card placeholder-view">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h2>Checklist de Certificación</h2>
+                    <p>Próximamente: Lista interactiva de requisitos indispensables para la graduación y barra de progreso calculada según las evidencias marcadas.</p>
+                </div>
+            </div>
+
+            <!-- VIEW: HISTORIAL -->
+            <div id="view-historial" class="view-content">
+                <div class="glass-card placeholder-view">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h2>Historial Documental</h2>
+                    <p>Próximamente: Línea de tiempo vertical detallando acciones de auditoría e historial del sistema con fechas y responsables de ejemplo.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL: CAMBIAR ESTADO FORMATIVO (PASO 2) -->
+    <div class="modal-backdrop" id="modalCambiarEstado">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Cambiar Estado Formativo</h3>
+                <button class="modal-close" id="btnCloseModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Aprendiz</label>
+                    <input type="text" id="modalStudentName" class="form-control" readonly style="background-color: var(--bg-primary); opacity: 0.8">
+                </div>
+                <div class="form-group">
+                    <label>Ficha y Programa</label>
+                    <input type="text" id="modalStudentFicha" class="form-control" readonly style="background-color: var(--bg-primary); opacity: 0.8">
+                </div>
+                <div class="form-group">
+                    <label>Nuevo Estado Formativo</label>
+                    <select id="modalStudentEstadoSelect" class="form-control">
+                        <option value="Inducción">Inducción</option>
+                        <option value="En Formación">En Formación</option>
+                        <option value="Etapa Productiva">Etapa Productiva</option>
+                        <option value="Por Certificar">Por Certificar</option>
+                        <option value="Certificado">Certificado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnCancelModal">Cancelar</button>
+                <button class="btn btn-primary" id="btnSaveModal">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: REGISTRAR APRENDIZ (PASO 2 SIMULACION) -->
+    <div class="modal-backdrop" id="modalRegistrarAprendiz">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Registrar Nuevo Aprendiz</h3>
+                <button class="modal-close" id="btnCloseRegisterModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="regName" class="form-control" placeholder="Ej. Juan Pérez Gómez">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="regEmail" class="form-control" placeholder="Ej. jperez@sena.edu.co">
+                </div>
+                <div class="form-group">
+                    <label>Documento de Identidad</label>
+                    <input type="text" id="regDoc" class="form-control" placeholder="Ej. 1002345678">
+                </div>
+                <div class="form-group">
+                    <label>Ficha de Caracterización</label>
+                    <input type="text" id="regFicha" class="form-control" placeholder="Ej. 2556201">
+                </div>
+                <div class="form-group">
+                    <label>Programa de Formación</label>
+                    <input type="text" id="regPrograma" class="form-control" placeholder="Ej. Análisis y Desarrollo de Software">
+                </div>
+                <div class="form-group">
+                    <label>Alternativa de Etapa Productiva</label>
+                    <select id="regAlternativa" class="form-control">
+                        <option value="Contrato de Aprendizaje">Contrato de Aprendizaje</option>
+                        <option value="Pasantía">Pasantía</option>
+                        <option value="Proyecto Productivo">Proyecto Productivo</option>
+                        <option value="Vínculo Laboral">Vínculo Laboral</option>
+                        <option value="Monitoría">Monitoría</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Instructor de Seguimiento</label>
+                    <input type="text" id="regInstructor" class="form-control" placeholder="Ej. Ing. Felipe Díaz">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnCancelRegisterModal">Cancelar</button>
+                <button class="btn btn-primary" id="btnSaveRegisterModal">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JS FOR SIDEBAR NAVIGATION & THEME SWITCHING -->
+    <script>
+        // MOCK DATABASE FOR APRENDICES (PASO 2)
+        let DB_APRENDICES = [
+            { id: 1, name: "Aarón Josué Cadena Pastrana", email: "ajcadena@sena.edu.co", document: "1002394857", ficha: "2556201", programa: "Análisis y Desarrollo de Software (ADSO)", alternativa: "Pasantía", instructor: "Ing. Felipe Díaz", estado: "Etapa Productiva", avatar: "AC" },
+            { id: 2, name: "Diana Carolina Rojas", email: "dcrojas@sena.edu.co", document: "1098765432", ficha: "2556201", programa: "Análisis y Desarrollo de Software (ADSO)", alternativa: "Contrato de Aprendizaje", instructor: "Ing. Felipe Díaz", estado: "Etapa Productiva", avatar: "DR" },
+            { id: 3, name: "Carlos Mario Restrepo", email: "cmrestrepo@sena.edu.co", document: "1012345678", ficha: "2443190", programa: "Gestión de Redes", alternativa: "Vínculo Laboral", instructor: "Dra. Claudia Pérez", estado: "Por Certificar", avatar: "CR" },
+            { id: 4, name: "Laura Valentina Torres", email: "lvtorres@sena.edu.co", document: "1032456789", ficha: "2556201", programa: "Análisis y Desarrollo de Software (ADSO)", alternativa: "Proyecto Productivo", instructor: "Ing. Felipe Díaz", estado: "Inducción", avatar: "LT" },
+            { id: 5, name: "Sebastián Castro Ortiz", email: "scastro@sena.edu.co", document: "1043210987", ficha: "2443190", programa: "Gestión de Redes", alternativa: "Contrato de Aprendizaje", instructor: "Dra. Claudia Pérez", estado: "Certificado", avatar: "SO" },
+            { id: 6, name: "Natalia Andrea Gómez", email: "nagomez@sena.edu.co", document: "1054321098", ficha: "2668310", programa: "Diseño Gráfico", alternativa: "Monitoría", instructor: "Lic. Manuel Soto", estado: "En Formación", avatar: "NG" },
+            { id: 7, name: "Mateo Bermúdez Silva", email: "mbermudez@sena.edu.co", document: "1065432109", ficha: "2668310", programa: "Diseño Gráfico", alternativa: "Contrato de Aprendizaje", instructor: "Lic. Manuel Soto", estado: "Etapa Productiva", avatar: "MB" }
+        ];
+
+        // Pagination and filter state
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let filteredData = [...DB_APRENDICES];
+        let activeEditStudentId = null;
+
+        // TOAST NOTIFICATIONS FUNCTION
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            if (type === 'error') {
+                toast.style.borderLeftColor = 'var(--status-rejected)';
+            } else if (type === 'warning') {
+                toast.style.borderLeftColor = 'var(--status-pending)';
+            }
+            
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-xmark' : 'fa-circle-exclamation'}" style="color: ${type === 'success' ? 'var(--sena-primary)' : type === 'error' ? 'var(--status-rejected)' : 'var(--status-pending)'}"></i>
+                <span>${message}</span>
+            `;
+            toastContainer.appendChild(toast);
+            
+            // Auto remove after 3s
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // SIDEBAR NAVIGATION
+            const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+            const viewContents = document.querySelectorAll('.view-content');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active from all menu items
+                    menuItems.forEach(mi => mi.classList.remove('active'));
+                    // Add active to current
+                    item.classList.add('active');
+
+                    // Hide all view contents
+                    viewContents.forEach(vc => vc.classList.remove('active'));
+                    
+                    // Show current view content
+                    const viewId = `view-${item.dataset.view}`;
+                    const targetView = document.getElementById(viewId);
+                    if (targetView) {
+                        targetView.classList.add('active');
+                    }
+                });
+            });
+
+            // THEME TOGGLER (LIGHT/DARK)
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const htmlTag = document.documentElement;
+
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = htmlTag.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                htmlTag.setAttribute('data-theme', newTheme);
+                
+                // Change icon
+                const icon = themeToggleBtn.querySelector('i');
+                if (newTheme === 'dark') {
+                    icon.className = 'fa-solid fa-sun';
+                } else {
+                    icon.className = 'fa-solid fa-moon';
+                }
+                showToast(`Modo ${newTheme === 'dark' ? 'Oscuro' : 'Claro'} activado`, 'success');
+            });
+
+            // DYNAMIC UPDATE OF DASHBOARD KPIS FROM DB_APRENDICES
+            function updateDashboardKPIs() {
+                const total = DB_APRENDICES.length;
+                const pendingCount = 12; // Static for mockup illustration
+                const bitacoras = 342;
+                const readyToCert = DB_APRENDICES.filter(s => s.estado === 'Por Certificar').length;
+
+                const role = document.getElementById('roleSelect').value;
+                
+                if (role === 'coordinador') {
+                    document.getElementById('kpi-total-aprendices').textContent = total;
+                    document.getElementById('kpi-docs-pendientes').textContent = pendingCount;
+                    document.getElementById('kpi-bitacoras-cargadas').textContent = bitacoras;
+                    document.getElementById('kpi-apto-certificar').textContent = readyToCert;
+                }
+            }
+
+            // ROLE SIMULATOR INTERACTIVITY
+            const roleSelect = document.getElementById('roleSelect');
+            const welcomeText = document.getElementById('welcomeText');
+            const userRoleTitle = document.getElementById('userRoleTitle');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+
+            roleSelect.addEventListener('change', () => {
+                const selectedRole = roleSelect.value;
+                if (selectedRole === 'coordinador') {
+                    welcomeText.textContent = '¡Bienvenido de nuevo, Aarón Josué!';
+                    userName.textContent = 'Aarón J. Cadena';
+                    userRoleTitle.textContent = 'Coordinador Académico';
+                    userAvatar.textContent = 'A';
+                    userAvatar.style.background = 'linear-gradient(135deg, #cbd5e1, #94a3b8)';
+                    
+                    updateDashboardKPIs();
+                    showToast("Vista simulada: Coordinador Académico", "success");
+                } else if (selectedRole === 'instructor') {
+                    welcomeText.textContent = '¡Bienvenido, Instructor de Seguimiento!';
+                    userName.textContent = 'Ing. Felipe Díaz';
+                    userRoleTitle.textContent = 'Instructor Técnico';
+                    userAvatar.textContent = 'FD';
+                    userAvatar.style.background = 'linear-gradient(135deg, var(--sena-primary), var(--sena-secondary))';
+                    
+                    // Update KPIs for instructor view
+                    document.getElementById('kpi-total-aprendices').textContent = '28';
+                    document.getElementById('kpi-docs-pendientes').textContent = '5';
+                    document.getElementById('kpi-bitacoras-cargadas').textContent = '112';
+                    document.getElementById('kpi-apto-certificar').textContent = '3';
+                    showToast("Vista simulada: Instructor", "success");
+                } else if (selectedRole === 'aprendiz') {
+                    welcomeText.textContent = '¡Hola, Aprendiz SENA!';
+                    userName.textContent = 'Aarón J. Cadena';
+                    userRoleTitle.textContent = 'Aprendiz - Ficha 2556201';
+                    userAvatar.textContent = 'AC';
+                    userAvatar.style.background = 'linear-gradient(135deg, #f59e0b, #ef4444)';
+                    
+                    // Update KPIs for apprentice view
+                    document.getElementById('kpi-total-aprendices').textContent = '1';
+                    document.getElementById('kpi-docs-pendientes').textContent = '2';
+                    document.getElementById('kpi-bitacoras-cargadas').textContent = '8';
+                    document.getElementById('kpi-apto-certificar').textContent = '83%';
+                    showToast("Vista simulada: Aprendiz", "success");
+                }
+            });
+
+            // ==========================================
+            // PASO 2: GESTION DE APRENDICES LOGIC
+            // ==========================================
+            const tableSearchInput = document.getElementById('tableSearchInput');
+            const topSearchInput = document.getElementById('topSearchInput');
+            const filterEstado = document.getElementById('filterEstado');
+            const filterAlternativa = document.getElementById('filterAlternativa');
+            const btnPrevPage = document.getElementById('btnPrevPage');
+            const btnNextPage = document.getElementById('btnNextPage');
+            
+            // Sync top header search with table search
+            topSearchInput.addEventListener('input', () => {
+                tableSearchInput.value = topSearchInput.value;
+                applyFilters();
+            });
+
+            tableSearchInput.addEventListener('input', () => {
+                topSearchInput.value = tableSearchInput.value;
+                applyFilters();
+            });
+
+            filterEstado.addEventListener('change', applyFilters);
+            filterAlternativa.addEventListener('change', applyFilters);
+
+            function applyFilters() {
+                const searchVal = tableSearchInput.value.toLowerCase().trim();
+                const estadoVal = filterEstado.value;
+                const alternativaVal = filterAlternativa.value;
+
+                filteredData = DB_APRENDICES.filter(student => {
+                    const matchesSearch = student.name.toLowerCase().includes(searchVal) || 
+                                          student.document.includes(searchVal) || 
+                                          student.ficha.includes(searchVal);
+                    
+                    const matchesEstado = estadoVal === "" || student.estado === estadoVal;
+                    const matchesAlternativa = alternativaVal === "" || student.alternativa === alternativaVal;
+
+                    return matchesSearch && matchesEstado && matchesAlternativa;
+                });
+
+                currentPage = 1; // Reset to page 1
+                renderTable();
+            }
+
+            function renderTable() {
+                const tbody = document.getElementById('aprendicesTableBody');
+                tbody.innerHTML = '';
+
+                // Calculate pagination indices
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+                const pageItems = filteredData.slice(startIndex, endIndex);
+
+                if (pageItems.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fa-solid fa-folder-open" style="font-size: 32px; margin-bottom: 8px; display:block; opacity:0.5;"></i> No se encontraron aprendices.</td></tr>`;
+                    document.getElementById('paginationInfo').textContent = `Mostrando 0-0 de 0 aprendices`;
+                    btnPrevPage.disabled = true;
+                    btnNextPage.disabled = true;
+                    return;
+                }
+
+                pageItems.forEach(student => {
+                    // Map statuses to CSS classes
+                    let statusClass = 'badge-pending';
+                    if (student.estado === 'Certificado') statusClass = 'badge-approved';
+                    else if (student.estado === 'Por Certificar') statusClass = 'badge-review';
+                    else if (student.estado === 'Etapa Productiva') statusClass = 'badge-review';
+                    else if (student.estado === 'En Formación') statusClass = 'badge-pending';
+                    else if (student.estado === 'Inducción') statusClass = 'badge-rejected';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>
+                            <div class="student-cell">
+                                <div class="user-avatar" style="border:none; width:34px; height:34px; font-size:12px; background:linear-gradient(135deg, var(--sena-secondary), #004c73)">${student.avatar}</div>
+                                <div class="student-info">
+                                    <h4>${student.name}</h4>
+                                    <span>${student.email}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="student-info">
+                                <h4>Ficha ${student.ficha}</h4>
+                                <span>${student.programa}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge btn-secondary" style="border: 1px solid var(--border-color);">${student.alternativa}</span>
+                        </td>
+                        <td>${student.instructor}</td>
+                        <td>
+                            <span class="badge ${statusClass}">${student.estado}</span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon-action btnVerCarpeta" data-id="${student.id}" title="Ver Carpeta Digital">
+                                    <i class="fa-solid fa-folder-closed"></i>
+                                </button>
+                                <button class="btn-icon-action btnCambiarEstado" data-id="${student.id}" title="Cambiar Estado">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                // Update pagination footer
+                document.getElementById('paginationInfo').textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${filteredData.length} aprendices`;
+                
+                btnPrevPage.disabled = currentPage === 1;
+                btnNextPage.disabled = endIndex >= filteredData.length;
+
+                // Add button listeners
+                document.querySelectorAll('.btnCambiarEstado').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const sId = parseInt(btn.dataset.id);
+                        openEditModal(sId);
+                    });
+                });
+
+                document.querySelectorAll('.btnVerCarpeta').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const sId = parseInt(btn.dataset.id);
+                        const studentObj = DB_APRENDICES.find(s => s.id === sId);
+                        showToast(`Abriendo Carpeta Digital de ${studentObj.name}`, 'success');
+                    });
+                });
+            }
+
+            // Pagination navigation
+            btnPrevPage.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
+                }
+            });
+
+            btnNextPage.addEventListener('click', () => {
+                const maxPage = Math.ceil(filteredData.length / itemsPerPage);
+                if (currentPage < maxPage) {
+                    currentPage++;
+                    renderTable();
+                }
+            });
+
+            // MODAL INTERACTION
+            const modalCambiarEstado = document.getElementById('modalCambiarEstado');
+            const btnCloseModal = document.getElementById('btnCloseModal');
+            const btnCancelModal = document.getElementById('btnCancelModal');
+            const btnSaveModal = document.getElementById('btnSaveModal');
+
+            function openEditModal(studentId) {
+                const student = DB_APRENDICES.find(s => s.id === studentId);
+                if (!student) return;
+
+                activeEditStudentId = studentId;
+                document.getElementById('modalStudentName').value = student.name;
+                document.getElementById('modalStudentFicha').value = `Ficha ${student.ficha} - ${student.programa}`;
+                document.getElementById('modalStudentEstadoSelect').value = student.estado;
+
+                modalCambiarEstado.classList.add('show');
+            }
+
+            function closeModal() {
+                modalCambiarEstado.classList.remove('show');
+                activeEditStudentId = null;
+            }
+
+            btnCloseModal.addEventListener('click', closeModal);
+            btnCancelModal.addEventListener('click', closeModal);
+            modalCambiarEstado.addEventListener('click', (e) => {
+                if (e.target === modalCambiarEstado) closeModal();
+            });
+
+            btnSaveModal.addEventListener('click', () => {
+                if (activeEditStudentId === null) return;
+                
+                const selectVal = document.getElementById('modalStudentEstadoSelect').value;
+                const studentIndex = DB_APRENDICES.findIndex(s => s.id === activeEditStudentId);
+                
+                if (studentIndex !== -1) {
+                    const student = DB_APRENDICES[studentIndex];
+                    const oldState = student.estado;
+                    student.estado = selectVal;
+
+                    showToast(`Estado formativo de ${student.name} cambiado a "${selectVal}"`, 'success');
+                    closeModal();
+                    
+                    // Re-render and update Dashboard
+                    applyFilters();
+                    updateDashboardKPIs();
+                }
+            });
+
+            // REGISTRATION MODAL
+            const modalRegistrar = document.getElementById('modalRegistrarAprendiz');
+            const btnRegistrarAprendiz = document.getElementById('btnRegistrarAprendiz');
+            const btnCloseRegisterModal = document.getElementById('btnCloseRegisterModal');
+            const btnCancelRegisterModal = document.getElementById('btnCancelRegisterModal');
+            const btnSaveRegisterModal = document.getElementById('btnSaveRegisterModal');
+
+            btnRegistrarAprendiz.addEventListener('click', () => {
+                // Clear fields
+                document.getElementById('regName').value = '';
+                document.getElementById('regEmail').value = '';
+                document.getElementById('regDoc').value = '';
+                document.getElementById('regFicha').value = '';
+                document.getElementById('regPrograma').value = '';
+                document.getElementById('regInstructor').value = '';
+                
+                modalRegistrar.classList.add('show');
+            });
+
+            function closeRegisterModal() {
+                modalRegistrar.classList.remove('show');
+            }
+
+            btnCloseRegisterModal.addEventListener('click', closeRegisterModal);
+            btnCancelRegisterModal.addEventListener('click', closeRegisterModal);
+            modalRegistrar.addEventListener('click', (e) => {
+                if (e.target === modalRegistrar) closeRegisterModal();
+            });
+
+            btnSaveRegisterModal.addEventListener('click', () => {
+                const name = document.getElementById('regName').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const documentVal = document.getElementById('regDoc').value.trim();
+                const ficha = document.getElementById('regFicha').value.trim();
+                const programa = document.getElementById('regPrograma').value.trim();
+                const alternativa = document.getElementById('regAlternativa').value;
+                const instructor = document.getElementById('regInstructor').value.trim() || "Por Asignar";
+
+                if (!name || !email || !documentVal || !ficha || !programa) {
+                    showToast('Por favor completa todos los campos requeridos', 'warning');
+                    return;
+                }
+
+                // Create mock initials for avatar
+                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+                const newStudent = {
+                    id: DB_APRENDICES.length + 1,
+                    name: name,
+                    email: email,
+                    document: documentVal,
+                    ficha: ficha,
+                    programa: programa,
+                    alternativa: alternativa,
+                    instructor: instructor,
+                    estado: 'Inducción',
+                    avatar: initials
+                };
+
+                DB_APRENDICES.push(newStudent);
+                showToast(`Aprendiz ${name} registrado con éxito en estado Inducción`, 'success');
+                closeRegisterModal();
+                
+                // Re-render and update KPIs
+                applyFilters();
+                updateDashboardKPIs();
+            });
+
+            // Initialize rendering
+            renderTable();
+            updateDashboardKPIs();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EtapaPro — Sidebar Preview</title>
+  <meta name="description" content="Vista previa del componente sidebar reutilizable para EtapaPro SENA">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Sidebar CSS -->
+  <link rel="stylesheet" href="../css/etapa-sidebar.css">
+
+  <style>
+    /* Estilos sólo para esta vista previa */
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #f1f5f9;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .preview-content {
+      margin-left: var(--etapa-sidebar-width, 268px);
+      flex: 1;
+      padding: 2.5rem;
+      transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .preview-content h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #0A3D2F;
+      margin-bottom: 0.5rem;
+    }
+
+    .preview-content p {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    /* Cuando sidebar está colapsada en mobile */
+    body.etapa-sidebar-open .preview-content {
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ╔══════════════════════════════════════════════╗ -->
+  <!-- ║         SIDEBAR ETAPAPRO — COMPONENTE        ║ -->
+  <!-- ║  Copia este bloque <aside> a tus páginas     ║ -->
+  <!-- ╚══════════════════════════════════════════════╝ -->
+
+  <!--
+    USO:
+    1. Agrega data-role="aprendiz" | "instructor" | "coordinador" | "empresa"
+       para mostrar el menú correspondiente al rol.
+    2. Ajusta data-user-name, data-user-role, data-user-initials con los datos reales.
+    3. La clase "active" en el <a> marca el ítem activo del menú.
+  -->
+  <aside
+    id="etapa-sidebar"
+    class="etapa-sidebar"
+    data-role="aprendiz"
+    data-user-name="Carlos A. Guerrero"
+    data-user-role="Aprendiz ADSO"
+    data-user-initials="CG"
+    aria-label="Menú de navegación principal"
+  >
+
+    <!-- ── Encabezado: Logo + Nombre ── -->
+    <div class="etapa-sidebar__header">
+      <div class="etapa-sidebar__logo">
+        <div class="etapa-sidebar__logo-icon" aria-hidden="true">
+          <i data-lucide="graduation-cap"></i>
+        </div>
+        <div class="etapa-sidebar__logo-text">
+          <span class="etapa-sidebar__logo-title">EtapaPro</span>
+          <span class="etapa-sidebar__logo-sub">SENA · Sistema</span>
+        </div>
+      </div>
+
+      <!-- Botón cerrar en mobile -->
+      <button
+        id="etapa-sidebar-close"
+        class="etapa-sidebar__close-btn"
+        aria-label="Cerrar menú"
+        onclick="etapaSidebarClose()"
+      >
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <!-- ── Etiqueta de rol activo ── -->
+    <div class="etapa-sidebar__role-chip" id="etapa-role-chip">
+      <i data-lucide="shield-check" class="etapa-sidebar__role-chip-icon"></i>
+      <span id="etapa-role-label">Aprendiz</span>
+    </div>
+
+    <!-- ── Navegación principal (se inyecta por JS según rol) ── -->
+    <nav class="etapa-sidebar__nav" id="etapa-sidebar-nav" aria-label="Menú principal">
+      <!-- Ítems generados dinámicamente por etapaSidebarInit() -->
+    </nav>
+
+    <!-- ── Footer: usuario + cerrar sesión ── -->
+    <div class="etapa-sidebar__footer">
+      <div class="etapa-sidebar__user" id="etapa-sidebar-user">
+        <div class="etapa-sidebar__user-avatar" id="etapa-user-avatar" aria-hidden="true">CG</div>
+        <div class="etapa-sidebar__user-info">
+          <span class="etapa-sidebar__user-name" id="etapa-user-name">Carlos A. Guerrero</span>
+          <span class="etapa-sidebar__user-role" id="etapa-user-role-label">Aprendiz ADSO</span>
+        </div>
+      </div>
+
+      <button
+        class="etapa-sidebar__logout-btn"
+        id="etapa-logout-btn"
+        aria-label="Cerrar sesión"
+        onclick="etapaSidebarLogout()"
+      >
+        <i data-lucide="log-out"></i>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ── Overlay oscuro para mobile ── -->
+  <div
+    class="etapa-sidebar__overlay"
+    id="etapa-sidebar-overlay"
+    aria-hidden="true"
+    onclick="etapaSidebarClose()"
+  ></div>
+
+  <!-- ── Botón hamburguesa (mobile) ── -->
+  <button
+    id="etapa-sidebar-toggle"
+    class="etapa-sidebar__toggle-btn"
+    aria-label="Abrir menú de navegación"
+    aria-expanded="false"
+    aria-controls="etapa-sidebar"
+    onclick="etapaSidebarOpen()"
+  >
+    <i data-lucide="menu"></i>
+  </button>
+
+  <!-- ╔══════════════════════════════════════════════╗ -->
+  <!-- ║           FIN DEL BLOQUE SIDEBAR             ║ -->
+  <!-- ╚══════════════════════════════════════════════╝ -->
+
+
+  <!-- Contenido de demo (eliminar en páginas reales) -->
+  <main class="preview-content" role="main">
+    <h1>Vista previa — Sidebar EtapaPro</h1>
+    <p>Cambia el atributo <strong>data-role</strong> en el <code>&lt;aside&gt;</code> para ver los menús de cada rol:<br>
+      <code>aprendiz</code> · <code>instructor</code> · <code>coordinador</code> · <code>empresa</code>
+    </p>
+    <br>
+    <p style="color:#0A3D2F;font-weight:600">Roles disponibles y sus menús:</p>
+    <ul style="color:#475569;margin-top:0.5rem;line-height:2">
+      <li><strong>aprendiz</strong> – Inicio, Mis Bitácoras, Carpeta Digital, Seguimientos, Asistente Virtual</li>
+      <li><strong>instructor</strong> – Inicio, Mis Aprendices, Seguimientos, Bitácoras, Reportes, Mensajes</li>
+      <li><strong>coordinador</strong> – Dashboard, Aprendices, Instructores, Empresas, Reportes, Configuración</li>
+      <li><strong>empresa</strong> – Inicio, Aprendices a cargo, Evaluaciones, Documentos, Contacto SENA</li>
+    </ul>
+  </main>
+
+
+  <!-- ── Script de la sidebar ── -->
+  <script>
+    /* ============================================================
+       ETAPAPRO SIDEBAR — Script autónomo
+       Incluye este <script> al final del <body> en cada página.
+       ============================================================ */
+
+    /* ── Definición de menús por rol ── */
+    const ETAPA_MENUS = {
+      aprendiz: {
+        label: 'Aprendiz',
+        icon: 'user',
+        items: [
+          { icon: 'layout-dashboard', label: 'Inicio',              href: 'dashboard-aprendiz.html', badge: null },
+          { icon: 'file-check-2',     label: 'Mis Bitácoras',       href: '#',                        badge: '3/6' },
+          { icon: 'folder-open',      label: 'Carpeta Digital',     href: '#',                        badge: null },
+          { icon: 'calendar',         label: 'Seguimientos',        href: '#',                        badge: null },
+          { icon: 'message-square',   label: 'Asistente Virtual',   href: '#',                        badge: null },
+        ]
+      },
+      instructor: {
+        label: 'Instructor',
+        icon: 'briefcase',
+        items: [
+          { icon: 'layout-dashboard', label: 'Inicio',              href: '#',  badge: null },
+          { icon: 'users',            label: 'Mis Aprendices',      href: '#',  badge: '24' },
+          { icon: 'calendar-check',   label: 'Seguimientos',        href: '#',  badge: '3' },
+          { icon: 'file-text',        label: 'Bitácoras',           href: '#',  badge: null },
+          { icon: 'bar-chart-2',      label: 'Reportes',            href: '#',  badge: null },
+          { icon: 'message-square',   label: 'Mensajes',            href: '#',  badge: '5' },
+        ]
+      },
+      coordinador: {
+        label: 'Coordinador',
+        icon: 'shield',
+        items: [
+          { icon: 'layout-dashboard', label: 'Dashboard',           href: '#',  badge: null },
+          { icon: 'users',            label: 'Aprendices',          href: '#',  badge: null },
+          { icon: 'user-check',       label: 'Instructores',        href: '#',  badge: null },
+          { icon: 'building-2',       label: 'Empresas',            href: '#',  badge: null },
+          { icon: 'bar-chart-2',      label: 'Reportes',            href: '#',  badge: null },
+          { icon: 'settings',         label: 'Configuración',       href: '#',  badge: null },
+        ]
+      },
+      empresa: {
+        label: 'Empresa',
+        icon: 'building',
+        items: [
+          { icon: 'layout-dashboard', label: 'Inicio',              href: '#',  badge: null },
+          { icon: 'users',            label: 'Aprendices a cargo',  href: '#',  badge: '2' },
+          { icon: 'clipboard-list',   label: 'Evaluaciones',        href: '#',  badge: null },
+          { icon: 'folder-open',      label: 'Documentos',          href: '#',  badge: null },
+          { icon: 'phone',            label: 'Contacto SENA',       href: '#',  badge: null },
+        ]
+      }
+    };
+
+    /* ── Inicialización ── */
+    function etapaSidebarInit() {
+      const sidebar  = document.getElementById('etapa-sidebar');
+      if (!sidebar) return;
+
+      const role     = sidebar.dataset.role || 'aprendiz';
+      const name     = sidebar.dataset.userName || 'Usuario';
+      const roleDesc = sidebar.dataset.userRole || '';
+      const initials = sidebar.dataset.userInitials || name.charAt(0).toUpperCase();
+      const config   = ETAPA_MENUS[role] || ETAPA_MENUS.aprendiz;
+
+      /* Datos usuario */
+      _setText('etapa-user-name', name);
+      _setText('etapa-user-role-label', roleDesc);
+      _setText('etapa-user-avatar', initials);
+      _setText('etapa-role-label', config.label);
+
+      /* Ícono del chip de rol */
+      const chip = document.getElementById('etapa-role-chip');
+      if (chip) {
+        const chipIcon = chip.querySelector('.etapa-sidebar__role-chip-icon');
+        if (chipIcon) chipIcon.setAttribute('data-lucide', config.icon);
+      }
+
+      /* Renderizar ítems de menú */
+      const nav = document.getElementById('etapa-sidebar-nav');
+      if (!nav) return;
+
+      nav.innerHTML = config.items.map((item, i) => {
+        const isActive = i === 0; /* El primero activo por defecto; cambia según necesidad */
+        const badge = item.badge
+          ? `<span class="etapa-sidebar__badge" aria-label="${item.badge} pendientes">${item.badge}</span>`
+          : '';
+        return `
+          <a href="${item.href}"
+             class="etapa-sidebar__item${isActive ? ' etapa-sidebar__item--active' : ''}"
+             aria-current="${isActive ? 'page' : 'false'}">
+            <i data-lucide="${item.icon}" class="etapa-sidebar__item-icon" aria-hidden="true"></i>
+            <span class="etapa-sidebar__item-label">${item.label}</span>
+            ${badge}
+          </a>`;
+      }).join('');
+
+      /* Reinicializar Lucide para los íconos nuevos */
+      if (window.lucide) lucide.createIcons();
+    }
+
+    /* ── Control mobile ── */
+    function etapaSidebarOpen() {
+      const sidebar  = document.getElementById('etapa-sidebar');
+      const overlay  = document.getElementById('etapa-sidebar-overlay');
+      const toggleBtn = document.getElementById('etapa-sidebar-toggle');
+      sidebar?.classList.add('etapa-sidebar--open');
+      overlay?.classList.add('etapa-sidebar__overlay--visible');
+      toggleBtn?.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('etapa-sidebar-open');
+    }
+
+    function etapaSidebarClose() {
+      const sidebar  = document.getElementById('etapa-sidebar');
+      const overlay  = document.getElementById('etapa-sidebar-overlay');
+      const toggleBtn = document.getElementById('etapa-sidebar-toggle');
+      sidebar?.classList.remove('etapa-sidebar--open');
+      overlay?.classList.remove('etapa-sidebar__overlay--visible');
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('etapa-sidebar-open');
+    }
+
+    /* ── Cerrar sesión (personaliza con tu lógica de auth) ── */
+    function etapaSidebarLogout() {
+      if (confirm('¿Seguro que deseas cerrar sesión?')) {
+        /* Reemplaza con tu lógica real: localStorage.clear(); window.location.href = '../index.html'; */
+        alert('Sesión cerrada. Redirigiendo al login…');
+      }
+    }
+
+    /* ── Utilidad ── */
+    function _setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    /* ── Cerrar con Escape ── */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') etapaSidebarClose();
+    });
+
+    /* ── Marcar ítem activo según URL actual ── */
+    function etapaSidebarMarkActive() {
+      const currentPage = window.location.pathname.split('/').pop() || '';
+      document.querySelectorAll('.etapa-sidebar__item').forEach(link => {
+        const href = link.getAttribute('href') || '';
+        const isActive = currentPage && href.includes(currentPage);
+        link.classList.toggle('etapa-sidebar__item--active', isActive);
+        link.setAttribute('aria-current', isActive ? 'page' : 'false');
+      });
+    }
+
+    /* ── Arranque ── */
+    document.addEventListener('DOMContentLoaded', () => {
+      etapaSidebarInit();
+      etapaSidebarMarkActive();
+    });
+  </script>
+
+</body>
+</html>

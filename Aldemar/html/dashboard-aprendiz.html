@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — EtapaPro SENA</title>
+  <meta name="description" content="Portal del aprendiz SENA — Seguimiento de etapa productiva">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body class="db-body">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="db-sidebar" id="dbSidebar" aria-label="Navegación principal">
+
+    <div class="db-sidebar__brand">
+      <div class="db-sidebar__logo-icon">
+        <i data-lucide="graduation-cap"></i>
+      </div>
+      <div class="db-sidebar__logo-text">
+        <span class="db-sidebar__logo-title">EtapaPro</span>
+        <span class="db-sidebar__logo-sub">SENA · Sistema</span>
+      </div>
+      <button class="db-sidebar__close" onclick="closeSidebar()" aria-label="Cerrar menú">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="db-sidebar__chip">
+      <i data-lucide="user-check"></i>
+      <span>Aprendiz</span>
+    </div>
+
+    <nav class="db-sidebar__nav" aria-label="Menú principal">
+      <a href="#" class="db-nav-item db-nav-item--active" aria-current="page">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Inicio</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="file-check-2"></i>
+        <span>Mis Bitácoras</span>
+        <span class="db-nav-badge">4/6</span>
+      </a>
+      <a href="carpeta-digital.html" class="db-nav-item">
+        <i data-lucide="folder-open"></i>
+        <span>Carpeta Digital</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="calendar"></i>
+        <span>Seguimientos</span>
+        <span class="db-nav-badge db-nav-badge--warn">1</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="building-2"></i>
+        <span>Mi Empresa</span>
+      </a>
+      <a href="#" class="db-nav-item">
+        <i data-lucide="message-square"></i>
+        <span>Asistente Virtual</span>
+      </a>
+    </nav>
+
+    <div class="db-sidebar__footer">
+      <div class="db-sidebar__user">
+        <div class="db-sidebar__avatar">CG</div>
+        <div class="db-sidebar__user-info">
+          <span class="db-sidebar__user-name">Carlos A. Guerrero</span>
+          <span class="db-sidebar__user-role">Aprendiz · ADSO</span>
+        </div>
+      </div>
+      <button class="db-sidebar__logout"
+        onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')"
+        aria-label="Cerrar sesión">
+        <i data-lucide="log-out"></i>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <div class="db-overlay" id="dbOverlay" onclick="closeSidebar()"></div>
+  <button class="db-hamburger" id="dbHamburger" onclick="openSidebar()"
+    aria-label="Abrir menú" aria-expanded="false">
+    <i data-lucide="menu"></i>
+  </button>
+
+
+  <!-- ══════════════════════════════════════
+       WRAPPER
+  ══════════════════════════════════════ -->
+  <div class="db-wrapper">
+
+    <!-- ── HEADER ── -->
+    <header class="db-header">
+      <div class="db-header__left">
+        <h1 class="db-header__title">Dashboard</h1>
+        <p class="db-header__sub">Viernes, 6 de junio de 2026 · Bienvenido de vuelta</p>
+      </div>
+      <div class="db-header__right">
+        <div class="db-header-search">
+          <i data-lucide="search"></i>
+          <input type="search" placeholder="Buscar…" aria-label="Buscar">
+        </div>
+        <button class="db-header__icon-btn" id="notifBtn"
+          aria-label="Notificaciones" onclick="toggleNotif()">
+          <i data-lucide="bell"></i>
+          <span class="db-header__notif-dot" aria-hidden="true"></span>
+        </button>
+        <div class="db-header__user">
+          <div class="db-header__user-info">
+            <span class="db-header__user-name">Carlos A. Guerrero</span>
+            <span class="db-header__user-role">Aprendiz ADSO</span>
+          </div>
+          <div class="db-header__avatar" aria-hidden="true">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Panel notificaciones -->
+    <div class="db-notif-panel" id="notifPanel" role="dialog" aria-label="Notificaciones">
+      <div class="db-notif-panel__head">
+        <span class="db-notif-panel__title">Notificaciones</span>
+        <button class="db-notif-panel__clear" onclick="toggleNotif()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <ul class="db-notif-list">
+        <li class="db-notif-item db-notif-item--unread">
+          <div class="db-notif-item__icon db-notif-item__icon--green">
+            <i data-lucide="check-circle-2"></i>
+          </div>
+          <div class="db-notif-item__body">
+            <p class="db-notif-item__msg">Bitácora N° 4 <strong>aprobada</strong> por la instructora.</p>
+            <span class="db-notif-item__time">Hace 20 min</span>
+          </div>
+        </li>
+        <li class="db-notif-item db-notif-item--unread">
+          <div class="db-notif-item__icon db-notif-item__icon--amber">
+            <i data-lucide="calendar-clock"></i>
+          </div>
+          <div class="db-notif-item__body">
+            <p class="db-notif-item__msg">Seguimiento N° 3 confirmado para el <strong>12 jun</strong>.</p>
+            <span class="db-notif-item__time">Hace 2 h</span>
+          </div>
+        </li>
+        <li class="db-notif-item">
+          <div class="db-notif-item__icon db-notif-item__icon--red">
+            <i data-lucide="file-warning"></i>
+          </div>
+          <div class="db-notif-item__body">
+            <p class="db-notif-item__msg">Formato F123 requiere firma antes del <strong>viernes</strong>.</p>
+            <span class="db-notif-item__time">Ayer, 4:15 PM</span>
+          </div>
+        </li>
+        <li class="db-notif-item">
+          <div class="db-notif-item__icon db-notif-item__icon--blue">
+            <i data-lucide="message-circle"></i>
+          </div>
+          <div class="db-notif-item__body">
+            <p class="db-notif-item__msg">Nuevo comentario en tu Bitácora N° 3.</p>
+            <span class="db-notif-item__time">Hace 3 días</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- ── CONTENIDO ── -->
+    <main class="db-main" id="main-content">
+
+      <!-- ────────────────────────────────────────
+           1. TARJETA BIENVENIDA
+      ──────────────────────────────────────── -->
+      <section class="db-welcome-card" aria-label="Bienvenida">
+        <div class="db-welcome-card__body">
+          <p class="db-welcome-card__greeting">
+            <i data-lucide="sun"></i> Buen día, Carlos
+          </p>
+          <h2 class="db-welcome-card__title">¡Vas por muy buen camino! 🎯</h2>
+          <p class="db-welcome-card__desc">
+            Llevas <strong>4 de 6 bitácoras</strong> entregadas. Tu etapa productiva va al
+            <strong>67%</strong>. Sigue así para certificarte exitosamente.
+          </p>
+          <div class="db-welcome-card__actions">
+            <a href="carpeta-digital.html" class="db-btn-primary">
+              <i data-lucide="folder-open"></i>
+              Ver carpeta digital
+            </a>
+            <button class="db-btn-ghost">
+              <i data-lucide="file-plus-2"></i>
+              Nueva bitácora
+            </button>
+          </div>
+        </div>
+        <div class="db-welcome-card__ring" aria-label="Progreso general 67%">
+          <svg viewBox="0 0 130 130" width="140" height="140">
+            <circle class="db-ring-bg"   cx="65" cy="65" r="54" fill="none" stroke-width="10"/>
+            <circle class="db-ring-fill" cx="65" cy="65" r="54" fill="none" stroke-width="10"
+              stroke-dasharray="339.29"
+              stroke-dashoffset="111.97"
+              stroke-linecap="round"
+              transform="rotate(-90 65 65)"/>
+          </svg>
+          <div class="db-ring-label">
+            <span class="db-ring-pct">67%</span>
+            <span class="db-ring-txt">Progreso</span>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ────────────────────────────────────────
+           GRID PRINCIPAL
+      ──────────────────────────────────────── -->
+      <div class="db-grid">
+
+        <!-- ══ COLUMNA IZQUIERDA ══ -->
+        <div class="db-col-main">
+
+          <!-- ──────────────────────────────────
+               2. ESTADO ACTUAL
+          ────────────────────────────────── -->
+          <div class="db-card db-card--accent-left" aria-label="Estado del proceso">
+            <div class="db-card__head">
+              <div>
+                <h3 class="db-card__title">Estado de Etapa Productiva</h3>
+                <p class="db-card__sub">Contrato de Aprendizaje · Presencial</p>
+              </div>
+              <span class="db-badge db-badge--green">
+                <i data-lucide="activity"></i> En seguimiento
+              </span>
+            </div>
+
+            <div class="db-info-grid">
+              <div class="db-info-row">
+                <span class="db-info-label"><i data-lucide="building-2"></i> Empresa</span>
+                <span class="db-info-val">Tecnologías del Cauca S.A.S.</span>
+              </div>
+              <div class="db-info-row">
+                <span class="db-info-label"><i data-lucide="user-circle"></i> Instructor</span>
+                <span class="db-info-val">Ing. María Rodríguez</span>
+              </div>
+              <div class="db-info-row">
+                <span class="db-info-label"><i data-lucide="map-pin"></i> Sede</span>
+                <span class="db-info-val">Popayán, Cauca</span>
+              </div>
+              <div class="db-info-row">
+                <span class="db-info-label"><i data-lucide="calendar-range"></i> Periodo</span>
+                <span class="db-info-val">Mar 2026 — Sep 2026</span>
+              </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="db-timeline" role="list" aria-label="Fases del proceso">
+              <div class="db-tl-item db-tl-item--done" role="listitem">
+                <div class="db-tl-dot"><i data-lucide="check"></i></div>
+                <span class="db-tl-lbl">Inicio</span>
+              </div>
+              <div class="db-tl-line db-tl-line--done"></div>
+              <div class="db-tl-item db-tl-item--active" role="listitem">
+                <div class="db-tl-dot"><span></span></div>
+                <span class="db-tl-lbl">Seguimiento</span>
+              </div>
+              <div class="db-tl-line"></div>
+              <div class="db-tl-item" role="listitem">
+                <div class="db-tl-dot"></div>
+                <span class="db-tl-lbl">Evaluación</span>
+              </div>
+              <div class="db-tl-line"></div>
+              <div class="db-tl-item" role="listitem">
+                <div class="db-tl-dot"></div>
+                <span class="db-tl-lbl">Certificación</span>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ──────────────────────────────────
+               3. PROGRESO DE BITÁCORAS
+          ────────────────────────────────── -->
+          <div class="db-card" aria-label="Progreso de bitácoras">
+            <div class="db-card__head">
+              <div>
+                <h3 class="db-card__title">Bitácoras Quincenales</h3>
+                <p class="db-card__sub">Una por cada quince días durante 6 meses</p>
+              </div>
+              <span class="db-badge db-badge--green">4 de 6</span>
+            </div>
+
+            <div class="db-progress-wrap">
+              <div class="db-progress-labels">
+                <span>Progreso de entrega</span>
+                <span class="db-progress-pct">67%</span>
+              </div>
+              <div class="db-progress-track">
+                <div class="db-progress-fill" style="width:67%"
+                  role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+
+            <ul class="db-bita-list" aria-label="Lista de bitácoras">
+              <li class="db-bita-row db-bita-row--ok">
+                <div class="db-bita-icon"><i data-lucide="file-check-2"></i></div>
+                <div class="db-bita-info">
+                  <span class="db-bita-name">Bitácora N° 1 — Semanas 1–2</span>
+                  <span class="db-bita-date">Enviada el 15/03/2026</span>
+                </div>
+                <span class="db-badge db-badge--green-sm">Aprobada</span>
+              </li>
+              <li class="db-bita-row db-bita-row--ok">
+                <div class="db-bita-icon"><i data-lucide="file-check-2"></i></div>
+                <div class="db-bita-info">
+                  <span class="db-bita-name">Bitácora N° 2 — Semanas 3–4</span>
+                  <span class="db-bita-date">Enviada el 30/03/2026</span>
+                </div>
+                <span class="db-badge db-badge--green-sm">Aprobada</span>
+              </li>
+              <li class="db-bita-row db-bita-row--ok">
+                <div class="db-bita-icon"><i data-lucide="file-check-2"></i></div>
+                <div class="db-bita-info">
+                  <span class="db-bita-name">Bitácora N° 3 — Semanas 5–6</span>
+                  <span class="db-bita-date">Enviada el 15/04/2026</span>
+                </div>
+                <span class="db-badge db-badge--green-sm">Aprobada</span>
+              </li>
+              <li class="db-bita-row db-bita-row--warn">
+                <div class="db-bita-icon"><i data-lucide="clock"></i></div>
+                <div class="db-bita-info">
+                  <span class="db-bita-name">Bitácora N° 4 — Semanas 7–8</span>
+                  <span class="db-bita-date">Enviada el 30/04/2026</span>
+                </div>
+                <span class="db-badge db-badge--amber-sm">En revisión</span>
+              </li>
+              <li class="db-bita-row db-bita-row--pending">
+                <div class="db-bita-icon"><i data-lucide="file-plus"></i></div>
+                <div class="db-bita-info">
+                  <span class="db-bita-name">Bitácora N° 5 — Semanas 9–10</span>
+                  <span class="db-bita-date">Vence el 15/06/2026</span>
+                </div>
+                <span class="db-badge db-badge--gray-sm">Pendiente</span>
+              </li>
+              <li class="db-bita-row db-bita-row--pending">
+                <div class="db-bita-icon"><i data-lucide="file-plus"></i></div>
+                <div class="db-bita-info">
+                  <span class="db-bita-name">Bitácora N° 6 — Semanas 11–12</span>
+                  <span class="db-bita-date">Vence el 30/06/2026</span>
+                </div>
+                <span class="db-badge db-badge--gray-sm">Pendiente</span>
+              </li>
+            </ul>
+
+            <button class="db-btn-primary db-btn-full">
+              <i data-lucide="file-plus-2"></i>
+              Crear Bitácora N° 5
+            </button>
+          </div>
+
+
+          <!-- ──────────────────────────────────
+               6. ACCESOS RÁPIDOS
+          ────────────────────────────────── -->
+          <div class="db-card" aria-label="Accesos rápidos">
+            <h3 class="db-card__title db-card__title--mb">Accesos Rápidos</h3>
+            <div class="db-quick-grid">
+
+              <button class="db-quick-item" aria-label="Nueva bitácora">
+                <div class="db-quick-item__icon db-quick-item__icon--green">
+                  <i data-lucide="file-plus-2"></i>
+                </div>
+                <span class="db-quick-item__lbl">Nueva<br>Bitácora</span>
+              </button>
+
+              <button class="db-quick-item" aria-label="Subir documento">
+                <div class="db-quick-item__icon db-quick-item__icon--blue">
+                  <i data-lucide="upload-cloud"></i>
+                </div>
+                <span class="db-quick-item__lbl">Subir<br>Documento</span>
+              </button>
+
+              <button class="db-quick-item" aria-label="Agendar seguimiento">
+                <div class="db-quick-item__icon db-quick-item__icon--amber">
+                  <i data-lucide="calendar-plus"></i>
+                </div>
+                <span class="db-quick-item__lbl">Agendar<br>Seguimiento</span>
+              </button>
+
+              <a href="carpeta-digital.html" class="db-quick-item" aria-label="Ver carpeta digital">
+                <div class="db-quick-item__icon db-quick-item__icon--purple">
+                  <i data-lucide="folder-git-2"></i>
+                </div>
+                <span class="db-quick-item__lbl">Carpeta<br>Digital</span>
+              </a>
+
+              <button class="db-quick-item" aria-label="Asistente virtual">
+                <div class="db-quick-item__icon db-quick-item__icon--teal">
+                  <i data-lucide="bot"></i>
+                </div>
+                <span class="db-quick-item__lbl">Asistente<br>Virtual</span>
+              </button>
+
+              <button class="db-quick-item" aria-label="Ver reportes">
+                <div class="db-quick-item__icon db-quick-item__icon--rose">
+                  <i data-lucide="bar-chart-3"></i>
+                </div>
+                <span class="db-quick-item__lbl">Mis<br>Reportes</span>
+              </button>
+
+            </div>
+          </div>
+
+        </div><!-- /col-main -->
+
+
+        <!-- ══ COLUMNA LATERAL ══ -->
+        <div class="db-col-side">
+
+          <!-- ──────────────────────────────────
+               MINI STATS
+          ────────────────────────────────── -->
+          <div class="db-stats-row">
+            <div class="db-stat-mini">
+              <div class="db-stat-mini__icon db-stat-mini__icon--green">
+                <i data-lucide="file-check-2"></i>
+              </div>
+              <div class="db-stat-mini__body">
+                <span class="db-stat-mini__num">4/6</span>
+                <span class="db-stat-mini__lbl">Bitácoras</span>
+              </div>
+            </div>
+            <div class="db-stat-mini">
+              <div class="db-stat-mini__icon db-stat-mini__icon--amber">
+                <i data-lucide="calendar-check"></i>
+              </div>
+              <div class="db-stat-mini__body">
+                <span class="db-stat-mini__num">2/3</span>
+                <span class="db-stat-mini__lbl">Seguimientos</span>
+              </div>
+            </div>
+            <div class="db-stat-mini">
+              <div class="db-stat-mini__icon db-stat-mini__icon--blue">
+                <i data-lucide="folder-open"></i>
+              </div>
+              <div class="db-stat-mini__body">
+                <span class="db-stat-mini__num">80%</span>
+                <span class="db-stat-mini__lbl">Documentos</span>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ──────────────────────────────────
+               4. PRÓXIMA CITA
+          ────────────────────────────────── -->
+          <div class="db-card db-card--top-amber" aria-label="Próximo seguimiento">
+            <div class="db-card__head">
+              <h3 class="db-card__title">Próximo Seguimiento</h3>
+              <span class="db-badge db-badge--amber">
+                <i data-lucide="clock-4"></i> 6 días
+              </span>
+            </div>
+
+            <div class="db-next-box">
+              <div class="db-next-cal">
+                <span class="db-next-cal__mon">JUN</span>
+                <span class="db-next-cal__day">12</span>
+              </div>
+              <div class="db-next-detail">
+                <span class="db-next-name">Seguimiento N° 3</span>
+                <span class="db-next-meta">
+                  <i data-lucide="clock"></i> 10:00 AM — 11:30 AM
+                </span>
+                <span class="db-next-meta">
+                  <i data-lucide="video"></i> Videollamada (Teams)
+                </span>
+              </div>
+            </div>
+
+            <div class="db-next-instructor">
+              <div class="db-next-avatar">MR</div>
+              <div class="db-next-instructor-info">
+                <span class="db-next-instructor-name">María Rodríguez</span>
+                <span class="db-next-instructor-role">Instructor de Seguimiento</span>
+              </div>
+            </div>
+
+            <div class="db-next-btns">
+              <button class="db-btn-primary">
+                <i data-lucide="video"></i> Unirse
+              </button>
+              <button class="db-btn-ghost">
+                <i data-lucide="calendar"></i> Reprogramar
+              </button>
+            </div>
+          </div>
+
+
+          <!-- ──────────────────────────────────
+               5. DOCUMENTOS PENDIENTES
+          ────────────────────────────────── -->
+          <div class="db-card" aria-label="Documentos pendientes">
+            <div class="db-card__head">
+              <div>
+                <h3 class="db-card__title">Documentos Pendientes</h3>
+                <p class="db-card__sub">2 requieren acción inmediata</p>
+              </div>
+              <span class="db-badge db-badge--red">
+                <i data-lucide="alert-circle"></i> 2
+              </span>
+            </div>
+
+            <ul class="db-doc-list" aria-label="Lista de documentos pendientes">
+              <li class="db-doc-item">
+                <div class="db-doc-icon db-doc-icon--amber">
+                  <i data-lucide="file-warning"></i>
+                </div>
+                <div class="db-doc-info">
+                  <span class="db-doc-name">Formato F123 — Concertación</span>
+                  <span class="db-doc-status db-doc-status--warn">Pendiente firma supervisor</span>
+                </div>
+                <button class="db-doc-action" aria-label="Subir formato F123">
+                  <i data-lucide="upload"></i>
+                </button>
+              </li>
+              <li class="db-doc-item">
+                <div class="db-doc-icon db-doc-icon--green">
+                  <i data-lucide="file-check"></i>
+                </div>
+                <div class="db-doc-info">
+                  <span class="db-doc-name">Contrato de Aprendizaje</span>
+                  <span class="db-doc-status db-doc-status--ok">Aprobado y verificado</span>
+                </div>
+                <button class="db-doc-action" aria-label="Ver contrato">
+                  <i data-lucide="eye"></i>
+                </button>
+              </li>
+              <li class="db-doc-item">
+                <div class="db-doc-icon db-doc-icon--red">
+                  <i data-lucide="file-clock"></i>
+                </div>
+                <div class="db-doc-info">
+                  <span class="db-doc-name">Plan de Trabajo Concertado</span>
+                  <span class="db-doc-status db-doc-status--warn">Falta formato firmado</span>
+                </div>
+                <button class="db-doc-action" aria-label="Subir plan">
+                  <i data-lucide="upload"></i>
+                </button>
+              </li>
+            </ul>
+
+            <a href="carpeta-digital.html" class="db-btn-ghost db-btn-full">
+              <i data-lucide="folder-open"></i>
+              Ver todos los documentos
+            </a>
+          </div>
+
+
+          <!-- ──────────────────────────────────
+               7. ÚLTIMAS NOTIFICACIONES
+          ────────────────────────────────── -->
+          <div class="db-card" aria-label="Actividad reciente">
+            <div class="db-card__head">
+              <h3 class="db-card__title">Actividad Reciente</h3>
+              <button class="db-link-btn">Ver todo</button>
+            </div>
+
+            <ul class="db-activity-list">
+              <li class="db-activity-item">
+                <div class="db-activity-dot db-activity-dot--green"></div>
+                <div class="db-activity-body">
+                  <p class="db-activity-msg">Bitácora N° 4 <strong>aprobada</strong> por la instructora.</p>
+                  <span class="db-activity-time">Hace 20 min</span>
+                </div>
+              </li>
+              <li class="db-activity-item">
+                <div class="db-activity-dot db-activity-dot--amber"></div>
+                <div class="db-activity-body">
+                  <p class="db-activity-msg">Seguimiento N° 3 confirmado para el <strong>12 jun</strong>.</p>
+                  <span class="db-activity-time">Hace 2 h</span>
+                </div>
+              </li>
+              <li class="db-activity-item">
+                <div class="db-activity-dot db-activity-dot--red"></div>
+                <div class="db-activity-body">
+                  <p class="db-activity-msg">Formato F123 requiere firma antes del <strong>viernes</strong>.</p>
+                  <span class="db-activity-time">Ayer, 4:15 PM</span>
+                </div>
+              </li>
+              <li class="db-activity-item">
+                <div class="db-activity-dot db-activity-dot--blue"></div>
+                <div class="db-activity-body">
+                  <p class="db-activity-msg">Nuevo comentario del instructor en Bitácora N° 3.</p>
+                  <span class="db-activity-time">Hace 3 días</span>
+                </div>
+              </li>
+              <li class="db-activity-item">
+                <div class="db-activity-dot db-activity-dot--green"></div>
+                <div class="db-activity-body">
+                  <p class="db-activity-msg">Contrato de Aprendizaje <strong>aprobado</strong>.</p>
+                  <span class="db-activity-time">15 abr, 2:00 PM</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /col-side -->
+
+      </div><!-- /db-grid -->
+
+    </main><!-- /db-main -->
+
+    <footer class="db-footer">
+      <span>EtapaPro · Sistema de Seguimiento de Aprendices · SENA Regional Cauca · v1.0</span>
+    </footer>
+
+  </div><!-- /db-wrapper -->
+
+
+  <script>
+    lucide.createIcons();
+
+    function openSidebar() {
+      document.getElementById('dbSidebar').classList.add('db-sidebar--open');
+      document.getElementById('dbOverlay').classList.add('db-overlay--visible');
+      document.getElementById('dbHamburger').setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      document.getElementById('dbSidebar').classList.remove('db-sidebar--open');
+      document.getElementById('dbOverlay').classList.remove('db-overlay--visible');
+      document.getElementById('dbHamburger').setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+    function toggleNotif() {
+      document.getElementById('notifPanel').classList.toggle('db-notif-panel--open');
+    }
+    document.addEventListener('click', e => {
+      const panel = document.getElementById('notifPanel');
+      const btn   = document.getElementById('notifBtn');
+      if (!panel.contains(e.target) && !btn.contains(e.target))
+        panel.classList.remove('db-notif-panel--open');
+    });
+  </script>
+</body>
+</html>
