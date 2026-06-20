@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seguimientos — EtapaPro SENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .time-slot {
+      padding:0.55rem 0.85rem; border:1.5px solid #e2e8f0; border-radius:8px;
+      font-size:0.85rem; font-weight:500; cursor:pointer; background:#f8fafc;
+      transition:var(--transition-fast); color:var(--text-dark);
+    }
+    .time-slot:hover { border-color:#0d6b52; color:#0d6b52; background:rgba(13,107,82,0.04); }
+    .time-slot.selected { border-color:#0d6b52; background:#0d6b52; color:#fff; }
+    .time-slot.busy { border-color:#fecaca; background:#fef2f2; color:#dc2626; cursor:not-allowed; }
+    .seg-card {
+      background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.25rem;
+      display:flex; align-items:flex-start; gap:1rem; margin-bottom:0.75rem;
+    }
+    .seg-icon {
+      width:44px; height:44px; border-radius:10px; display:flex;
+      align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .seg-icon i { width:22px; height:22px; }
+    .badge-sm { font-size:0.75rem; font-weight:600; padding:0.25rem 0.65rem; border-radius:20px; white-space:nowrap; }
+    .modal-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200;
+      display:none; align-items:center; justify-content:center;
+    }
+    .modal-overlay.open { display:flex; }
+    .modal-box {
+      background:#fff; border-radius:18px; padding:2rem; max-width:480px; width:calc(100% - 2rem);
+      box-shadow:0 25px 60px rgba(0,0,0,0.15); animation:slideUp 0.25s ease;
+    }
+    @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .modal-title { font-family:var(--font-family-title); font-size:1.2rem; font-weight:700; margin-bottom:0.25rem; }
+    .section-label {
+      font-size:0.75rem; font-weight:700; letter-spacing:0.06em;
+      text-transform:uppercase; color:var(--text-muted); margin-bottom:0.75rem;
+    }
+    .form-field { margin-bottom:1.25rem; }
+    .form-field label { display:block; font-size:0.85rem; font-weight:600; color:var(--text-medium); margin-bottom:0.4rem; }
+    .form-field select, .form-field textarea, .form-field input {
+      width:100%; padding:0.75rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px;
+      font-family:var(--font-family-body); font-size:0.9rem; color:var(--text-dark);
+      background:#f8fafc; transition:var(--transition-fast);
+    }
+    .form-field select:focus, .form-field textarea:focus, .form-field input:focus {
+      outline:none; border-color:#0d6b52; background:#fff;
+      box-shadow:0 0 0 3px rgba(13,107,82,0.1);
+    }
+    .form-field textarea { resize:vertical; min-height:80px; }
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo-container-sidebar"><i data-lucide="graduation-cap" class="logo-icon-sidebar"></i></div>
+      <div class="logo-text-sidebar">
+        <span class="logo-title-sidebar">EtapaPro</span>
+        <span class="logo-subtitle-sidebar">SENA · Sistema</span>
+      </div>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-aprendiz.html" class="menu-item"><i data-lucide="layout-dashboard"></i><span>Inicio</span></a>
+      <a href="mis-bitacoras.html" class="menu-item"><i data-lucide="file-check-2"></i><span>Mis Bitácoras</span><span class="menu-badge">4/6</span></a>
+      <a href="carpeta-digital.html" class="menu-item"><i data-lucide="folder-open"></i><span>Carpeta Digital</span></a>
+      <a href="seguimientos-aprendiz.html" class="menu-item active"><i data-lucide="calendar"></i><span>Seguimientos</span><span class="menu-badge">1</span></a>
+      <a href="mi-empresa.html" class="menu-item"><i data-lucide="building-2"></i><span>Mi Empresa</span></a>
+      <a href="notificaciones.html" class="menu-item"><i data-lucide="bell"></i><span>Notificaciones</span><span class="menu-badge">3</span></a>
+      <a href="chatbot.html" class="menu-item"><i data-lucide="message-square"></i><span>Asistente Virtual</span></a>
+      <a href="perfil-usuario.html" class="menu-item"><i data-lucide="user-circle"></i><span>Mi Perfil</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-profile sidebar-footer-profile">
+        <div class="avatar-display avatar-display--sidebar">CG</div>
+        <div class="user-info user-info--sidebar">
+          <span class="user-name-display user-name--sidebar">Carlos Guerrero</span>
+          <span class="user-role-display user-role--sidebar">Aprendiz ADSO</span>
+        </div>
+      </div>
+      <a href="#" class="menu-item logout" onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')">
+        <i data-lucide="log-out"></i><span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-wrapper">
+    <header class="main-header">
+      <div>
+        <h1 class="header-title">Mis Seguimientos</h1>
+        <p class="header-subtitle">Programa y gestiona tus citas de seguimiento con el instructor</p>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" onclick="window.location.href='notificaciones.html'">
+          <i data-lucide="bell"></i><span class="notif-badge-dot"></span>
+        </button>
+        <div class="user-profile">
+          <div class="user-info">
+            <span class="user-name-display">Carlos A. Guerrero</span>
+            <span class="user-role-display">Aprendiz · ADSO</span>
+          </div>
+          <div class="avatar-display">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+
+      <!-- Stats -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:0.5rem;">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:1.25rem;display:flex;align-items:center;gap:0.75rem;">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="check-circle" style="width:20px;height:20px;color:#059669;"></i></div>
+          <div><div style="font-size:1.4rem;font-weight:700;color:var(--text-dark);">2</div><div style="font-size:0.78rem;color:var(--text-muted);">Completados</div></div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:1.25rem;display:flex;align-items:center;gap:0.75rem;">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="calendar-clock" style="width:20px;height:20px;color:#d97706;"></i></div>
+          <div><div style="font-size:1.4rem;font-weight:700;color:var(--text-dark);">1</div><div style="font-size:0.78rem;color:var(--text-muted);">Programado</div></div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:1.25rem;display:flex;align-items:center;gap:0.75rem;">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(13,107,82,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="calendar-range" style="width:20px;height:20px;color:#0d6b52;"></i></div>
+          <div><div style="font-size:1.4rem;font-weight:700;color:var(--text-dark);">3</div><div style="font-size:0.78rem;color:var(--text-muted);">Total requeridos</div></div>
+        </div>
+      </div>
+
+      <!-- Grid 2 columnas -->
+      <div style="display:grid; grid-template-columns:1fr 340px; gap:1.5rem;">
+
+        <!-- Lista de seguimientos -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h2 style="font-family:var(--font-family-title); font-size:1rem; font-weight:700; color:var(--text-dark);">Mis Seguimientos</h2>
+            <button class="submit-btn" style="padding:0.55rem 1rem; font-size:0.85rem; border-radius:10px; gap:0.4rem; width:auto;" onclick="openModal()">
+              <i data-lucide="calendar-plus" style="width:16px;height:16px;"></i> Solicitar cita
+            </button>
+          </div>
+
+          <!-- Próximo seguimiento destacado -->
+          <div style="background:linear-gradient(135deg,#0d6b52,#074736);border-radius:16px;padding:1.5rem;color:#fff;margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+              <div>
+                <div style="font-size:0.78rem;opacity:0.8;margin-bottom:0.25rem;">PRÓXIMO SEGUIMIENTO</div>
+                <div style="font-family:var(--font-family-title);font-size:1.1rem;font-weight:700;">Seguimiento N° 3</div>
+              </div>
+              <span style="background:rgba(255,255,255,0.15);border-radius:20px;padding:0.3rem 0.75rem;font-size:0.78rem;font-weight:600;">En 6 días</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:1rem;">
+              <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;opacity:0.9;">
+                <i data-lucide="calendar" style="width:16px;height:16px;"></i> Jueves 12 jun 2026
+              </div>
+              <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;opacity:0.9;">
+                <i data-lucide="clock" style="width:16px;height:16px;"></i> 10:00 – 11:30 AM
+              </div>
+              <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;opacity:0.9;">
+                <i data-lucide="video" style="width:16px;height:16px;"></i> Virtual (Teams)
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.08);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1rem;">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;">MR</div>
+              <div>
+                <div style="font-size:0.88rem;font-weight:600;">María Rodríguez</div>
+                <div style="font-size:0.75rem;opacity:0.8;">Instructora de Seguimiento</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:0.75rem;">
+              <button style="background:rgba(255,255,255,0.15);border:none;color:#fff;padding:0.55rem 1rem;border-radius:8px;font-family:var(--font-family-body);font-size:0.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:0.4rem;">
+                <i data-lucide="video" style="width:15px;height:15px;"></i> Unirse
+              </button>
+              <button style="background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;padding:0.55rem 1rem;border-radius:8px;font-family:var(--font-family-body);font-size:0.85rem;cursor:pointer;">
+                Reprogramar
+              </button>
+            </div>
+          </div>
+
+          <!-- Historial -->
+          <h3 style="font-size:0.82rem;font-weight:700;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.75rem;">Historial</h3>
+
+          <div class="seg-card">
+            <div class="seg-icon" style="background:rgba(16,185,129,0.1);color:#059669;"><i data-lucide="calendar-check"></i></div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                  <div style="font-size:0.9rem;font-weight:600;color:var(--text-dark);">Seguimiento N° 2</div>
+                  <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.15rem;">30/04/2026 · 02:00 PM · Presencial · Ing. Rodríguez</div>
+                </div>
+                <span class="badge-sm" style="background:#e8f8ef;color:#14532d;">Completado</span>
+              </div>
+              <div style="font-size:0.82rem;color:var(--text-medium);margin-top:0.5rem;padding:0.5rem 0.75rem;background:#f8fafc;border-radius:8px;">
+                <strong>Observación:</strong> Buen desempeño. Continuar con el plan de trabajo concertado.
+              </div>
+            </div>
+          </div>
+
+          <div class="seg-card">
+            <div class="seg-icon" style="background:rgba(16,185,129,0.1);color:#059669;"><i data-lucide="calendar-check"></i></div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                  <div style="font-size:0.9rem;font-weight:600;color:var(--text-dark);">Seguimiento N° 1</div>
+                  <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.15rem;">15/03/2026 · 10:00 AM · Virtual · Ing. Rodríguez</div>
+                </div>
+                <span class="badge-sm" style="background:#e8f8ef;color:#14532d;">Completado</span>
+              </div>
+              <div style="font-size:0.82rem;color:var(--text-medium);margin-top:0.5rem;padding:0.5rem 0.75rem;background:#f8fafc;border-radius:8px;">
+                <strong>Observación:</strong> Inicio exitoso. Documentación al día.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel lateral: solicitar cita -->
+        <div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.5rem;position:sticky;top:80px;">
+            <h3 style="font-family:var(--font-family-title);font-size:1rem;font-weight:700;color:var(--text-dark);margin-bottom:1.25rem;">Solicitar Seguimiento</h3>
+
+            <div class="form-field">
+              <label>Modalidad</label>
+              <select>
+                <option>Virtual (Videollamada)</option>
+                <option>Presencial</option>
+                <option>Telefónica</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label>Fecha</label>
+              <input type="date" value="2026-06-19">
+            </div>
+
+            <div style="margin-bottom:1.25rem;">
+              <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-medium);margin-bottom:0.6rem;">Hora disponible</label>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem;">
+                <button class="time-slot">08:00</button>
+                <button class="time-slot">08:30</button>
+                <button class="time-slot busy">09:00 ✗</button>
+                <button class="time-slot">09:30</button>
+                <button class="time-slot selected">10:00</button>
+                <button class="time-slot busy">10:30 ✗</button>
+                <button class="time-slot">11:00</button>
+                <button class="time-slot">14:00</button>
+                <button class="time-slot">15:00</button>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.6rem;">
+                <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.75rem;color:var(--text-muted);">
+                  <div style="width:12px;height:12px;border-radius:3px;background:#f8fafc;border:1.5px solid #e2e8f0;"></div> Disponible
+                </div>
+                <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.75rem;color:var(--text-muted);">
+                  <div style="width:12px;height:12px;border-radius:3px;background:#0d6b52;"></div> Seleccionado
+                </div>
+                <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.75rem;color:var(--text-muted);">
+                  <div style="width:12px;height:12px;border-radius:3px;background:#fef2f2;border:1.5px solid #fecaca;"></div> Ocupado
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Observaciones (opcional)</label>
+              <textarea placeholder="Temas a tratar en el seguimiento..."></textarea>
+            </div>
+
+            <button class="submit-btn" style="border-radius:10px;" onclick="showConfirm()">
+              <i data-lucide="send" style="width:16px;height:16px;"></i>
+              <span>Solicitar cita</span>
+            </button>
+
+            <!-- Confirmación -->
+            <div id="confirmMsg" style="display:none;margin-top:1rem;background:#e8f8ef;border:1px solid #bbf7d0;border-radius:10px;padding:0.75rem 1rem;">
+              <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;font-weight:600;color:#14532d;">
+                <i data-lucide="check-circle" style="width:16px;height:16px;"></i>
+                ¡Solicitud enviada!
+              </div>
+              <p style="font-size:0.8rem;color:#166534;margin-top:0.25rem;">Tu cita quedó pendiente de confirmación por el instructor.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL solicitar (versión alternativa) -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;">
+        <div>
+          <div class="modal-title">Solicitar Seguimiento</div>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Completa los datos para agendar tu cita</p>
+        </div>
+        <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);padding:0.25rem;">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="form-field">
+        <label>Instructor</label>
+        <select><option>Ing. María Rodríguez</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-field">
+          <label>Modalidad</label>
+          <select><option>Virtual</option><option>Presencial</option><option>Telefónica</option></select>
+        </div>
+        <div class="form-field">
+          <label>Fecha</label>
+          <input type="date" value="2026-06-19">
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Observaciones</label>
+        <textarea placeholder="Temas a tratar..."></textarea>
+      </div>
+      <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+        <button onclick="closeModal()" style="padding:0.65rem 1.25rem;border:1.5px solid #e2e8f0;border-radius:10px;background:#f8fafc;cursor:pointer;font-family:var(--font-family-body);font-size:0.9rem;">Cancelar</button>
+        <button class="submit-btn" style="border-radius:10px;width:auto;" onclick="closeModal()">
+          <i data-lucide="send" style="width:15px;height:15px;"></i> Enviar solicitud
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    document.querySelectorAll('.time-slot:not(.busy)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+    });
+
+    function showConfirm() {
+      document.getElementById('confirmMsg').style.display = 'block';
+      lucide.createIcons();
+    }
+    function openModal()  { document.getElementById('modal').classList.add('open'); }
+    function closeModal() { document.getElementById('modal').classList.remove('open'); }
+  </script>
+</body>
+</html>

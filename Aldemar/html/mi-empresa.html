@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Empresa — EtapaPro SENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .info-card { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.5rem; margin-bottom:1rem; }
+    .info-card-title { font-family:var(--font-family-title); font-size:0.95rem; font-weight:700; color:var(--text-dark); margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+    .info-card-title i { width:18px; height:18px; color:#0d6b52; }
+    .info-row { display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0; border-bottom:1px solid #f1f5f9; font-size:0.88rem; }
+    .info-row:last-child { border-bottom:none; }
+    .info-row .lbl { color:var(--text-muted); display:flex; align-items:center; gap:0.4rem; }
+    .info-row .lbl i { width:14px; height:14px; }
+    .info-row .val { font-weight:600; color:var(--text-dark); text-align:right; }
+    .badge-sm { font-size:0.75rem; font-weight:600; padding:0.25rem 0.65rem; border-radius:20px; }
+    .badge-green { background:#e8f8ef; color:#14532d; }
+    .badge-amber { background:#fff8e6; color:#92400e; }
+    .action-btn {
+      display:flex; align-items:center; gap:0.6rem; width:100%;
+      padding:0.85rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px;
+      background:#f8fafc; color:var(--text-dark); cursor:pointer; font-family:var(--font-family-body);
+      font-size:0.88rem; font-weight:500; transition:var(--transition-fast); margin-bottom:0.6rem; text-align:left;
+    }
+    .action-btn:hover { border-color:#0d6b52; color:#0d6b52; background:rgba(13,107,82,0.04); }
+    .action-btn i { width:18px; height:18px; flex-shrink:0; }
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200; display:none; align-items:center; justify-content:center; }
+    .modal-overlay.open { display:flex; }
+    .modal-box { background:#fff; border-radius:18px; padding:2rem; max-width:500px; width:calc(100% - 2rem); box-shadow:0 25px 60px rgba(0,0,0,0.15); }
+    .form-field { margin-bottom:1rem; }
+    .form-field label { display:block; font-size:0.85rem; font-weight:600; color:var(--text-medium); margin-bottom:0.4rem; }
+    .form-field select, .form-field textarea, .form-field input {
+      width:100%; padding:0.75rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px;
+      font-family:var(--font-family-body); font-size:0.9rem; color:var(--text-dark); background:#f8fafc;
+    }
+    .form-field select:focus, .form-field textarea:focus, .form-field input:focus {
+      outline:none; border-color:#0d6b52; background:#fff; box-shadow:0 0 0 3px rgba(13,107,82,0.1);
+    }
+    .form-field textarea { resize:vertical; min-height:90px; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo-container-sidebar"><i data-lucide="graduation-cap" class="logo-icon-sidebar"></i></div>
+      <div class="logo-text-sidebar">
+        <span class="logo-title-sidebar">EtapaPro</span>
+        <span class="logo-subtitle-sidebar">SENA · Sistema</span>
+      </div>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-aprendiz.html" class="menu-item"><i data-lucide="layout-dashboard"></i><span>Inicio</span></a>
+      <a href="mis-bitacoras.html" class="menu-item"><i data-lucide="file-check-2"></i><span>Mis Bitácoras</span><span class="menu-badge">4/6</span></a>
+      <a href="carpeta-digital.html" class="menu-item"><i data-lucide="folder-open"></i><span>Carpeta Digital</span></a>
+      <a href="seguimientos-aprendiz.html" class="menu-item"><i data-lucide="calendar"></i><span>Seguimientos</span><span class="menu-badge">1</span></a>
+      <a href="mi-empresa.html" class="menu-item active"><i data-lucide="building-2"></i><span>Mi Empresa</span></a>
+      <a href="notificaciones.html" class="menu-item"><i data-lucide="bell"></i><span>Notificaciones</span><span class="menu-badge">3</span></a>
+      <a href="chatbot.html" class="menu-item"><i data-lucide="message-square"></i><span>Asistente Virtual</span></a>
+      <a href="perfil-usuario.html" class="menu-item"><i data-lucide="user-circle"></i><span>Mi Perfil</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-profile sidebar-footer-profile">
+        <div class="avatar-display avatar-display--sidebar">CG</div>
+        <div class="user-info user-info--sidebar">
+          <span class="user-name-display user-name--sidebar">Carlos Guerrero</span>
+          <span class="user-role-display user-role--sidebar">Aprendiz ADSO</span>
+        </div>
+      </div>
+      <a href="#" class="menu-item logout" onclick="confirm('¿Cerrar sesión?') && (window.location.href='iniciosesion.html')">
+        <i data-lucide="log-out"></i><span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-wrapper">
+    <header class="main-header">
+      <div>
+        <h1 class="header-title">Mi Empresa</h1>
+        <p class="header-subtitle">Información de la empresa patrocinadora de tu etapa productiva</p>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" onclick="window.location.href='notificaciones.html'"><i data-lucide="bell"></i><span class="notif-badge-dot"></span></button>
+        <div class="user-profile">
+          <div class="user-info"><span class="user-name-display">Carlos A. Guerrero</span><span class="user-role-display">Aprendiz · ADSO</span></div>
+          <div class="avatar-display">CG</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <div style="display:grid; grid-template-columns:1fr 300px; gap:1.5rem;">
+
+        <!-- Columna principal -->
+        <div>
+          <!-- Cabecera empresa -->
+          <div class="info-card" style="display:flex; align-items:center; gap:1.5rem; border-left:4px solid #0d6b52;">
+            <div style="width:72px;height:72px;border-radius:16px;background:rgba(13,107,82,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i data-lucide="building-2" style="width:36px;height:36px;color:#0d6b52;"></i>
+            </div>
+            <div>
+              <h2 style="font-family:var(--font-family-title);font-size:1.25rem;font-weight:700;color:var(--text-dark);">Tecnologías del Cauca S.A.S.</h2>
+              <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">NIT: 900.123.456-7</div>
+              <div style="margin-top:0.5rem;"><span class="badge-sm badge-green">Empresa activa</span></div>
+            </div>
+          </div>
+
+          <!-- Datos generales -->
+          <div class="info-card">
+            <div class="info-card-title"><i data-lucide="info"></i> Información General</div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="briefcase"></i> Razón social</span>
+              <span class="val">Tecnologías del Cauca S.A.S.</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="hash"></i> NIT</span>
+              <span class="val">900.123.456-7</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="map-pin"></i> Dirección</span>
+              <span class="val">Calle 5 N° 4-70, Popayán, Cauca</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="phone"></i> Teléfono</span>
+              <span class="val">(2) 820-1234</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="mail"></i> Correo</span>
+              <span class="val">contacto@tecnocauca.com</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="globe"></i> Sitio web</span>
+              <span class="val">www.tecnocauca.com</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="layers"></i> Sector económico</span>
+              <span class="val">Tecnología e Informática</span>
+            </div>
+          </div>
+
+          <!-- Supervisor -->
+          <div class="info-card">
+            <div class="info-card-title"><i data-lucide="user-check"></i> Supervisor de Empresa</div>
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding:1rem;background:#f8fafc;border-radius:10px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:rgba(13,107,82,0.1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#0d6b52;flex-shrink:0;">RH</div>
+              <div>
+                <div style="font-size:0.95rem;font-weight:600;color:var(--text-dark);">Ricardo Hernández Vargas</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Jefe de Sistemas · Supervisor directo</div>
+              </div>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="mail"></i> Correo</span>
+              <span class="val">r.hernandez@tecnocauca.com</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="smartphone"></i> Celular</span>
+              <span class="val">315 874 2201</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="briefcase"></i> Cargo</span>
+              <span class="val">Jefe de Sistemas</span>
+            </div>
+          </div>
+
+          <!-- Contrato -->
+          <div class="info-card">
+            <div class="info-card-title"><i data-lucide="file-text"></i> Detalles del Contrato</div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="calendar-range"></i> Inicio etapa</span>
+              <span class="val">01/03/2026</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="calendar-x"></i> Fin etapa</span>
+              <span class="val">30/09/2026 (6 meses)</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="clock"></i> Horario</span>
+              <span class="val">Lun–Vie · 08:00 – 05:00 PM</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="banknote"></i> Apoyo de sostenimiento</span>
+              <span class="val">$768.250 / mes</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl"><i data-lucide="file-check"></i> Tipo</span>
+              <span class="val">Contrato de aprendizaje</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna lateral: acciones -->
+        <div>
+          <div class="info-card" style="position:sticky;top:80px;">
+            <div class="info-card-title" style="margin-bottom:1rem;"><i data-lucide="zap"></i> Acciones</div>
+
+            <button class="action-btn" onclick="window.print()">
+              <i data-lucide="file-down"></i>
+              Descargar carta de presentación
+            </button>
+            <button class="action-btn" onclick="openNovedadModal()">
+              <i data-lucide="alert-triangle"></i>
+              Reportar novedad o cambio
+            </button>
+            <button class="action-btn">
+              <i data-lucide="mail"></i>
+              Enviar mensaje al supervisor
+            </button>
+            <button class="action-btn">
+              <i data-lucide="map-pin"></i>
+              Ver ubicación en mapa
+            </button>
+
+            <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid #f1f5f9;">
+              <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem;">Estado de la vinculación</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#10b981;"></div>
+                <span style="font-size:0.85rem;color:var(--text-dark);font-weight:500;">Activa</span>
+              </div>
+              <div style="background:#f8fafc;border-radius:8px;padding:0.75rem;">
+                <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text-muted);margin-bottom:0.4rem;">
+                  <span>Progreso etapa</span><span style="font-weight:600;color:var(--text-dark);">67%</span>
+                </div>
+                <div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;">
+                  <div style="height:100%;width:67%;background:#0d6b52;border-radius:3px;"></div>
+                </div>
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.4rem;">~3 meses restantes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal novedad -->
+  <div class="modal-overlay" id="novedadModal">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;">
+        <div>
+          <div style="font-family:var(--font-family-title);font-size:1.1rem;font-weight:700;color:var(--text-dark);">Reportar Novedad o Cambio</div>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.2rem;">Informa al instructor sobre cambios en tu empresa</p>
+        </div>
+        <button onclick="closeNovedadModal()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+      </div>
+      <div class="form-field">
+        <label>Tipo de novedad</label>
+        <select>
+          <option>Cambio de supervisor</option>
+          <option>Cambio de empresa</option>
+          <option>Cambio de horario</option>
+          <option>Ausentismo o incapacidad</option>
+          <option>Dificultades en el trabajo</option>
+          <option>Otra novedad</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Fecha del cambio</label>
+        <input type="date">
+      </div>
+      <div class="form-field">
+        <label>Descripción detallada</label>
+        <textarea placeholder="Describe la novedad o cambio ocurrido..."></textarea>
+      </div>
+      <div class="form-field">
+        <label>Documento de soporte (opcional)</label>
+        <div style="border:1.5px dashed #e2e8f0;border-radius:10px;padding:1.5rem;text-align:center;color:var(--text-muted);cursor:pointer;font-size:0.85rem;">
+          <i data-lucide="upload-cloud" style="width:24px;height:24px;margin-bottom:0.5rem;display:block;margin-left:auto;margin-right:auto;"></i>
+          Clic para adjuntar archivo
+        </div>
+      </div>
+      <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+        <button onclick="closeNovedadModal()" style="padding:0.65rem 1.25rem;border:1.5px solid #e2e8f0;border-radius:10px;background:#f8fafc;cursor:pointer;font-family:var(--font-family-body);font-size:0.9rem;">Cancelar</button>
+        <button class="submit-btn" style="border-radius:10px;width:auto;" onclick="closeNovedadModal()">
+          <i data-lucide="send" style="width:15px;height:15px;"></i> Enviar reporte
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function openNovedadModal()  { document.getElementById('novedadModal').classList.add('open'); lucide.createIcons(); }
+    function closeNovedadModal() { document.getElementById('novedadModal').classList.remove('open'); }
+  </script>
+</body>
+</html>

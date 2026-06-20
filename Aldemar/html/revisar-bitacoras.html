@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisar Bitácoras — EtapaPro SENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--green:#0d6b52;--green-light:#158b6c;--green-dark:#074736;--green-xlight:rgba(13,107,82,.08);--accent:#0ed29a;--bg:#f8fafc;--border:#e2e8f0;--dark:#1e293b;--mid:#475569;--muted:#94a3b8;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--info:#3b82f6;--font-title:'Outfit',sans-serif;--font-body:'Plus Jakarta Sans',sans-serif;}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--dark);display:flex;min-height:100vh;}
+    .sidebar{width:250px;background:var(--green-dark);color:#fff;display:flex;flex-direction:column;padding:1.75rem 1.25rem;position:fixed;top:0;left:0;height:100vh;z-index:100;}
+    .sidebar-brand{display:flex;align-items:center;gap:.65rem;margin-bottom:2rem;}
+    .brand-icon{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .brand-icon i{width:18px;height:18px;color:var(--accent);}
+    .brand-title{font-family:var(--font-title);font-size:1.1rem;font-weight:700;}
+    .brand-sub{font-size:.72rem;color:rgba(255,255,255,.6);}
+    .role-chip{background:rgba(14,210,154,.15);border:1px solid rgba(14,210,154,.3);color:var(--accent);font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:.4rem;}
+    nav{display:flex;flex-direction:column;gap:.35rem;flex:1;}
+    .nav-item{display:flex;align-items:center;gap:.7rem;padding:.75rem .9rem;border-radius:10px;color:rgba(255,255,255,.65);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .2s;}
+    .nav-item i{width:17px;height:17px;flex-shrink:0;}
+    .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+    .nav-item.active{background:var(--green);color:#fff;}
+    .nav-badge{margin-left:auto;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;}
+    .nb-red{background:var(--danger);color:#fff;}
+    .sidebar-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;}
+    .s-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;}
+    .main{margin-left:250px;flex:1;display:flex;flex-direction:column;}
+    .header{background:#fff;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;}
+    .header-title{font-family:var(--font-title);font-size:1.4rem;font-weight:700;}
+    .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--mid);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;}
+    .icon-btn i{width:17px;height:17px;}
+    .notif-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid #fff;}
+    .h-avatar{width:38px;height:38px;border-radius:50%;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;}
+    .content{padding:2rem;flex:1;}
+    .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+    .badge{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;}
+    .badge-green{background:#e8f8ef;color:#14532d;}
+    .badge-amber{background:#fff8e6;color:#92400e;}
+    .badge-red{background:#fef2f2;color:#7f1d1d;}
+    .badge-gray{background:#f1f5f9;color:#475569;}
+    .btn{padding:.55rem 1rem;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:var(--font-body);border:1.5px solid;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem;}
+    .btn i{width:15px;height:15px;}
+    .btn-primary{background:var(--green);color:#fff;border-color:var(--green);}
+    .btn-primary:hover{background:var(--green-light);}
+    .btn-ghost{background:var(--bg);color:var(--mid);border-color:var(--border);}
+    .btn-ghost:hover{border-color:#94a3b8;}
+    .btn-danger{background:#fef2f2;color:var(--danger);border-color:#fecaca;}
+    .btn-sm{padding:.35rem .75rem;font-size:.8rem;}
+    .avatar{width:36px;height:36px;border-radius:50%;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0;}
+    .filter-bar{display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;align-items:center;}
+    .filter-btn{padding:.4rem .9rem;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--mid);transition:all .15s;font-family:var(--font-body);}
+    .filter-btn.active{border-color:var(--green);background:var(--green-xlight);color:var(--green);}
+    /* Bitácora card expandible */
+    .bit-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:.85rem;transition:box-shadow .2s;}
+    .bit-card:hover{box-shadow:0 4px 16px rgba(148,163,184,.1);}
+    .bit-head{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;cursor:pointer;}
+    .bit-num{width:36px;height:36px;border-radius:10px;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.88rem;flex-shrink:0;}
+    .bit-meta{flex:1;}
+    .bit-title{font-size:.92rem;font-weight:700;color:var(--dark);}
+    .bit-sub{font-size:.78rem;color:var(--muted);margin-top:.1rem;}
+    .bit-actions{display:flex;gap:.5rem;align-items:center;}
+    .bit-body{padding:1.25rem;border-top:1px solid #f1f5f9;display:none;}
+    .bit-body.open{display:block;}
+    .bit-content{font-size:.88rem;color:var(--mid);line-height:1.65;background:#f8fafc;border-radius:10px;padding:1rem;margin-bottom:1rem;}
+    .criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem;}
+    .criteria-item{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--mid);}
+    .criteria-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--green);}
+    .form-field{margin-bottom:1rem;}
+    .form-field label{display:block;font-size:.85rem;font-weight:600;color:var(--mid);margin-bottom:.4rem;}
+    .form-field textarea{width:100%;padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-family:var(--font-body);font-size:.88rem;color:var(--dark);background:#f8fafc;resize:vertical;min-height:80px;}
+    .form-field textarea:focus{outline:none;border-color:var(--green);background:#fff;}
+    .stars{display:flex;gap:.25rem;margin-bottom:1rem;}
+    .star{font-size:1.5rem;cursor:pointer;color:#e2e8f0;transition:color .15s;}
+    .star.on{color:#f59e0b;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;}
+    .modal-overlay.open{display:flex;}
+    .modal-box{background:#fff;border-radius:18px;padding:2rem;max-width:500px;width:calc(100% - 2rem);box-shadow:0 25px 60px rgba(0,0,0,.15);}
+    .toast{position:fixed;bottom:2rem;right:2rem;padding:.85rem 1.25rem;border-radius:12px;color:#fff;font-size:.88rem;font-weight:600;display:none;align-items:center;gap:.6rem;z-index:300;box-shadow:0 8px 30px rgba(0,0,0,.15);}
+    .toast.show{display:flex;}
+    .toast i{width:18px;height:18px;}
+    .toast-success{background:var(--success);}
+    .toast-danger{background:var(--danger);}
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="graduation-cap"></i></div>
+      <div><div class="brand-title">EtapaPro</div><div class="brand-sub">SENA · Sistema</div></div>
+    </div>
+    <div class="role-chip"><i data-lucide="user-check"></i> Instructor</div>
+    <nav>
+      <a href="dashboard-instructor.html" class="nav-item"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
+      <a href="aprendices.html" class="nav-item"><i data-lucide="users"></i><span>Mis Aprendices</span></a>
+      <a href="agenda-instructor.html" class="nav-item"><i data-lucide="calendar"></i><span>Mi Agenda</span></a>
+      <a href="revisar-documentos.html" class="nav-item"><i data-lucide="file-check"></i><span>Documentos</span><span class="nav-badge nb-red">4</span></a>
+      <a href="revisar-bitacoras.html" class="nav-item active"><i data-lucide="book-open-check"></i><span>Bitácoras</span><span class="nav-badge nb-red">5</span></a>
+      <a href="evaluacion-instructor.html" class="nav-item"><i data-lucide="clipboard-check"></i><span>Evaluaciones</span></a>
+      <a href="notificaciones.html" class="nav-item"><i data-lucide="bell"></i><span>Notificaciones</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem;">
+        <div class="s-avatar">MR</div>
+        <div><div style="font-size:.85rem;font-weight:600;">María Rodríguez</div><div style="font-size:.72rem;color:rgba(255,255,255,.55);">Instructora</div></div>
+      </div>
+      <a href="iniciosesion.html" class="nav-item" style="color:rgba(255,255,255,.5);"><i data-lucide="log-out"></i><span>Cerrar sesión</span></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="header">
+      <div><div class="header-title">Revisar Bitácoras</div><div style="font-size:.82rem;color:var(--muted);">Aprueba o rechaza bitácoras de tus aprendices</div></div>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="icon-btn" onclick="window.location.href='notificaciones.html'"><i data-lucide="bell"></i><span class="notif-dot"></span></button>
+        <div style="display:flex;align-items:center;gap:.6rem;">
+          <div style="text-align:right;"><div style="font-size:.88rem;font-weight:600;">María Rodríguez</div><div style="font-size:.75rem;color:var(--muted);">Instructora</div></div>
+          <div class="h-avatar">MR</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div class="card" style="text-align:center;"><div style="font-family:var(--font-title);font-size:1.6rem;font-weight:700;color:var(--warning);">5</div><div style="font-size:.8rem;color:var(--muted);">Pendientes</div></div>
+        <div class="card" style="text-align:center;"><div style="font-family:var(--font-title);font-size:1.6rem;font-weight:700;color:var(--success);">14</div><div style="font-size:.8rem;color:var(--muted);">Aprobadas</div></div>
+        <div class="card" style="text-align:center;"><div style="font-family:var(--font-title);font-size:1.6rem;font-weight:700;color:var(--danger);">2</div><div style="font-size:.8rem;color:var(--muted);">Rechazadas</div></div>
+        <div class="card" style="text-align:center;"><div style="font-family:var(--font-title);font-size:1.6rem;font-weight:700;color:var(--dark);">21</div><div style="font-size:.8rem;color:var(--muted);">Total bitácoras</div></div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterBit(this,'todos')">Todos los aprendices</button>
+        <button class="filter-btn" onclick="filterBit(this,'CG')">Carlos Guerrero</button>
+        <button class="filter-btn" onclick="filterBit(this,'SG')">Sandra Gómez</button>
+        <button class="filter-btn" onclick="filterBit(this,'PM')">Pedro Mena</button>
+        <button class="filter-btn" onclick="filterBit(this,'LV')">Laura Vargas</button>
+        <select style="margin-left:auto;padding:.4rem .85rem;border:1.5px solid var(--border);border-radius:8px;font-size:.82rem;font-family:var(--font-body);">
+          <option>Todas las estados</option><option>Pendiente</option><option>Aprobada</option><option>Rechazada</option>
+        </select>
+      </div>
+
+      <!-- Bitácoras pendientes -->
+      <div style="font-family:var(--font-title);font-size:.88rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;">Pendientes de revisión</div>
+
+      <div class="bit-card" data-ap="CG">
+        <div class="bit-head" onclick="toggleBit(this)">
+          <div class="bit-num">N°4</div>
+          <div class="avatar">CG</div>
+          <div class="bit-meta">
+            <div class="bit-title">Bitácora N°4 — Carlos Guerrero</div>
+            <div class="bit-sub">Período: 15/04 – 15/05/2026 · Enviada hace 2 días</div>
+          </div>
+          <span class="badge badge-amber">Pendiente</span>
+          <div class="bit-actions">
+            <button class="btn btn-ghost btn-sm"><i data-lucide="chevron-down"></i></button>
+          </div>
+        </div>
+        <div class="bit-body">
+          <div class="bit-content">
+            Durante este período me desempeñé en el área de desarrollo backend, implementando APIs REST con Node.js y Express. Participé en reuniones de sprint planning y code reviews. Aprendí sobre buenas prácticas de versionamiento con Git Flow y colaboré en la migración de la base de datos a PostgreSQL. Los principales retos fueron la gestión de dependencias y la configuración del entorno de pruebas con Jest.
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--dark);margin-bottom:.65rem;">Criterios de evaluación</div>
+          <div class="criteria-grid">
+            <label class="criteria-item"><input type="checkbox" checked> Actividades relacionadas al programa</label>
+            <label class="criteria-item"><input type="checkbox" checked> Redacción clara y coherente</label>
+            <label class="criteria-item"><input type="checkbox"> Reflexión sobre aprendizajes</label>
+            <label class="criteria-item"><input type="checkbox" checked> Período correcto registrado</label>
+            <label class="criteria-item"><input type="checkbox"> Evidencias adjuntas</label>
+            <label class="criteria-item"><input type="checkbox" checked> Cumple extensión mínima</label>
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--dark);margin:.65rem 0 .45rem;">Calificación</div>
+          <div class="stars" id="stars-cg4">
+            <span class="star on" onclick="rateStar('cg4',1)">★</span>
+            <span class="star on" onclick="rateStar('cg4',2)">★</span>
+            <span class="star on" onclick="rateStar('cg4',3)">★</span>
+            <span class="star on" onclick="rateStar('cg4',4)">★</span>
+            <span class="star" onclick="rateStar('cg4',5)">★</span>
+          </div>
+          <div class="form-field">
+            <label>Observaciones (opcionales)</label>
+            <textarea placeholder="Escribe retroalimentación para el aprendiz...">Muy buen contenido técnico. Falta profundizar en la reflexión sobre los aprendizajes obtenidos.</textarea>
+          </div>
+          <div style="display:flex;gap:.75rem;">
+            <button class="btn btn-primary" onclick="aprobarBit(this)"><i data-lucide="check"></i> Aprobar bitácora</button>
+            <button class="btn btn-danger" onclick="rechazarBit(this)"><i data-lucide="x"></i> Rechazar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bit-card" data-ap="SG">
+        <div class="bit-head" onclick="toggleBit(this)">
+          <div class="bit-num">N°3</div>
+          <div class="avatar">SG</div>
+          <div class="bit-meta">
+            <div class="bit-title">Bitácora N°3 — Sandra Gómez</div>
+            <div class="bit-sub">Período: 01/04 – 30/04/2026 · Enviada hace 3 días</div>
+          </div>
+          <span class="badge badge-amber">Pendiente</span>
+          <div class="bit-actions"><button class="btn btn-ghost btn-sm"><i data-lucide="chevron-down"></i></button></div>
+        </div>
+        <div class="bit-body">
+          <div class="bit-content">
+            En este período trabajé en el área de soporte técnico y documentación de sistemas. Realicé levantamiento de requerimientos con usuarios finales y elaboré manuales de usuario. También participé en pruebas de calidad del software desarrollado por el equipo.
+          </div>
+          <div class="form-field" style="margin-top:.75rem;">
+            <label>Observaciones</label>
+            <textarea placeholder="Retroalimentación al aprendiz..."></textarea>
+          </div>
+          <div style="display:flex;gap:.75rem;">
+            <button class="btn btn-primary" onclick="aprobarBit(this)"><i data-lucide="check"></i> Aprobar bitácora</button>
+            <button class="btn btn-danger" onclick="rechazarBit(this)"><i data-lucide="x"></i> Rechazar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bit-card" data-ap="PM">
+        <div class="bit-head" onclick="toggleBit(this)">
+          <div class="bit-num">N°5</div>
+          <div class="avatar">PM</div>
+          <div class="bit-meta">
+            <div class="bit-title">Bitácora N°5 — Pedro Mena</div>
+            <div class="bit-sub">Período: 01/05 – 31/05/2026 · Enviada hace 1 día</div>
+          </div>
+          <span class="badge badge-amber">Pendiente</span>
+          <div class="bit-actions"><button class="btn btn-ghost btn-sm"><i data-lucide="chevron-down"></i></button></div>
+        </div>
+        <div class="bit-body">
+          <div class="bit-content">
+            Durante este mes me concentré en la implementación de módulos de seguridad para la aplicación web. Implementé autenticación JWT, validación de roles y protección contra ataques XSS y CSRF. Fue el período más técnico y enriquecedor de la etapa productiva hasta el momento.
+          </div>
+          <div class="form-field" style="margin-top:.75rem;">
+            <label>Observaciones</label>
+            <textarea placeholder="Retroalimentación al aprendiz..."></textarea>
+          </div>
+          <div style="display:flex;gap:.75rem;">
+            <button class="btn btn-primary" onclick="aprobarBit(this)"><i data-lucide="check"></i> Aprobar bitácora</button>
+            <button class="btn btn-danger" onclick="rechazarBit(this)"><i data-lucide="x"></i> Rechazar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aprobadas -->
+      <div style="font-family:var(--font-title);font-size:.88rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:1.5rem 0 .75rem;">Revisadas</div>
+
+      <div class="bit-card" data-ap="CG">
+        <div class="bit-head" onclick="toggleBit(this)">
+          <div class="bit-num">N°3</div>
+          <div class="avatar">CG</div>
+          <div class="bit-meta">
+            <div class="bit-title">Bitácora N°3 — Carlos Guerrero</div>
+            <div class="bit-sub">Aprobada el 02/05/2026 · Calificación: ★★★★☆</div>
+          </div>
+          <span class="badge badge-green">Aprobada</span>
+          <div class="bit-actions"><button class="btn btn-ghost btn-sm"><i data-lucide="chevron-down"></i></button></div>
+        </div>
+        <div class="bit-body">
+          <div class="bit-content">Contenido del período 15/03–15/04. Revisado y aprobado con observaciones menores sobre la extensión.</div>
+          <div style="background:#e8f8ef;border-radius:10px;padding:.75rem 1rem;font-size:.85rem;color:#14532d;">
+            <strong>Observación del instructor:</strong> Buen trabajo. La próxima bitácora debe incluir más reflexión sobre los retos enfrentados.
+          </div>
+        </div>
+      </div>
+
+      <div class="bit-card" data-ap="LV">
+        <div class="bit-head" onclick="toggleBit(this)">
+          <div class="bit-num">N°1</div>
+          <div class="avatar">LV</div>
+          <div class="bit-meta">
+            <div class="bit-title">Bitácora N°1 — Laura Vargas</div>
+            <div class="bit-sub">Rechazada el 15/04/2026 · Motivo: Contenido insuficiente</div>
+          </div>
+          <span class="badge badge-red">Rechazada</span>
+          <div class="bit-actions"><button class="btn btn-ghost btn-sm"><i data-lucide="chevron-down"></i></button></div>
+        </div>
+        <div class="bit-body">
+          <div class="bit-content">Solo 3 líneas de texto sin descripción de actividades.</div>
+          <div style="background:#fef2f2;border-radius:10px;padding:.75rem 1rem;font-size:.85rem;color:#7f1d1d;">
+            <strong>Motivo del rechazo:</strong> La bitácora no cumple con el mínimo de contenido requerido (mínimo 200 palabras). Por favor, detalla las actividades realizadas durante el período.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal rechazo -->
+  <div class="modal-overlay" id="rechazoModal">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+        <div style="font-family:var(--font-title);font-size:1.05rem;font-weight:700;">Rechazar bitácora</div>
+        <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;color:var(--muted);"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+      </div>
+      <div class="form-field">
+        <label>Motivo del rechazo</label>
+        <select>
+          <option>Contenido insuficiente (menos de 200 palabras)</option>
+          <option>Período incorrecto</option>
+          <option>Actividades no relacionadas al programa</option>
+          <option>Falta de reflexión sobre aprendizajes</option>
+          <option>Plagio o contenido copiado</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Indicaciones para el aprendiz</label>
+        <textarea placeholder="Describe qué debe mejorar o corregir el aprendiz..."></textarea>
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:flex-end;">
+        <button onclick="closeModal()" class="btn btn-ghost">Cancelar</button>
+        <button class="btn btn-danger" onclick="confirmarRechazo()"><i data-lucide="x-circle"></i> Rechazar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast toast-success" id="toastOk"><i data-lucide="check-circle-2"></i> Bitácora aprobada. El aprendiz fue notificado.</div>
+  <div class="toast toast-danger" id="toastRej"><i data-lucide="x-circle"></i> Bitácora rechazada. El aprendiz fue notificado.</div>
+
+  <script>
+    lucide.createIcons();
+    let currentCard = null;
+
+    function toggleBit(head) {
+      const body = head.nextElementSibling;
+      body.classList.toggle('open');
+    }
+    function filterBit(btn, ap) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.bit-card').forEach(c => {
+        c.style.display = (ap === 'todos' || c.dataset.ap === ap) ? 'block' : 'none';
+      });
+    }
+    function rateStar(id, n) {
+      document.querySelectorAll(`#stars-${id} .star`).forEach((s,i) => s.classList.toggle('on', i < n));
+    }
+    function aprobarBit(btn) {
+      const card = btn.closest('.bit-card');
+      card.querySelector('.badge').textContent = 'Aprobada';
+      card.querySelector('.badge').className = 'badge badge-green';
+      card.querySelector('.bit-body').classList.remove('open');
+      showToast('toastOk');
+    }
+    function rechazarBit(btn) { currentCard = btn.closest('.bit-card'); document.getElementById('rechazoModal').classList.add('open'); }
+    function closeModal() { document.getElementById('rechazoModal').classList.remove('open'); currentCard = null; }
+    function confirmarRechazo() {
+      if (currentCard) {
+        currentCard.querySelector('.badge').textContent = 'Rechazada';
+        currentCard.querySelector('.badge').className = 'badge badge-red';
+        currentCard.querySelector('.bit-body').classList.remove('open');
+      }
+      closeModal();
+      showToast('toastRej');
+    }
+    function showToast(id) {
+      const t = document.getElementById(id); t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>

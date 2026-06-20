@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación de Aprendiz — EtapaPro SENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--green:#0d6b52;--green-light:#158b6c;--green-dark:#074736;--green-xlight:rgba(13,107,82,.08);--accent:#0ed29a;--bg:#f8fafc;--border:#e2e8f0;--dark:#1e293b;--mid:#475569;--muted:#94a3b8;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--font-title:'Outfit',sans-serif;--font-body:'Plus Jakarta Sans',sans-serif;}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--dark);display:flex;min-height:100vh;}
+    .sidebar{width:250px;background:var(--green-dark);color:#fff;display:flex;flex-direction:column;padding:1.75rem 1.25rem;position:fixed;top:0;left:0;height:100vh;z-index:100;}
+    .sidebar-brand{display:flex;align-items:center;gap:.65rem;margin-bottom:2rem;}
+    .brand-icon{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+    .brand-icon i{width:18px;height:18px;color:var(--accent);}
+    .brand-title{font-family:var(--font-title);font-size:1.1rem;font-weight:700;}
+    .brand-sub{font-size:.72rem;color:rgba(255,255,255,.6);}
+    .role-chip{background:rgba(14,210,154,.15);border:1px solid rgba(14,210,154,.3);color:var(--accent);font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:.4rem;}
+    nav{display:flex;flex-direction:column;gap:.35rem;flex:1;}
+    .nav-item{display:flex;align-items:center;gap:.7rem;padding:.75rem .9rem;border-radius:10px;color:rgba(255,255,255,.65);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .2s;}
+    .nav-item i{width:17px;height:17px;flex-shrink:0;}
+    .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+    .nav-item.active{background:var(--green);color:#fff;}
+    .nav-badge{margin-left:auto;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;}
+    .nb-red{background:var(--danger);color:#fff;}
+    .sidebar-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;}
+    .s-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;}
+    .main{margin-left:250px;flex:1;display:flex;flex-direction:column;}
+    .header{background:#fff;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;}
+    .header-title{font-family:var(--font-title);font-size:1.4rem;font-weight:700;}
+    .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--mid);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;}
+    .icon-btn i{width:17px;height:17px;}
+    .notif-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid #fff;}
+    .h-avatar{width:38px;height:38px;border-radius:50%;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;}
+    .content{padding:2rem;flex:1;}
+    .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+    .badge{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;}
+    .badge-green{background:#e8f8ef;color:#14532d;}
+    .badge-amber{background:#fff8e6;color:#92400e;}
+    .badge-blue{background:#e8f2fd;color:#1e40af;}
+    .badge-gray{background:#f1f5f9;color:#475569;}
+    .btn{padding:.55rem 1rem;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:var(--font-body);border:1.5px solid;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem;}
+    .btn i{width:15px;height:15px;}
+    .btn-primary{background:var(--green);color:#fff;border-color:var(--green);}
+    .btn-primary:hover{background:var(--green-light);}
+    .btn-ghost{background:var(--bg);color:var(--mid);border-color:var(--border);}
+    .btn-ghost:hover{border-color:#94a3b8;}
+    .btn-sm{padding:.35rem .75rem;font-size:.8rem;}
+    .avatar{width:36px;height:36px;border-radius:50%;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0;}
+    /* Layout 2 col */
+    .layout{display:grid;grid-template-columns:300px 1fr;gap:1.5rem;align-items:start;}
+    /* Aprendiz selector */
+    .ap-list{display:flex;flex-direction:column;gap:.5rem;}
+    .ap-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:#fff;transition:all .2s;}
+    .ap-item:hover{border-color:var(--green);}
+    .ap-item.sel{border-color:var(--green);background:var(--green-xlight);}
+    .ap-name{font-size:.9rem;font-weight:600;color:var(--dark);}
+    .ap-meta{font-size:.75rem;color:var(--muted);}
+    /* Formulario evaluación */
+    .eval-section{margin-bottom:1.5rem;}
+    .eval-section-title{font-family:var(--font-title);font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .criteria-row{display:flex;align-items:center;gap:1rem;padding:.65rem 0;border-bottom:1px solid #f8fafc;}
+    .criteria-row:last-child{border-bottom:none;}
+    .criteria-name{flex:1;font-size:.88rem;color:var(--dark);}
+    .criteria-desc{font-size:.75rem;color:var(--muted);margin-top:.1rem;}
+    .score-btns{display:flex;gap:.35rem;}
+    .score-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:#f8fafc;color:var(--muted);font-weight:700;font-size:.85rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;font-family:var(--font-body);}
+    .score-btn.sel-1{border-color:#ef4444;background:#fef2f2;color:#dc2626;}
+    .score-btn.sel-2{border-color:#f59e0b;background:#fff8e6;color:#d97706;}
+    .score-btn.sel-3{border-color:#3b82f6;background:#e8f2fd;color:#2563eb;}
+    .score-btn.sel-4{border-color:#10b981;background:#e8f8ef;color:#059669;}
+    .score-btn.sel-5{border-color:#0d6b52;background:rgba(13,107,82,.1);color:#0d6b52;}
+    .total-box{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:14px;padding:1.5rem;color:#fff;text-align:center;margin-top:1rem;}
+    .total-val{font-family:var(--font-title);font-size:2.5rem;font-weight:800;}
+    .total-label{font-size:.85rem;opacity:.8;margin-top:.25rem;}
+    .progress-bar{height:8px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin-top:.75rem;}
+    .progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .4s;}
+    .form-field{margin-bottom:1rem;}
+    .form-field label{display:block;font-size:.85rem;font-weight:600;color:var(--mid);margin-bottom:.4rem;}
+    .form-field textarea,.form-field select,.form-field input{width:100%;padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-family:var(--font-body);font-size:.88rem;color:var(--dark);background:#f8fafc;}
+    .form-field textarea:focus,.form-field select:focus{outline:none;border-color:var(--green);background:#fff;}
+    .form-field textarea{resize:vertical;min-height:90px;}
+    .saved-banner{display:none;background:#e8f8ef;border:1px solid #bbf7d0;border-radius:12px;padding:1rem 1.25rem;color:#14532d;font-size:.88rem;font-weight:600;align-items:center;gap:.5rem;margin-top:1rem;}
+    .saved-banner.show{display:flex;}
+    .saved-banner i{width:18px;height:18px;}
+    .legend{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;padding:.75rem 1rem;background:#f8fafc;border-radius:10px;}
+    .leg-item{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--muted);}
+    .leg-dot{width:10px;height:10px;border-radius:50%;}
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="graduation-cap"></i></div>
+      <div><div class="brand-title">EtapaPro</div><div class="brand-sub">SENA · Sistema</div></div>
+    </div>
+    <div class="role-chip"><i data-lucide="user-check"></i> Instructor</div>
+    <nav>
+      <a href="dashboard-instructor.html" class="nav-item"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
+      <a href="aprendices.html" class="nav-item"><i data-lucide="users"></i><span>Mis Aprendices</span></a>
+      <a href="agenda-instructor.html" class="nav-item"><i data-lucide="calendar"></i><span>Mi Agenda</span></a>
+      <a href="revisar-documentos.html" class="nav-item"><i data-lucide="file-check"></i><span>Documentos</span><span class="nav-badge nb-red">4</span></a>
+      <a href="revisar-bitacoras.html" class="nav-item"><i data-lucide="book-open-check"></i><span>Bitácoras</span><span class="nav-badge nb-red">5</span></a>
+      <a href="evaluacion-instructor.html" class="nav-item active"><i data-lucide="clipboard-check"></i><span>Evaluaciones</span></a>
+      <a href="notificaciones.html" class="nav-item"><i data-lucide="bell"></i><span>Notificaciones</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem;">
+        <div class="s-avatar">MR</div>
+        <div><div style="font-size:.85rem;font-weight:600;">María Rodríguez</div><div style="font-size:.72rem;color:rgba(255,255,255,.55);">Instructora</div></div>
+      </div>
+      <a href="iniciosesion.html" class="nav-item" style="color:rgba(255,255,255,.5);"><i data-lucide="log-out"></i><span>Cerrar sesión</span></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="header">
+      <div><div class="header-title">Evaluar Desempeño</div><div style="font-size:.82rem;color:var(--muted);">Registra la evaluación de seguimiento del aprendiz</div></div>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="icon-btn" onclick="window.location.href='notificaciones.html'"><i data-lucide="bell"></i><span class="notif-dot"></span></button>
+        <div style="display:flex;align-items:center;gap:.6rem;">
+          <div style="text-align:right;"><div style="font-size:.88rem;font-weight:600;">María Rodríguez</div><div style="font-size:.75rem;color:var(--muted);">Instructora</div></div>
+          <div class="h-avatar">MR</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="layout">
+
+        <!-- Columna izquierda: selector aprendiz -->
+        <div>
+          <div class="card" style="margin-bottom:1rem;">
+            <div style="font-family:var(--font-title);font-size:.88rem;font-weight:700;margin-bottom:.85rem;color:var(--dark);">Seleccionar aprendiz</div>
+            <div class="ap-list">
+              <div class="ap-item sel" onclick="selAp(this)">
+                <div class="avatar">CG</div>
+                <div><div class="ap-name">Carlos Guerrero</div><div class="ap-meta">Seguimiento N°3 · Pendiente</div></div>
+                <span class="badge badge-amber">Pend.</span>
+              </div>
+              <div class="ap-item" onclick="selAp(this)">
+                <div class="avatar">PM</div>
+                <div><div class="ap-name">Pedro Mena</div><div class="ap-meta">Seguimiento N°3 · Pendiente</div></div>
+                <span class="badge badge-amber">Pend.</span>
+              </div>
+              <div class="ap-item" onclick="selAp(this)">
+                <div class="avatar">SG</div>
+                <div><div class="ap-name">Sandra Gómez</div><div class="ap-meta">Seguimiento N°2 · Evaluado</div></div>
+                <span class="badge badge-green">Listo</span>
+              </div>
+              <div class="ap-item" onclick="selAp(this)">
+                <div class="avatar">LV</div>
+                <div><div class="ap-name">Laura Vargas</div><div class="ap-meta">Seguimiento N°1 · Sin iniciar</div></div>
+                <span class="badge badge-gray">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumen -->
+          <div class="total-box">
+            <div class="total-label">Nota actual</div>
+            <div class="total-val" id="totalScore">3.8</div>
+            <div class="total-label">/ 5.0</div>
+            <div class="progress-bar"><div class="progress-fill" id="totalBar" style="width:76%;"></div></div>
+            <div style="font-size:.82rem;opacity:.75;margin-top:.5rem;" id="totalLabel">Desempeño bueno</div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: formulario evaluación -->
+        <div class="card">
+          <!-- Cabecera aprendiz -->
+          <div style="display:flex;align-items:center;gap:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem;">
+            <div style="width:52px;height:52px;border-radius:50%;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;">CG</div>
+            <div>
+              <div style="font-family:var(--font-title);font-size:1.1rem;font-weight:700;">Carlos Guerrero</div>
+              <div style="font-size:.82rem;color:var(--muted);">ADSO 2876543 · Tecno Cauca S.A.S. · Seguimiento N°3</div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:.5rem;">
+              <span class="badge badge-blue">Seguimiento N°3</span>
+              <span class="badge badge-amber">Sin evaluar</span>
+            </div>
+          </div>
+
+          <!-- Leyenda -->
+          <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:#ef4444;"></div> 1 — Deficiente</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#f59e0b;"></div> 2 — Regular</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#3b82f6;"></div> 3 — Aceptable</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#10b981;"></div> 4 — Bueno</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#0d6b52;"></div> 5 — Excelente</div>
+          </div>
+
+          <!-- Sección 1: Desempeño técnico -->
+          <div class="eval-section">
+            <div class="eval-section-title">1. Desempeño Técnico</div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Aplicación de conocimientos técnicos</div><div class="criteria-desc">Aplica los conocimientos del programa en las actividades de la empresa</div></div>
+              <div class="score-btns" id="sc1">
+                <button class="score-btn" onclick="score('sc1',1)">1</button>
+                <button class="score-btn" onclick="score('sc1',2)">2</button>
+                <button class="score-btn" onclick="score('sc1',3)">3</button>
+                <button class="score-btn sel-4" onclick="score('sc1',4)">4</button>
+                <button class="score-btn" onclick="score('sc1',5)">5</button>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Calidad del trabajo realizado</div><div class="criteria-desc">Entrega productos o resultados con calidad aceptable</div></div>
+              <div class="score-btns" id="sc2">
+                <button class="score-btn" onclick="score('sc2',1)">1</button>
+                <button class="score-btn" onclick="score('sc2',2)">2</button>
+                <button class="score-btn" onclick="score('sc2',3)">3</button>
+                <button class="score-btn sel-4" onclick="score('sc2',4)">4</button>
+                <button class="score-btn" onclick="score('sc2',5)">5</button>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Resolución de problemas</div><div class="criteria-desc">Identifica y resuelve problemas técnicos de forma autónoma</div></div>
+              <div class="score-btns" id="sc3">
+                <button class="score-btn" onclick="score('sc3',1)">1</button>
+                <button class="score-btn" onclick="score('sc3',2)">2</button>
+                <button class="score-btn" onclick="score('sc3',3)">3</button>
+                <button class="score-btn sel-3" onclick="score('sc3',3)">3</button>
+                <button class="score-btn" onclick="score('sc3',5)">5</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 2: Actitudinal -->
+          <div class="eval-section">
+            <div class="eval-section-title">2. Desempeño Actitudinal</div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Puntualidad y asistencia</div><div class="criteria-desc">Cumple con los horarios establecidos en el contrato</div></div>
+              <div class="score-btns" id="sc4">
+                <button class="score-btn" onclick="score('sc4',1)">1</button>
+                <button class="score-btn" onclick="score('sc4',2)">2</button>
+                <button class="score-btn" onclick="score('sc4',3)">3</button>
+                <button class="score-btn" onclick="score('sc4',4)">4</button>
+                <button class="score-btn sel-5" onclick="score('sc4',5)">5</button>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Trabajo en equipo</div><div class="criteria-desc">Se integra y colabora con el equipo de trabajo de la empresa</div></div>
+              <div class="score-btns" id="sc5">
+                <button class="score-btn" onclick="score('sc5',1)">1</button>
+                <button class="score-btn" onclick="score('sc5',2)">2</button>
+                <button class="score-btn" onclick="score('sc5',3)">3</button>
+                <button class="score-btn sel-4" onclick="score('sc5',4)">4</button>
+                <button class="score-btn" onclick="score('sc5',5)">5</button>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Responsabilidad y compromiso</div><div class="criteria-desc">Cumple con los compromisos adquiridos dentro del proceso formativo</div></div>
+              <div class="score-btns" id="sc6">
+                <button class="score-btn" onclick="score('sc6',1)">1</button>
+                <button class="score-btn" onclick="score('sc6',2)">2</button>
+                <button class="score-btn" onclick="score('sc6',3)">3</button>
+                <button class="score-btn sel-4" onclick="score('sc6',4)">4</button>
+                <button class="score-btn" onclick="score('sc6',5)">5</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 3: Formativo -->
+          <div class="eval-section">
+            <div class="eval-section-title">3. Cumplimiento Formativo</div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Entrega oportuna de bitácoras</div><div class="criteria-desc">Cumple con los plazos de entrega de bitácoras</div></div>
+              <div class="score-btns" id="sc7">
+                <button class="score-btn" onclick="score('sc7',1)">1</button>
+                <button class="score-btn" onclick="score('sc7',2)">2</button>
+                <button class="score-btn" onclick="score('sc7',3)">3</button>
+                <button class="score-btn sel-4" onclick="score('sc7',4)">4</button>
+                <button class="score-btn" onclick="score('sc7',5)">5</button>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div><div class="criteria-name">Calidad de la documentación</div><div class="criteria-desc">Las bitácoras y documentos son completos y bien elaborados</div></div>
+              <div class="score-btns" id="sc8">
+                <button class="score-btn" onclick="score('sc8',1)">1</button>
+                <button class="score-btn" onclick="score('sc8',2)">2</button>
+                <button class="score-btn" onclick="score('sc8',3)">3</button>
+                <button class="score-btn sel-3" onclick="score('sc8',3)">3</button>
+                <button class="score-btn" onclick="score('sc8',5)">5</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fortalezas y debilidades -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="form-field" style="margin-bottom:0;">
+              <label>Fortalezas observadas</label>
+              <textarea placeholder="¿En qué aspectos destaca el aprendiz?">Excelente dominio técnico. Alta puntualidad y compromiso con el equipo.</textarea>
+            </div>
+            <div class="form-field" style="margin-bottom:0;">
+              <label>Aspectos a mejorar</label>
+              <textarea placeholder="¿Qué debe mejorar?">Documentación de procesos. Iniciativa propia para resolver problemas.</textarea>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Concepto general del seguimiento</label>
+            <textarea>El aprendiz demuestra buen desempeño técnico y actitudinal. Se recomienda continuar el proceso y enfocarse en fortalecer las habilidades de documentación y resolución autónoma de problemas.</textarea>
+          </div>
+
+          <div class="form-field">
+            <label>Resultado del seguimiento</label>
+            <select>
+              <option>Aprobado — Continúa proceso</option>
+              <option>Aprobado con observaciones</option>
+              <option>En riesgo — Requiere atención</option>
+              <option>No aprobado — Requiere refuerzo</option>
+            </select>
+          </div>
+
+          <div style="display:flex;gap:.75rem;align-items:center;">
+            <button class="btn btn-primary" onclick="guardarEval()"><i data-lucide="save"></i> Guardar evaluación</button>
+            <button class="btn btn-ghost"><i data-lucide="file-down"></i> Exportar PDF</button>
+            <span style="font-size:.8rem;color:var(--muted);margin-left:auto;">Última modificación: hoy 09:42 AM</span>
+          </div>
+
+          <div class="saved-banner" id="savedBanner">
+            <i data-lucide="check-circle-2"></i>
+            Evaluación guardada exitosamente. El aprendiz recibirá notificación.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    const scores = {sc1:4,sc2:4,sc3:3,sc4:5,sc5:4,sc6:4,sc7:4,sc8:3};
+
+    function score(id, val) {
+      scores[id] = val;
+      const container = document.getElementById(id);
+      container.querySelectorAll('.score-btn').forEach((b,i) => {
+        b.className = 'score-btn';
+        if (i+1 === val) b.classList.add('sel-'+val);
+      });
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const vals = Object.values(scores);
+      const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+      const pct = (avg/5)*100;
+      document.getElementById('totalScore').textContent = avg.toFixed(1);
+      document.getElementById('totalBar').style.width = pct+'%';
+      const labels = ['','Deficiente','Regular','Aceptable','Bueno','Excelente'];
+      document.getElementById('totalLabel').textContent = 'Desempeño ' + (labels[Math.round(avg)] || 'bueno');
+    }
+
+    function selAp(el) {
+      document.querySelectorAll('.ap-item').forEach(a => a.classList.remove('sel'));
+      el.classList.add('sel');
+    }
+
+    function guardarEval() {
+      const b = document.getElementById('savedBanner');
+      b.classList.add('show');
+      lucide.createIcons();
+      setTimeout(() => b.classList.remove('show'), 4000);
+    }
+  </script>
+</body>
+</html>

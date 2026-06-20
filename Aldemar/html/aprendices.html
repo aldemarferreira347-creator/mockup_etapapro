@@ -637,6 +637,70 @@
             </div>
         </main>
     </div>
+
+  <!-- ══ MODAL: Asociar Empresa (HU-13) ══ -->
+  <div id="empresaModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:20px;padding:2rem;max-width:540px;width:calc(100% - 2rem);box-shadow:0 25px 60px rgba(0,0,0,.18);max-height:90vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;">
+        <div>
+          <div style="font-size:1.1rem;font-weight:700;color:#1e293b;">Asociar Empresa al Proceso Formativo</div>
+          <p style="font-size:.85rem;color:#64748b;margin-top:.2rem;">Aprendiz: <strong id="empModalAprendiz">—</strong></p>
+        </div>
+        <button onclick="closeEmpresaModal()" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:1.4rem;line-height:1;">✕</button>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:.75rem 1rem;font-size:.83rem;color:#14532d;margin-bottom:1.25rem;">
+        ℹ️ Esta asociación quedará registrada en el proceso del aprendiz. El aprendiz recibirá notificación automática.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem;">
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Razón social *</label><input type="text" value="Tecno Cauca S.A.S." style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">NIT *</label><input type="text" value="900123456-1" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Nombre del supervisor *</label><input type="text" value="Ing. Juan Pérez" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Cargo del supervisor</label><input type="text" value="Jefe de TI" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Correo supervisor *</label><input type="email" value="jperez@tecnocauca.com" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Teléfono empresa</label><input type="tel" value="(602) 8251100" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div style="grid-column:1/-1;"><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Dirección empresa *</label><input type="text" value="Cra 7 #5-43, Popayán, Cauca" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Fecha inicio etapa *</label><input type="date" value="2026-07-01" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Fecha fin estimada</label><input type="date" value="2026-12-31" style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;"></div>
+        <div style="grid-column:1/-1;"><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Alternativa de etapa productiva</label><select style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;background:#f8fafc;"><option>Contrato de Aprendizaje</option><option>Proyecto Productivo</option><option>Vinculación Laboral / Pasantía</option><option>Unidad Productiva Familiar</option></select></div>
+        <div style="grid-column:1/-1;"><label style="display:block;font-size:.83rem;font-weight:600;color:#475569;margin-bottom:.35rem;">Observaciones</label><textarea rows="3" placeholder="Notas adicionales..." style="width:100%;padding:.7rem .9rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.88rem;font-family:inherit;resize:vertical;"></textarea></div>
+      </div>
+      <div id="empSuccess" style="display:none;background:#e8f8ef;border:1px solid #bbf7d0;border-radius:12px;padding:1rem 1.25rem;color:#14532d;font-size:.88rem;font-weight:600;margin-bottom:1rem;">✓ Empresa asociada exitosamente. El aprendiz fue notificado.</div>
+      <div style="display:flex;gap:.75rem;justify-content:flex-end;" id="empBtns">
+        <button onclick="closeEmpresaModal()" style="padding:.55rem 1rem;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;border:1.5px solid #e2e8f0;background:#f8fafc;color:#475569;">Cancelar</button>
+        <button onclick="guardarEmpresa()" style="padding:.55rem 1rem;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;border:1.5px solid #0d6b52;background:#0d6b52;color:#fff;">Asociar empresa</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openEmpresaModal(nombre) {
+      document.getElementById('empModalAprendiz').textContent = nombre || '—';
+      document.getElementById('empSuccess').style.display = 'none';
+      document.getElementById('empBtns').style.display = 'flex';
+      document.getElementById('empresaModal').style.display = 'flex';
+    }
+    function closeEmpresaModal() { document.getElementById('empresaModal').style.display = 'none'; }
+    function guardarEmpresa() {
+      document.getElementById('empSuccess').style.display = 'block';
+      document.getElementById('empBtns').style.display = 'none';
+      setTimeout(closeEmpresaModal, 2500);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('tbody tr').forEach(row => {
+        const nombreEl = row.querySelector('.td-user');
+        const nombre = nombreEl ? nombreEl.textContent.trim() : 'Aprendiz';
+        const td = row.querySelector('td:last-child');
+        if (td) {
+          const btn = document.createElement('button');
+          btn.className = 'btn btn-ghost btn-sm';
+          btn.style.marginLeft = '.35rem';
+          btn.textContent = '+ Empresa';
+          btn.onclick = () => openEmpresaModal(nombre);
+          td.appendChild(btn);
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

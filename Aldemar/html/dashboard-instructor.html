@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Instructor — EtapaPro SENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --green:#0d6b52; --green-light:#158b6c; --green-dark:#074736;
+      --green-xlight:rgba(13,107,82,0.08); --accent:#0ed29a;
+      --white:#fff; --bg:#f8fafc; --border:#e2e8f0;
+      --dark:#1e293b; --mid:#475569; --muted:#94a3b8;
+      --success:#10b981; --warning:#f59e0b; --danger:#ef4444; --info:#3b82f6;
+      --font-title:'Outfit',sans-serif; --font-body:'Plus Jakarta Sans',sans-serif;
+      --r:12px; --shadow:0 4px 20px -2px rgba(148,163,184,.12);
+    }
+    body{font-family:var(--font-body);background:var(--bg);color:var(--dark);display:flex;min-height:100vh;}
+    /* Sidebar */
+    .sidebar{width:250px;background:var(--green-dark);color:#fff;display:flex;flex-direction:column;padding:1.75rem 1.25rem;position:fixed;top:0;left:0;height:100vh;z-index:100;}
+    .sidebar-brand{display:flex;align-items:center;gap:.65rem;margin-bottom:2rem;}
+    .brand-icon{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .brand-icon i{width:18px;height:18px;color:var(--accent);}
+    .brand-title{font-family:var(--font-title);font-size:1.1rem;font-weight:700;line-height:1.2;}
+    .brand-sub{font-size:.72rem;color:rgba(255,255,255,.6);}
+    .role-chip{background:rgba(14,210,154,.15);border:1px solid rgba(14,210,154,.3);color:var(--accent);font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:.4rem;}
+    .role-chip i{width:13px;height:13px;}
+    nav{display:flex;flex-direction:column;gap:.35rem;flex:1;}
+    .nav-item{display:flex;align-items:center;gap:.7rem;padding:.75rem .9rem;border-radius:10px;color:rgba(255,255,255,.65);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .2s;}
+    .nav-item i{width:17px;height:17px;flex-shrink:0;}
+    .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+    .nav-item.active{background:var(--green);color:#fff;font-weight:600;}
+    .nav-badge{margin-left:auto;background:var(--accent);color:var(--green-dark);font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;}
+    .nav-badge.red{background:var(--danger);color:#fff;}
+    .sidebar-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;}
+    .sidebar-user{display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem;}
+    .s-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;}
+    .s-name{font-size:.85rem;font-weight:600;}
+    .s-role{font-size:.72rem;color:rgba(255,255,255,.55);}
+    /* Main */
+    .main{margin-left:250px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
+    .header{background:#fff;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;}
+    .header-title{font-family:var(--font-title);font-size:1.4rem;font-weight:700;}
+    .header-sub{font-size:.82rem;color:var(--muted);}
+    .header-right{display:flex;align-items:center;gap:1rem;}
+    .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--mid);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;transition:all .15s;}
+    .icon-btn:hover{background:#e2e8f0;color:var(--green);}
+    .icon-btn i{width:17px;height:17px;}
+    .notif-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid #fff;}
+    .h-avatar{width:38px;height:38px;border-radius:50%;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;border:1.5px solid rgba(13,107,82,.2);}
+    .content{padding:2rem;flex:1;}
+    /* Cards */
+    .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem;}
+    .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+    .kpi-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:.75rem;}
+    .kpi-icon i{width:20px;height:20px;}
+    .kpi-val{font-family:var(--font-title);font-size:1.6rem;font-weight:700;color:var(--dark);}
+    .kpi-lbl{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
+    .kpi-delta{font-size:.75rem;font-weight:600;margin-top:.35rem;}
+    .kpi-delta.up{color:var(--success);} .kpi-delta.down{color:var(--danger);}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;}
+    .card-title{font-family:var(--font-title);font-size:.95rem;font-weight:700;color:var(--dark);margin-bottom:1rem;}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;}
+    th{text-align:left;padding:.65rem .9rem;font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);}
+    td{padding:.75rem .9rem;border-bottom:1px solid #f8fafc;vertical-align:middle;}
+    tr:last-child td{border-bottom:none;}
+    .avatar{width:34px;height:34px;border-radius:50%;background:var(--green-xlight);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0;}
+    .badge{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;}
+    .badge-green{background:#e8f8ef;color:#14532d;}
+    .badge-amber{background:#fff8e6;color:#92400e;}
+    .badge-red{background:#fef2f2;color:#7f1d1d;}
+    .badge-blue{background:#e8f2fd;color:#1e40af;}
+    .badge-gray{background:#f1f5f9;color:#475569;}
+    .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+    .progress-fill{height:100%;background:var(--green);border-radius:3px;}
+    .act-item{display:flex;align-items:flex-start;gap:.75rem;padding:.65rem 0;border-bottom:1px solid #f8fafc;}
+    .act-item:last-child{border-bottom:none;}
+    .act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+    .act-msg{font-size:.85rem;color:var(--dark);}
+    .act-time{font-size:.75rem;color:var(--muted);margin-top:.1rem;}
+    .btn-sm{padding:.4rem .85rem;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all .15s;border:1.5px solid;}
+    .btn-primary{background:var(--green);color:#fff;border-color:var(--green);}
+    .btn-primary:hover{background:var(--green-light);}
+    .btn-ghost{background:var(--bg);color:var(--mid);border-color:var(--border);}
+    .btn-ghost:hover{border-color:#94a3b8;color:var(--dark);}
+    .btn-danger{background:#fef2f2;color:var(--danger);border-color:#fecaca;}
+    .next-seg{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:14px;padding:1.25rem;color:#fff;}
+    .next-seg .label{font-size:.72rem;opacity:.7;margin-bottom:.25rem;}
+    .next-seg .title{font-size:1rem;font-weight:700;margin-bottom:.75rem;}
+    .meta-row{display:flex;align-items:center;gap:.5rem;font-size:.82rem;opacity:.88;margin-bottom:.4rem;}
+    .meta-row i{width:14px;height:14px;}
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i data-lucide="graduation-cap"></i></div>
+      <div><div class="brand-title">EtapaPro</div><div class="brand-sub">SENA · Sistema</div></div>
+    </div>
+    <div class="role-chip"><i data-lucide="user-check"></i> Instructor</div>
+    <nav>
+      <a href="dashboard-instructor.html" class="nav-item active"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
+      <a href="aprendices.html" class="nav-item"><i data-lucide="users"></i><span>Mis Aprendices</span><span class="nav-badge">12</span></a>
+      <a href="agenda-instructor.html" class="nav-item"><i data-lucide="calendar"></i><span>Mi Agenda</span><span class="nav-badge red">2</span></a>
+      <a href="#" class="nav-item"><i data-lucide="book-open-check"></i><span>Bitácoras</span><span class="nav-badge red">5</span></a>
+      <a href="#" class="nav-item"><i data-lucide="clipboard-check"></i><span>Evaluaciones</span></a>
+      <a href="notificaciones.html" class="nav-item"><i data-lucide="bell"></i><span>Notificaciones</span><span class="nav-badge red">3</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="s-avatar">MR</div>
+        <div><div class="s-name">María Rodríguez</div><div class="s-role">Instructora · SENA</div></div>
+      </div>
+      <a href="iniciosesion.html" class="nav-item" style="color:rgba(255,255,255,.5);" onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
+        <i data-lucide="log-out"></i><span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="header">
+      <div>
+        <div class="header-title">Dashboard</div>
+        <div class="header-sub">Viernes, 6 de junio de 2026 · Bienvenida, María</div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="window.location.href='notificaciones.html'"><i data-lucide="bell"></i><span class="notif-dot"></span></button>
+        <div style="display:flex;align-items:center;gap:.6rem;">
+          <div style="text-align:right;"><div style="font-size:.88rem;font-weight:600;">María Rodríguez</div><div style="font-size:.75rem;color:var(--muted);">Instructora</div></div>
+          <div class="h-avatar">MR</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-icon" style="background:rgba(13,107,82,.08);"><i data-lucide="users" style="color:#0d6b52;"></i></div>
+          <div class="kpi-val">12</div><div class="kpi-lbl">Aprendices asignados</div>
+          <div class="kpi-delta up">▲ 2 este periodo</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-icon" style="background:rgba(245,158,11,.08);"><i data-lucide="calendar-clock" style="color:#d97706;"></i></div>
+          <div class="kpi-val">2</div><div class="kpi-lbl">Seguimientos esta semana</div>
+          <div class="kpi-delta" style="color:var(--muted);">Próx: 12 jun</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-icon" style="background:rgba(239,68,68,.08);"><i data-lucide="file-warning" style="color:#dc2626;"></i></div>
+          <div class="kpi-val">5</div><div class="kpi-lbl">Bitácoras por revisar</div>
+          <div class="kpi-delta down">▼ Pendientes revisión</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-icon" style="background:rgba(59,130,246,.08);"><i data-lucide="clipboard-check" style="color:#2563eb;"></i></div>
+          <div class="kpi-val">8</div><div class="kpi-lbl">Evaluaciones realizadas</div>
+          <div class="kpi-delta up">▲ 87% promedio</div>
+        </div>
+      </div>
+
+      <!-- Fila 1 -->
+      <div class="grid-2">
+
+        <!-- Próximos seguimientos -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <div class="card-title" style="margin-bottom:0;">Próximos Seguimientos</div>
+            <a href="agenda-instructor.html" style="font-size:.8rem;color:var(--green);text-decoration:none;font-weight:600;">Ver agenda →</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid #f8fafc;">
+            <div style="width:46px;text-align:center;background:var(--green-xlight);border-radius:8px;padding:.3rem 0;font-size:.78rem;font-weight:700;color:var(--green);flex-shrink:0;"><div>JUN</div><div style="font-size:1rem;">12</div></div>
+            <div style="flex:1;"><div style="font-size:.88rem;font-weight:600;">Carlos A. Guerrero</div><div style="font-size:.76rem;color:var(--muted);">10:00 AM · Virtual (Teams)</div></div>
+            <span class="badge badge-blue">Virtual</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid #f8fafc;">
+            <div style="width:46px;text-align:center;background:var(--green-xlight);border-radius:8px;padding:.3rem 0;font-size:.78rem;font-weight:700;color:var(--green);flex-shrink:0;"><div>JUN</div><div style="font-size:1rem;">13</div></div>
+            <div style="flex:1;"><div style="font-size:.88rem;font-weight:600;">Sandra Gómez</div><div style="font-size:.76rem;color:var(--muted);">02:00 PM · Presencial</div></div>
+            <span class="badge badge-green">Presencial</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.7rem 0;">
+            <div style="width:46px;text-align:center;background:#fff8e6;border-radius:8px;padding:.3rem 0;font-size:.78rem;font-weight:700;color:#d97706;flex-shrink:0;"><div>JUN</div><div style="font-size:1rem;">15</div></div>
+            <div style="flex:1;"><div style="font-size:.88rem;font-weight:600;">Pedro Mena</div><div style="font-size:.76rem;color:var(--muted);">09:00 AM · Virtual</div></div>
+            <span class="badge badge-amber">Pendiente</span>
+          </div>
+        </div>
+
+        <!-- Bitácoras pendientes -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <div class="card-title" style="margin-bottom:0;">Bitácoras por Revisar</div>
+            <span class="badge badge-red" style="font-size:.78rem;">5 pendientes</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid #f8fafc;">
+            <div class="avatar">CG</div>
+            <div style="flex:1;"><div style="font-size:.88rem;font-weight:600;">Carlos Guerrero — Bitácora N°4</div><div style="font-size:.76rem;color:var(--muted);">Enviada hace 2 días</div></div>
+            <div style="display:flex;gap:.35rem;"><button class="btn-sm btn-primary">✓</button><button class="btn-sm btn-danger">✗</button></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid #f8fafc;">
+            <div class="avatar">SG</div>
+            <div style="flex:1;"><div style="font-size:.88rem;font-weight:600;">Sandra Gómez — Bitácora N°3</div><div style="font-size:.76rem;color:var(--muted);">Enviada hace 3 días</div></div>
+            <div style="display:flex;gap:.35rem;"><button class="btn-sm btn-primary">✓</button><button class="btn-sm btn-danger">✗</button></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid #f8fafc;">
+            <div class="avatar">PM</div>
+            <div style="flex:1;"><div style="font-size:.88rem;font-weight:600;">Pedro Mena — Bitácora N°5</div><div style="font-size:.76rem;color:var(--muted);">Enviada hace 1 día</div></div>
+            <div style="display:flex;gap:.35rem;"><button class="btn-sm btn-primary">✓</button><button class="btn-sm btn-danger">✗</button></div>
+          </div>
+          <div style="padding:.75rem 0;text-align:center;">
+            <a href="#" style="font-size:.82rem;color:var(--green);text-decoration:none;font-weight:600;">Ver todas las bitácoras →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Fila 2: mis aprendices -->
+      <div class="card" style="margin-bottom:1.25rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <div class="card-title" style="margin-bottom:0;">Mis Aprendices</div>
+          <div style="display:flex;gap:.5rem;">
+            <input placeholder="Buscar aprendiz..." style="padding:.45rem .85rem;border:1px solid var(--border);border-radius:8px;font-size:.82rem;font-family:var(--font-body);width:200px;">
+            <button class="btn-sm btn-primary" onclick="window.location.href='aprendices.html'">Ver todos</button>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Aprendiz</th>
+              <th>Empresa</th>
+              <th>Progreso</th>
+              <th>Bitácoras</th>
+              <th>Seguimientos</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div style="display:flex;align-items:center;gap:.65rem;"><div class="avatar">CG</div><div><div style="font-size:.88rem;font-weight:600;">Carlos Guerrero</div><div style="font-size:.75rem;color:var(--muted);">ADSO · 2876543</div></div></div></td>
+              <td style="font-size:.85rem;">Tecno Cauca S.A.S.</td>
+              <td><div style="display:flex;align-items:center;gap:.5rem;"><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:67%;"></div></div><span style="font-size:.78rem;color:var(--muted);">67%</span></div></td>
+              <td><span class="badge badge-amber">4/6</span></td>
+              <td><span class="badge badge-green">2/3</span></td>
+              <td><span class="badge badge-blue">En proceso</span></td>
+              <td><div style="display:flex;gap:.35rem;"><button class="btn-sm btn-ghost" title="Ver carpeta">📁</button><button class="btn-sm btn-ghost" title="Evaluar">📝</button></div></td>
+            </tr>
+            <tr>
+              <td><div style="display:flex;align-items:center;gap:.65rem;"><div class="avatar">SG</div><div><div style="font-size:.88rem;font-weight:600;">Sandra Gómez</div><div style="font-size:.75rem;color:var(--muted);">ADSO · 2876544</div></div></div></td>
+              <td style="font-size:.85rem;">Sistemas Andinos</td>
+              <td><div style="display:flex;align-items:center;gap:.5rem;"><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:50%;"></div></div><span style="font-size:.78rem;color:var(--muted);">50%</span></div></td>
+              <td><span class="badge badge-amber">3/6</span></td>
+              <td><span class="badge badge-amber">1/3</span></td>
+              <td><span class="badge badge-blue">En proceso</span></td>
+              <td><div style="display:flex;gap:.35rem;"><button class="btn-sm btn-ghost">📁</button><button class="btn-sm btn-ghost">📝</button></div></td>
+            </tr>
+            <tr>
+              <td><div style="display:flex;align-items:center;gap:.65rem;"><div class="avatar">PM</div><div><div style="font-size:.88rem;font-weight:600;">Pedro Mena</div><div style="font-size:.75rem;color:var(--muted);">ADSO · 2876545</div></div></div></td>
+              <td style="font-size:.85rem;">DataSoft Colombia</td>
+              <td><div style="display:flex;align-items:center;gap:.5rem;"><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:83%;background:var(--success);"></div></div><span style="font-size:.78rem;color:var(--muted);">83%</span></div></td>
+              <td><span class="badge badge-green">5/6</span></td>
+              <td><span class="badge badge-green">3/3</span></td>
+              <td><span class="badge badge-green">En evaluación</span></td>
+              <td><div style="display:flex;gap:.35rem;"><button class="btn-sm btn-ghost">📁</button><button class="btn-sm btn-primary">📝</button></div></td>
+            </tr>
+            <tr>
+              <td><div style="display:flex;align-items:center;gap:.65rem;"><div class="avatar">LV</div><div><div style="font-size:.88rem;font-weight:600;">Laura Vargas</div><div style="font-size:.75rem;color:var(--muted);">ADSO · 2876546</div></div></div></td>
+              <td style="font-size:.85rem;">Infotech Cauca</td>
+              <td><div style="display:flex;align-items:center;gap:.5rem;"><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:17%;background:var(--danger);"></div></div><span style="font-size:.78rem;color:var(--muted);">17%</span></div></td>
+              <td><span class="badge badge-red">1/6</span></td>
+              <td><span class="badge badge-gray">0/3</span></td>
+              <td><span class="badge badge-red">Atrasada</span></td>
+              <td><div style="display:flex;gap:.35rem;"><button class="btn-sm btn-ghost">📁</button><button class="btn-sm btn-danger">⚠️</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Fila 3 -->
+      <div class="grid-2">
+        <!-- Actividad reciente -->
+        <div class="card">
+          <div class="card-title">Actividad Reciente</div>
+          <div class="act-item"><div class="act-dot" style="background:var(--success);"></div><div><div class="act-msg">Bitácora N°3 de Sandra Gómez <strong>aprobada</strong></div><div class="act-time">Hace 30 min</div></div></div>
+          <div class="act-item"><div class="act-dot" style="background:var(--info);"></div><div><div class="act-msg">Seguimiento N°2 con Carlos Guerrero <strong>completado</strong></div><div class="act-time">Hace 2 h</div></div></div>
+          <div class="act-item"><div class="act-dot" style="background:var(--warning);"></div><div><div class="act-msg">Nueva bitácora de Pedro Mena <strong>pendiente revisión</strong></div><div class="act-time">Hace 3 h</div></div></div>
+          <div class="act-item"><div class="act-dot" style="background:var(--danger);"></div><div><div class="act-msg">Laura Vargas — sin actividad en <strong>14 días</strong></div><div class="act-time">Ayer</div></div></div>
+          <div class="act-item"><div class="act-dot" style="background:var(--success);"></div><div><div class="act-msg">Evaluación de Pedro Mena <strong>guardada</strong></div><div class="act-time">Hace 2 días</div></div></div>
+        </div>
+
+        <!-- Disponibilidad hoy -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <div class="card-title" style="margin-bottom:0;">Mi Disponibilidad Hoy</div>
+            <a href="agenda-instructor.html" style="font-size:.8rem;color:var(--green);text-decoration:none;font-weight:600;">Editar agenda</a>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem .85rem;background:var(--green-xlight);border-radius:8px;margin-bottom:.5rem;">
+            <span style="font-size:.85rem;display:flex;align-items:center;gap:.4rem;"><i data-lucide="clock" style="width:14px;height:14px;color:var(--green);"></i> 08:00 – 10:00</span>
+            <span class="badge badge-green">Libre</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem .85rem;background:#fef2f2;border-radius:8px;margin-bottom:.5rem;">
+            <span style="font-size:.85rem;display:flex;align-items:center;gap:.4rem;"><i data-lucide="clock" style="width:14px;height:14px;color:var(--danger);"></i> 10:00 – 11:30</span>
+            <span class="badge badge-red">Seguimiento</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem .85rem;background:var(--green-xlight);border-radius:8px;margin-bottom:.5rem;">
+            <span style="font-size:.85rem;display:flex;align-items:center;gap:.4rem;"><i data-lucide="clock" style="width:14px;height:14px;color:var(--green);"></i> 14:00 – 16:00</span>
+            <span class="badge badge-green">Libre</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem .85rem;background:#f1f5f9;border-radius:8px;">
+            <span style="font-size:.85rem;display:flex;align-items:center;gap:.4rem;"><i data-lucide="clock" style="width:14px;height:14px;color:var(--muted);"></i> 16:00 – 18:00</span>
+            <span class="badge badge-gray">No disponible</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

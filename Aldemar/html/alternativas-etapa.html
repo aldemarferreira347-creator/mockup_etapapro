@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alternativas de Etapa Productiva — EtapaPro SENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .alt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+    .alt-card { background: #fff; border: 2px solid var(--border-color, #e2e8f0); border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all .2s; position: relative; overflow: hidden; }
+    .alt-card:hover { border-color: var(--primary-green); box-shadow: 0 8px 30px rgba(13,107,82,.12); transform: translateY(-2px); }
+    .alt-card.selected { border-color: var(--primary-green); background: linear-gradient(135deg, rgba(13,107,82,.04), rgba(14,210,154,.04)); }
+    .alt-card.selected::after { content: '✓'; position: absolute; top: 1rem; right: 1rem; width: 24px; height: 24px; background: var(--primary-green); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 700; }
+    .alt-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .alt-icon i { width: 26px; height: 26px; }
+    .alt-title { font-family: var(--font-family-title, 'Outfit', sans-serif); font-size: 1.05rem; font-weight: 700; color: #1e293b; margin-bottom: .4rem; }
+    .alt-desc { font-size: .85rem; color: #64748b; line-height: 1.55; margin-bottom: 1rem; }
+    .req-list { display: flex; flex-direction: column; gap: .4rem; }
+    .req-item { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: #475569; }
+    .req-item i { width: 14px; height: 14px; color: var(--accent-color, #0ed29a); flex-shrink: 0; }
+    .tag { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 20px; display: inline-block; margin-bottom: .75rem; }
+    .tag-green { background: #e8f8ef; color: #14532d; }
+    .tag-blue { background: #e8f2fd; color: #1e40af; }
+    .tag-purple { background: #f5f3ff; color: #5b21b6; }
+    .tag-amber { background: #fff8e6; color: #92400e; }
+    .detail-panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; display: none; }
+    .detail-panel.open { display: block; }
+    .steps-list { display: flex; flex-direction: column; gap: 0; margin: 1rem 0; }
+    .step { display: flex; gap: 1rem; position: relative; padding-bottom: 1.25rem; }
+    .step:last-child { padding-bottom: 0; }
+    .step:not(:last-child)::before { content: ''; position: absolute; left: 18px; top: 36px; bottom: 0; width: 2px; background: #e2e8f0; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary-green); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
+    .step-content .step-title { font-weight: 600; font-size: .9rem; color: #1e293b; }
+    .step-content .step-desc { font-size: .82rem; color: #64748b; margin-top: .2rem; }
+    .docs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: .75rem; }
+    .doc-item { display: flex; align-items: center; gap: .6rem; padding: .65rem .85rem; background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; font-size: .82rem; color: #475569; }
+    .doc-item i { width: 16px; height: 16px; color: var(--primary-green); flex-shrink: 0; }
+    .btn { padding: .6rem 1.25rem; border-radius: 10px; font-size: .88rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; border: 1.5px solid; transition: all .15s; display: inline-flex; align-items: center; gap: .45rem; }
+    .btn i { width: 16px; height: 16px; }
+    .btn-primary { background: var(--primary-green); color: #fff; border-color: var(--primary-green); }
+    .btn-primary:hover { background: #158b6c; }
+    .btn-ghost { background: #f8fafc; color: #475569; border-color: #e2e8f0; }
+    .btn-ghost:hover { border-color: #94a3b8; color: #1e293b; }
+    .info-box { padding: .85rem 1.1rem; border-radius: 10px; font-size: .85rem; display: flex; align-items: flex-start; gap: .6rem; margin-bottom: 1rem; }
+    .info-box i { width: 16px; height: 16px; flex-shrink: 0; margin-top: .1rem; }
+    .info-blue { background: #e8f2fd; color: #1e40af; border: 1px solid #bfdbfe; }
+    .info-amber { background: #fff8e6; color: #92400e; border: 1px solid #fde68a; }
+    .section-title { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; margin-top: 1.5rem; }
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><i data-lucide="graduation-cap"></i></div>
+      <div class="sidebar-brand-text">
+        <span class="sidebar-title">EtapaPro</span>
+        <span class="sidebar-subtitle">SENA · Sistema</span>
+      </div>
+    </div>
+    <div class="role-badge"><i data-lucide="user-check"></i><span>Aprendiz</span></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard-aprendiz.html" class="menu-item"><i data-lucide="layout-dashboard"></i><span>Inicio</span></a>
+      <a href="mis-bitacoras.html" class="menu-item"><i data-lucide="file-check-2"></i><span>Mis Bitácoras</span><span class="menu-badge">4/6</span></a>
+      <a href="carpeta-digital.html" class="menu-item"><i data-lucide="folder-open"></i><span>Carpeta Digital</span></a>
+      <a href="seguimientos-aprendiz.html" class="menu-item"><i data-lucide="calendar"></i><span>Seguimientos</span></a>
+      <a href="mi-empresa.html" class="menu-item"><i data-lucide="building-2"></i><span>Mi Empresa</span></a>
+      <a href="alternativas-etapa.html" class="menu-item active"><i data-lucide="list-checks"></i><span>Alternativas</span></a>
+      <a href="notificaciones.html" class="menu-item"><i data-lucide="bell"></i><span>Notificaciones</span><span class="menu-badge">3</span></a>
+      <a href="chatbot.html" class="menu-item"><i data-lucide="message-square"></i><span>Asistente Virtual</span></a>
+      <a href="perfil-usuario.html" class="menu-item"><i data-lucide="user-circle"></i><span>Mi Perfil</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">CG</div>
+        <div><div class="sidebar-user-name">Carlos Guerrero</div><div class="sidebar-user-role">Aprendiz ADSO</div></div>
+      </div>
+      <a href="iniciosesion.html" class="menu-item menu-item--logout"><i data-lucide="log-out"></i><span>Cerrar sesión</span></a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="main-header">
+      <div class="header-left">
+        <h1 class="header-title">Alternativas de Etapa Productiva</h1>
+        <p class="header-subtitle">Consulta las opciones disponibles y sus requisitos</p>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" onclick="window.location.href='notificaciones.html'"><i data-lucide="bell"></i><span class="notif-badge-dot"></span></button>
+        <div class="user-profile"><div class="user-info"><span class="user-name-display">Carlos A. Guerrero</span><span class="user-role-display">Aprendiz ADSO</span></div><div class="avatar-display">CG</div></div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+
+      <div class="info-box info-blue" style="margin-bottom:1.5rem;">
+        <i data-lucide="info"></i>
+        <span>Selecciona una alternativa para ver los detalles, requisitos y documentos necesarios. Una vez decidido, podrás solicitar tu asignación de instructor desde <a href="solicitar-instructor.html" style="color:inherit;font-weight:700;">Solicitar Instructor</a>.</span>
+      </div>
+
+      <!-- Cards de alternativas -->
+      <div class="alt-grid">
+
+        <div class="alt-card" onclick="selectAlt('contrato', this)">
+          <div class="alt-icon" style="background:rgba(13,107,82,.08);"><i data-lucide="briefcase" style="color:#0d6b52;"></i></div>
+          <span class="tag tag-green">Más común</span>
+          <div class="alt-title">Contrato de Aprendizaje</div>
+          <div class="alt-desc">Vinculación formal con empresa patrocinadora que paga apoyo de sostenimiento. La más frecuente en programas del SENA.</div>
+          <div class="req-list">
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Apoyo de sostenimiento mensual</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Afiliación a ARL por empresa</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> 6 meses mínimo</div>
+          </div>
+        </div>
+
+        <div class="alt-card" onclick="selectAlt('proyecto', this)">
+          <div class="alt-icon" style="background:rgba(59,130,246,.08);"><i data-lucide="flask-conical" style="color:#2563eb;"></i></div>
+          <span class="tag tag-blue">Innovación</span>
+          <div class="alt-title">Proyecto Productivo</div>
+          <div class="alt-desc">Desarrollo de un proyecto de emprendimiento o investigación aplicada. Ideal para aprendices con ideas propias.</div>
+          <div class="req-list">
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Plan de negocio o proyecto</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Aval del instructor</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Bitácoras de avance</div>
+          </div>
+        </div>
+
+        <div class="alt-card" onclick="selectAlt('pasantia', this)">
+          <div class="alt-icon" style="background:rgba(91,33,182,.08);"><i data-lucide="globe-2" style="color:#5b21b6;"></i></div>
+          <span class="tag tag-purple">Internacional</span>
+          <div class="alt-title">Pasantía / Vinculación Laboral</div>
+          <div class="alt-desc">Para aprendices con contrato laboral vigente relacionado con su área de formación, o pasantía en entidad pública.</div>
+          <div class="req-list">
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Contrato laboral activo</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Cargo relacionado al programa</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Certificación empleador</div>
+          </div>
+        </div>
+
+        <div class="alt-card" onclick="selectAlt('unidad', this)">
+          <div class="alt-icon" style="background:rgba(245,158,11,.08);"><i data-lucide="store" style="color:#d97706;"></i></div>
+          <span class="tag tag-amber">Negocio propio</span>
+          <div class="alt-title">Unidad Productiva Familiar</div>
+          <div class="alt-desc">Aprendices que trabajan en un negocio o unidad productiva de carácter familiar y aplican los conocimientos del programa.</div>
+          <div class="req-list">
+            <div class="req-item"><i data-lucide="check-circle-2"></i> RUT o cámara de comercio</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Declaración aprendiz-empresa</div>
+            <div class="req-item"><i data-lucide="check-circle-2"></i> Aprobación coordinador</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Panel de detalle -->
+      <div class="detail-panel" id="detail-contrato">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+          <div><div style="font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;color:#1e293b;">Contrato de Aprendizaje</div><p style="font-size:.85rem;color:#64748b;margin-top:.25rem;">Detalles, proceso y documentos requeridos</p></div>
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="arrow-right"></i> Seleccionar esta alternativa</button>
+        </div>
+        <div class="info-box info-amber"><i data-lucide="alert-triangle"></i><span>Para esta alternativa debes tener empresa vinculada antes de iniciar el proceso. Si no tienes empresa, contacta al coordinador.</span></div>
+        <div class="section-title">Proceso paso a paso</div>
+        <div class="steps-list">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Búsqueda de empresa patrocinadora</div><div class="step-desc">Identificar empresa interesada en suscribir contrato de aprendizaje con el SENA.</div></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Registro de empresa en el sistema</div><div class="step-desc">El instructor o coordinador registra la empresa y valida los datos de NIT, razón social y supervisor.</div></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Firma del contrato</div><div class="step-desc">La empresa y el aprendiz firman el contrato. El SENA actúa como intermediario.</div></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Inicio de etapa productiva</div><div class="step-desc">Se activa el proceso en el sistema, se asigna instructor y comienzan los seguimientos.</div></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Seguimientos y bitácoras</div><div class="step-desc">El aprendiz entrega 6 bitácoras y asiste a 3 seguimientos durante el período.</div></div></div>
+        </div>
+        <div class="section-title">Documentos requeridos</div>
+        <div class="docs-grid">
+          <div class="doc-item"><i data-lucide="file-text"></i> Contrato de aprendizaje firmado</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Afiliación ARL</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Plan de trabajo aprobado</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Carta de presentación SENA</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Acta de inicio</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Formulario F-023 SENA</div>
+        </div>
+        <div style="margin-top:1.5rem;display:flex;gap:.75rem;">
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="user-plus"></i> Solicitar instructor</button>
+          <button class="btn btn-ghost" onclick="closeDetail()"><i data-lucide="x"></i> Cerrar</button>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="detail-proyecto">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+          <div><div style="font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;color:#1e293b;">Proyecto Productivo</div><p style="font-size:.85rem;color:#64748b;margin-top:.25rem;">Emprendimiento o investigación aplicada</p></div>
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="arrow-right"></i> Seleccionar esta alternativa</button>
+        </div>
+        <div class="section-title">Proceso paso a paso</div>
+        <div class="steps-list">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Formulación del proyecto</div><div class="step-desc">Redactar el plan de proyecto o negocio describiendo objetivos, alcance y justificación.</div></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Presentación al instructor</div><div class="step-desc">El instructor evalúa la viabilidad y pertinencia del proyecto con el programa de formación.</div></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Aval del coordinador</div><div class="step-desc">El coordinador aprueba el proyecto y habilita el inicio de la etapa productiva.</div></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Ejecución y bitácoras</div><div class="step-desc">El aprendiz ejecuta el proyecto entregando bitácoras mensuales de avance.</div></div></div>
+        </div>
+        <div class="section-title">Documentos requeridos</div>
+        <div class="docs-grid">
+          <div class="doc-item"><i data-lucide="file-text"></i> Plan de proyecto/negocio</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Aval instructor firmado</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Cronograma de actividades</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Acta de inicio</div>
+        </div>
+        <div style="margin-top:1.5rem;display:flex;gap:.75rem;">
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="user-plus"></i> Solicitar instructor</button>
+          <button class="btn btn-ghost" onclick="closeDetail()"><i data-lucide="x"></i> Cerrar</button>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="detail-pasantia">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+          <div><div style="font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;color:#1e293b;">Pasantía / Vinculación Laboral</div><p style="font-size:.85rem;color:#64748b;margin-top:.25rem;">Para aprendices con vínculo laboral activo</p></div>
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="arrow-right"></i> Seleccionar esta alternativa</button>
+        </div>
+        <div class="section-title">Proceso paso a paso</div>
+        <div class="steps-list">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Verificación del vínculo laboral</div><div class="step-desc">El aprendiz debe acreditar contrato laboral activo en cargo relacionado con el programa.</div></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Certificación del empleador</div><div class="step-desc">La empresa emite certificado indicando cargo, funciones y relación con el área de formación.</div></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Aprobación SENA</div><div class="step-desc">El coordinador valida la pertinencia del cargo y aprueba esta alternativa.</div></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Seguimientos normales</div><div class="step-desc">Se realizan los 3 seguimientos y 6 bitácoras estipulados en el proceso estándar.</div></div></div>
+        </div>
+        <div class="section-title">Documentos requeridos</div>
+        <div class="docs-grid">
+          <div class="doc-item"><i data-lucide="file-text"></i> Contrato laboral vigente</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Certificación del empleador</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Comprobante de pago nómina</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Acta de inicio</div>
+        </div>
+        <div style="margin-top:1.5rem;display:flex;gap:.75rem;">
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="user-plus"></i> Solicitar instructor</button>
+          <button class="btn btn-ghost" onclick="closeDetail()"><i data-lucide="x"></i> Cerrar</button>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="detail-unidad">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+          <div><div style="font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;color:#1e293b;">Unidad Productiva Familiar</div><p style="font-size:.85rem;color:#64748b;margin-top:.25rem;">Negocio o unidad de carácter familiar</p></div>
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="arrow-right"></i> Seleccionar esta alternativa</button>
+        </div>
+        <div class="info-box info-amber"><i data-lucide="alert-triangle"></i><span>Esta alternativa requiere aprobación explícita del coordinador antes de iniciar. El proceso puede tomar hasta 5 días hábiles.</span></div>
+        <div class="section-title">Proceso paso a paso</div>
+        <div class="steps-list">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Registro de la unidad productiva</div><div class="step-desc">El aprendiz presenta RUT o cámara de comercio que acredite la actividad económica.</div></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Declaración de relación familiar</div><div class="step-desc">Se firma declaración indicando la relación del aprendiz con la unidad y las funciones que desempeña.</div></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Aprobación coordinador</div><div class="step-desc">El coordinador revisa y aprueba la pertinencia de la unidad con el programa de formación.</div></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Seguimientos y bitácoras</div><div class="step-desc">Proceso estándar: 3 seguimientos y 6 bitácoras durante la etapa productiva.</div></div></div>
+        </div>
+        <div class="section-title">Documentos requeridos</div>
+        <div class="docs-grid">
+          <div class="doc-item"><i data-lucide="file-text"></i> RUT o cámara de comercio</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Declaración aprendiz-empresa</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Descripción de actividades</div>
+          <div class="doc-item"><i data-lucide="file-text"></i> Acta de inicio</div>
+        </div>
+        <div style="margin-top:1.5rem;display:flex;gap:.75rem;">
+          <button class="btn btn-primary" onclick="window.location.href='solicitar-instructor.html'"><i data-lucide="user-plus"></i> Solicitar instructor</button>
+          <button class="btn btn-ghost" onclick="closeDetail()"><i data-lucide="x"></i> Cerrar</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    let currentAlt = null;
+    function selectAlt(id, card) {
+      document.querySelectorAll('.alt-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+      card.classList.add('selected');
+      const panel = document.getElementById('detail-' + id);
+      if (currentAlt === id) { currentAlt = null; card.classList.remove('selected'); return; }
+      panel.classList.add('open');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      currentAlt = id;
+    }
+    function closeDetail() {
+      document.querySelectorAll('.alt-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+      currentAlt = null;
+    }
+  </script>
+</body>
+</html>

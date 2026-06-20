@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitar Instructor — EtapaPro SENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .wizard { max-width: 740px; margin: 0 auto; }
+    .steps-nav { display: flex; align-items: center; gap: 0; margin-bottom: 2.5rem; }
+    .step-node { display: flex; flex-direction: column; align-items: center; gap: .4rem; flex: 1; position: relative; }
+    .step-node:not(:last-child)::after { content: ''; position: absolute; top: 18px; left: 60%; width: 80%; height: 2px; background: #e2e8f0; z-index: 0; }
+    .step-node.done::after { background: var(--primary-green); }
+    .step-circle { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #e2e8f0; background: #f8fafc; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; color: #94a3b8; position: relative; z-index: 1; transition: all .3s; }
+    .step-node.active .step-circle { border-color: var(--primary-green); background: var(--primary-green); color: #fff; }
+    .step-node.done .step-circle { border-color: var(--primary-green); background: var(--primary-green); color: #fff; }
+    .step-label { font-size: .75rem; font-weight: 600; color: #94a3b8; text-align: center; }
+    .step-node.active .step-label, .step-node.done .step-label { color: var(--primary-green); }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .card-form { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.75rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-field { margin-bottom: 1rem; }
+    .form-field label { display: block; font-size: .85rem; font-weight: 600; color: #475569; margin-bottom: .4rem; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; padding: .75rem 1rem; border: 1.5px solid #e2e8f0; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .9rem; color: #1e293b; background: #f8fafc; transition: all .2s; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--primary-green); background: #fff; box-shadow: 0 0 0 3px rgba(13,107,82,.1); }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .alt-selector { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1rem; }
+    .alt-opt { padding: .9rem 1rem; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: .75rem; }
+    .alt-opt:hover { border-color: #94a3b8; }
+    .alt-opt.sel { border-color: var(--primary-green); background: rgba(13,107,82,.04); }
+    .alt-opt i { width: 20px; height: 20px; flex-shrink: 0; }
+    .alt-opt-title { font-size: .88rem; font-weight: 600; color: #1e293b; }
+    .alt-opt-sub { font-size: .75rem; color: #64748b; }
+    .instructor-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1rem; }
+    .inst-card { padding: 1rem 1.1rem; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: .85rem; }
+    .inst-card:hover { border-color: #94a3b8; }
+    .inst-card.sel { border-color: var(--primary-green); background: rgba(13,107,82,.04); }
+    .inst-avatar { width: 44px; height: 44px; border-radius: 50%; background: rgba(13,107,82,.1); color: var(--primary-green); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .88rem; flex-shrink: 0; }
+    .inst-name { font-size: .92rem; font-weight: 700; color: #1e293b; }
+    .inst-meta { font-size: .78rem; color: #64748b; }
+    .inst-badge { margin-left: auto; }
+    .badge { font-size: .72rem; font-weight: 600; padding: .2rem .6rem; border-radius: 20px; }
+    .badge-green { background: #e8f8ef; color: #14532d; }
+    .badge-amber { background: #fff8e6; color: #92400e; }
+    .badge-gray { background: #f1f5f9; color: #475569; }
+    .review-row { display: flex; justify-content: space-between; padding: .6rem 0; border-bottom: 1px solid #f8fafc; font-size: .88rem; }
+    .review-row:last-child { border-bottom: none; }
+    .review-label { color: #64748b; }
+    .review-val { font-weight: 600; color: #1e293b; }
+    .btn { padding: .6rem 1.25rem; border-radius: 10px; font-size: .88rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; border: 1.5px solid; transition: all .15s; display: inline-flex; align-items: center; gap: .45rem; }
+    .btn i { width: 16px; height: 16px; }
+    .btn-primary { background: var(--primary-green); color: #fff; border-color: var(--primary-green); }
+    .btn-primary:hover { background: #158b6c; }
+    .btn-ghost { background: #f8fafc; color: #475569; border-color: #e2e8f0; }
+    .btn-ghost:hover { border-color: #94a3b8; }
+    .success-box { text-align: center; padding: 2.5rem 2rem; }
+    .success-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(13,107,82,.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+    .success-icon i { width: 36px; height: 36px; color: var(--primary-green); }
+    .info-box { padding: .85rem 1.1rem; border-radius: 10px; font-size: .85rem; display: flex; align-items: flex-start; gap: .6rem; margin-bottom: 1rem; }
+    .info-box i { width: 16px; height: 16px; flex-shrink: 0; margin-top: .1rem; }
+    .info-blue { background: #e8f2fd; color: #1e40af; border: 1px solid #bfdbfe; }
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><i data-lucide="graduation-cap"></i></div>
+      <div class="sidebar-brand-text"><span class="sidebar-title">EtapaPro</span><span class="sidebar-subtitle">SENA · Sistema</span></div>
+    </div>
+    <div class="role-badge"><i data-lucide="user-check"></i><span>Aprendiz</span></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard-aprendiz.html" class="menu-item"><i data-lucide="layout-dashboard"></i><span>Inicio</span></a>
+      <a href="mis-bitacoras.html" class="menu-item"><i data-lucide="file-check-2"></i><span>Mis Bitácoras</span><span class="menu-badge">4/6</span></a>
+      <a href="carpeta-digital.html" class="menu-item"><i data-lucide="folder-open"></i><span>Carpeta Digital</span></a>
+      <a href="seguimientos-aprendiz.html" class="menu-item"><i data-lucide="calendar"></i><span>Seguimientos</span></a>
+      <a href="mi-empresa.html" class="menu-item"><i data-lucide="building-2"></i><span>Mi Empresa</span></a>
+      <a href="alternativas-etapa.html" class="menu-item"><i data-lucide="list-checks"></i><span>Alternativas</span></a>
+      <a href="notificaciones.html" class="menu-item"><i data-lucide="bell"></i><span>Notificaciones</span><span class="menu-badge">3</span></a>
+      <a href="chatbot.html" class="menu-item"><i data-lucide="message-square"></i><span>Asistente Virtual</span></a>
+      <a href="perfil-usuario.html" class="menu-item"><i data-lucide="user-circle"></i><span>Mi Perfil</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">CG</div>
+        <div><div class="sidebar-user-name">Carlos Guerrero</div><div class="sidebar-user-role">Aprendiz ADSO</div></div>
+      </div>
+      <a href="iniciosesion.html" class="menu-item menu-item--logout"><i data-lucide="log-out"></i><span>Cerrar sesión</span></a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="main-header">
+      <div class="header-left">
+        <h1 class="header-title">Solicitar Asignación de Instructor</h1>
+        <p class="header-subtitle">Completa el proceso para iniciar tu etapa productiva</p>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" onclick="window.location.href='notificaciones.html'"><i data-lucide="bell"></i><span class="notif-badge-dot"></span></button>
+        <div class="user-profile"><div class="user-info"><span class="user-name-display">Carlos A. Guerrero</span><span class="user-role-display">Aprendiz ADSO</span></div><div class="avatar-display">CG</div></div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+      <div class="wizard">
+
+        <!-- Pasos -->
+        <div class="steps-nav">
+          <div class="step-node active" id="sn1"><div class="step-circle">1</div><div class="step-label">Alternativa</div></div>
+          <div class="step-node" id="sn2"><div class="step-circle">2</div><div class="step-label">Empresa</div></div>
+          <div class="step-node" id="sn3"><div class="step-circle">3</div><div class="step-label">Instructor</div></div>
+          <div class="step-node" id="sn4"><div class="step-circle">4</div><div class="step-label">Confirmar</div></div>
+        </div>
+
+        <!-- Paso 1: Alternativa -->
+        <div class="panel active card-form" id="p1">
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:1.25rem;">¿Qué alternativa vas a realizar?</h3>
+          <div class="alt-selector">
+            <div class="alt-opt sel" onclick="selAlt(this)"><i data-lucide="briefcase" style="color:#0d6b52;"></i><div><div class="alt-opt-title">Contrato de Aprendizaje</div><div class="alt-opt-sub">Con empresa patrocinadora</div></div></div>
+            <div class="alt-opt" onclick="selAlt(this)"><i data-lucide="flask-conical" style="color:#2563eb;"></i><div><div class="alt-opt-title">Proyecto Productivo</div><div class="alt-opt-sub">Emprendimiento propio</div></div></div>
+            <div class="alt-opt" onclick="selAlt(this)"><i data-lucide="globe-2" style="color:#5b21b6;"></i><div><div class="alt-opt-title">Vinculación Laboral</div><div class="alt-opt-sub">Contrato laboral activo</div></div></div>
+            <div class="alt-opt" onclick="selAlt(this)"><i data-lucide="store" style="color:#d97706;"></i><div><div class="alt-opt-title">Unidad Productiva</div><div class="alt-opt-sub">Negocio familiar</div></div></div>
+          </div>
+          <div class="form-field">
+            <label>Fecha estimada de inicio</label>
+            <input type="date" value="2026-07-01">
+          </div>
+          <div class="form-field">
+            <label>Observaciones adicionales (opcional)</label>
+            <textarea placeholder="Cuéntale al coordinador algo relevante sobre tu situación..."></textarea>
+          </div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn btn-primary" onclick="goStep(2)">Siguiente <i data-lucide="arrow-right"></i></button></div>
+        </div>
+
+        <!-- Paso 2: Empresa -->
+        <div class="panel card-form" id="p2">
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Datos de la empresa</h3>
+          <p style="font-size:.85rem;color:#64748b;margin-bottom:1.25rem;">Si ya tienes empresa confirmada, completa los datos. Si aún no, puedes indicar que está en búsqueda.</p>
+          <div style="display:flex;gap:.75rem;margin-bottom:1.25rem;">
+            <label style="display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border:2px solid var(--primary-green);border-radius:10px;cursor:pointer;flex:1;background:rgba(13,107,82,.04);">
+              <input type="radio" name="emp_status" checked> <span style="font-size:.88rem;font-weight:600;color:#1e293b;">Ya tengo empresa</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border:2px solid #e2e8f0;border-radius:10px;cursor:pointer;flex:1;">
+              <input type="radio" name="emp_status"> <span style="font-size:.88rem;font-weight:600;color:#1e293b;">Aún en búsqueda</span>
+            </label>
+          </div>
+          <div class="form-grid">
+            <div class="form-field"><label>Razón social</label><input type="text" value="Tecno Cauca S.A.S."></div>
+            <div class="form-field"><label>NIT</label><input type="text" value="900123456-1"></div>
+            <div class="form-field"><label>Nombre del supervisor</label><input type="text" value="Ing. Juan Pérez"></div>
+            <div class="form-field"><label>Cargo del supervisor</label><input type="text" value="Jefe de TI"></div>
+            <div class="form-field"><label>Correo del supervisor</label><input type="email" value="jperez@tecnocauca.com"></div>
+            <div class="form-field"><label>Teléfono empresa</label><input type="tel" value="(602) 8251100"></div>
+            <div class="form-field full"><label>Dirección</label><input type="text" value="Cra 7 #5-43, Popayán, Cauca"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;"><button class="btn btn-ghost" onclick="goStep(1)"><i data-lucide="arrow-left"></i> Anterior</button><button class="btn btn-primary" onclick="goStep(3)">Siguiente <i data-lucide="arrow-right"></i></button></div>
+        </div>
+
+        <!-- Paso 3: Instructor -->
+        <div class="panel card-form" id="p3">
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.5rem;">Selecciona tu instructor</h3>
+          <p style="font-size:.85rem;color:#64748b;margin-bottom:1.25rem;">El coordinador realizará la asignación final. Puedes indicar una preferencia.</p>
+          <div class="info-box info-blue" style="margin-bottom:1.25rem;"><i data-lucide="info"></i><span>La asignación definitiva la realiza el coordinador según disponibilidad. Tu preferencia es orientativa.</span></div>
+          <div class="instructor-list">
+            <div class="inst-card sel" onclick="selInst(this)">
+              <div class="inst-avatar">MR</div>
+              <div><div class="inst-name">María Rodríguez</div><div class="inst-meta">Instructora ADSO · 12 aprendices asignados</div></div>
+              <div class="inst-badge"><span class="badge badge-green">Disponible</span></div>
+            </div>
+            <div class="inst-card" onclick="selInst(this)">
+              <div class="inst-avatar">JP</div>
+              <div><div class="inst-name">Juan Pablo Torres</div><div class="inst-meta">Instructor ADSO · 10 aprendices asignados</div></div>
+              <div class="inst-badge"><span class="badge badge-green">Disponible</span></div>
+            </div>
+            <div class="inst-card" onclick="selInst(this)">
+              <div class="inst-avatar">LC</div>
+              <div><div class="inst-name">Luisa Castaño</div><div class="inst-meta">Instructora ADSO · 15 aprendices asignados</div></div>
+              <div class="inst-badge"><span class="badge badge-amber">Alta carga</span></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;"><button class="btn btn-ghost" onclick="goStep(2)"><i data-lucide="arrow-left"></i> Anterior</button><button class="btn btn-primary" onclick="goStep(4)">Revisar solicitud <i data-lucide="arrow-right"></i></button></div>
+        </div>
+
+        <!-- Paso 4: Confirmar -->
+        <div class="panel card-form" id="p4">
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:1.25rem;">Resumen de la solicitud</h3>
+          <div style="background:#f8fafc;border-radius:12px;padding:1.1rem;margin-bottom:1.25rem;">
+            <div class="review-row"><span class="review-label">Alternativa</span><span class="review-val">Contrato de Aprendizaje</span></div>
+            <div class="review-row"><span class="review-label">Fecha inicio estimada</span><span class="review-val">01/07/2026</span></div>
+            <div class="review-row"><span class="review-label">Empresa</span><span class="review-val">Tecno Cauca S.A.S.</span></div>
+            <div class="review-row"><span class="review-label">NIT</span><span class="review-val">900123456-1</span></div>
+            <div class="review-row"><span class="review-label">Supervisor</span><span class="review-val">Ing. Juan Pérez</span></div>
+            <div class="review-row"><span class="review-label">Instructor preferido</span><span class="review-val">María Rodríguez</span></div>
+          </div>
+          <div class="info-box info-blue"><i data-lucide="info"></i><span>Al enviar, el coordinador recibirá tu solicitud y en máximo 3 días hábiles recibirás notificación con el instructor asignado y los próximos pasos.</span></div>
+          <div style="display:flex;justify-content:space-between;margin-top:.5rem;"><button class="btn btn-ghost" onclick="goStep(3)"><i data-lucide="arrow-left"></i> Anterior</button><button class="btn btn-primary" onclick="enviarSolicitud()"><i data-lucide="send"></i> Enviar solicitud</button></div>
+        </div>
+
+        <!-- Éxito -->
+        <div class="panel card-form" id="p5">
+          <div class="success-box">
+            <div class="success-icon"><i data-lucide="check-circle-2"></i></div>
+            <h3 style="font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem;">¡Solicitud enviada con éxito!</h3>
+            <p style="color:#64748b;font-size:.9rem;max-width:400px;margin:0 auto 1.5rem;">Tu solicitud fue enviada al coordinador. Recibirás una notificación cuando sea procesada (máx. 3 días hábiles).</p>
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:1rem 1.25rem;max-width:400px;margin:0 auto 1.5rem;text-align:left;">
+              <div style="font-size:.82rem;color:#14532d;font-weight:600;margin-bottom:.5rem;">Número de solicitud</div>
+              <div style="font-size:1.2rem;font-weight:800;color:#0d6b52;font-family:'Outfit',sans-serif;">#SOL-2026-0047</div>
+            </div>
+            <div style="display:flex;gap:.75rem;justify-content:center;">
+              <button class="btn btn-primary" onclick="window.location.href='dashboard-aprendiz.html'"><i data-lucide="home"></i> Ir al inicio</button>
+              <button class="btn btn-ghost" onclick="window.location.href='notificaciones.html'"><i data-lucide="bell"></i> Ver notificaciones</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    let step = 1;
+    function goStep(n) {
+      document.getElementById('p'+step).classList.remove('active');
+      document.getElementById('sn'+step).classList.remove('active');
+      document.getElementById('sn'+step).classList.add('done');
+      step = n;
+      document.getElementById('p'+step).classList.add('active');
+      document.getElementById('sn'+step).classList.add('active');
+    }
+    function selAlt(el) { document.querySelectorAll('.alt-opt').forEach(e => e.classList.remove('sel')); el.classList.add('sel'); }
+    function selInst(el) { document.querySelectorAll('.inst-card').forEach(e => e.classList.remove('sel')); el.classList.add('sel'); }
+    function enviarSolicitud() {
+      document.getElementById('p4').classList.remove('active');
+      document.querySelectorAll('.step-node').forEach(n => { n.classList.remove('active'); n.classList.add('done'); });
+      document.getElementById('p5').classList.add('active');
+    }
+  </script>
+</body>
+</html>
